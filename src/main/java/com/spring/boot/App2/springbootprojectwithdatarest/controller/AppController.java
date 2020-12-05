@@ -258,8 +258,13 @@ public class AppController {
         return "redirect:/company-employees/employee-list";
     }
 
-    public String errorMessage(List<?> list, String message, String returnText1, String returnText2, Model model,
-                               String modelAtt1, String modelAtrr2) {
+    public String errorMessage(List<?> list,
+                               String message,
+                               String returnText1,
+                               String returnText2,
+                               Model model,
+                               String modelAtt1,
+                               String modelAtrr2) {
         if (list.isEmpty()) {
             System.out.println("methodMessage: " + message);
             model.addAttribute(modelAtt1, message);
