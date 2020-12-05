@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer-Review</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+<body style="margin:  5% 10%; border-left: darkcyan">
+
+<div class="bg-primary" style="text-align: center; padding: 5px">
+    <h2>ERM- EMPLOYEE RELATIONSHIP MANAGEMENT</h2>
+</div>
+<hr>
+<h3>Employee Review List</h3>
+<div>
+
+    <div th:each="review : ${reviews}">
+
+        <span style="color: blue; background-color: blue; float: left">.</span>
+        <p style="margin-left: 10px" th:text="${review}"/>
+
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <style>
+        .error{color: red}
+    </style>
+</head>
+<body>
+<div class="Container" style="margin: 2% 10%">
+
+    <div class="bg-primary" style="text-align: center; padding: 5px; width: 40%">
+        <h3>ERM- EMPLOYEE RELATIONSHIP MANAGER</h3>
+    </div>
+
+    <div style="width: 40%"><hr ></div>
+
+    <div style=" padding: 5px">
+        <form action="#" th:action="@{/company-employees/customers/postUpdateEmployeeCustomer(employeeId=${employeeId})}"
+              th:object="${customer}"
+              method="POST">
+            <h4 >Update Customer for Employee</h4>
+            <input type="hidden" th:field="*{id}"/>
+            <table style="width: 40%" >
+                <tbody >
+                <tr>
+                    <td><input type="text" th:field="*{firstName}" class="form-control"
+                               placeholder="first name here"></td>
+                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName Error</td>
+                </tr>
+                <tr>
+                    <td><input type="text" th:field="*{lastName}" class="form-control"
+                               placeholder="last name here"></td>
+                    <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error</td>
+                </tr>
+
+                <tr>
+                    <td>
+                    <input type="hidden" name="employeeId" th:field="*{employee}"
+                           class="form-control">
+
+                    <input type="number" name="employeeId"  th:value="${customer.employee.id}"
+                          disabled class="form-control">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td> <input type="submit" value="Save"  class="btn btn-outline-primary"/></td>
+                </tr>
+                <div style="clear:both"></div>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>

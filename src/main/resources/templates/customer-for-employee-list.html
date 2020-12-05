@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>ERMC</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container" style="margin: 2% 10%">
+
+    <h3>Employee Customers Data</h3>
+    <hr>
+
+    <form th:action="@{/company-employees/customers/search}" class="form-inline">
+        <a th:href="@{/company-employees/customers/showFormForAdd(employeeId=${employeeId})}"
+           class="btn btn-primary btn-sm mr-5 mb-3">
+            Add Customer
+        </a>
+
+        <input class="form-control  ml-5 mr-sm-2 mb-3" type="text" name="searchEmployeeCustomer"
+               placeholder="Search by name" />
+
+        <input class="btn btn-success mb-3" type="submit" value="Search">
+        <input type="hidden" name="employeeId" th:value="${employeeId}">
+    </form>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="employeeCustomer : ${employeeCustomers}">
+
+            <td th:text="${employeeCustomer.firstName}" />
+            <td th:text="${employeeCustomer.lastName}" />
+
+            <td>
+                    <!-- Add "update" button/link -->
+                    <a th:href="@{/company-employees/showFormForCustomerUpdate(customerUpdate=${employeeCustomer.getId()})}"
+                       class="btn btn-info btn-sm">
+                        Update
+                    </a>
+
+                    <!-- Add "delete" button/link -->
+                    <a th:href="@{/company-employees/delete(customerDelete=${employeeCustomer.getId()})}"
+                       class="btn btn-danger btn-sm"
+                       onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">
+                        Delete
+                    </a>
+
+                <a th:href="@{/company-employees/showFormForEmployeeCustomerReview(customerReview=${employeeCustomer.getId()})}"
+                   class="btn btn-info btn-sm">
+                    Reviews
+                </a>
+            </td>
+
+
+        </tr>
+        </tbody>
+    </table>
+    <div style="clear: both"></div>
+<div>
+        <a th:href="@{/company-employees/employee-list}" class="btn btn-outline-primary mt-2" style="margin-top: 11px">
+            Employee List
+        </a>
+    <div  style="float: right; width: 80%; margin-right: 5%; margin-top: 10px">
+        <div  th:if="${totalPage > 1}" >
+            <div class="row col-sm-12">
+
+                <div class="pagination">
+                    <div class="page-item">
+                        <a class="page-link" th:if="${currentPage > 1}"
+                           th:href="@{'/company-employees/customerPage/'+ ${1}+ '?employeeId='+${employeeId}} ">First</a>
+                        <span  class="page-link" th:unless="${currentPage > 1}">First</span>
+                    </div>
+                    <div>
+                        <a class="page-link" th:if="${currentPage > 1}"
+                           th:href="@{'/company-employees/customerPage/'+ ${currentPage - 1}+ '?employeeId='+${employeeId}} ">Previous</a>
+                        <span  class="page-link" th:unless="${currentPage > 1}">Previous</span>
+                    </div>
+
+                    <span class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}">
+                    <a class="page-link" th:if="${currentPage != i}"
+                       th:href="@{'/company-employees/customerPage/'+ ${i}+ '?employeeId='+${employeeId}}">
+                        [[${i}]]</a>
+                    <span style="background-color: blue" class="page-link" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
+
+                    <div class="page-item">
+                        <a class="page-link" th:if="${currentPage < totalPage}"
+                           th:href="@{'/company-employees/customerPage/'+ ${currentPage + 1}+ '?employeeId='+${employeeId}}">
+                            Next</a>
+                        <span  class="page-link" th:unless="${currentPage < totalPage}">Next</span>
+                    </div>
+
+                    <div class="page-item">
+                        <a class="page-link" th:if="${currentPage < totalPage}"
+                           th:href="@{'/company-employees/customerPage/'+ ${totalPage}+ '?employeeId='+${employeeId}}">
+                            Last</a>
+                        <span  class="page-link" th:unless="${currentPage < totalPage}">Last</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</body>
+</html>
+
+
+

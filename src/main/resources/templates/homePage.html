@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>ERM-Home</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <style>
+        .error{color: red}
+        body{
+            width: 80%;
+            margin-left: 10%;
+        }
+        #headerDv{
+            float: left;
+            margin-left: 1%;
+        }
+       header div a {
+            float: right ;
+        }
+        header{
+            margin-bottom: 15%;
+            height: 70px;
+            position: fixed;
+            width: 80%;
+            top: 0%;
+        }
+        .headerLi{
+            color: white;
+            text-decoration: none;
+            font-size: 17px;
+            margin-right: 15px;
+            margin-left: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        #top1{
+            margin-top:6% ;
+            -webkit-animation: anime 5s infinite;
+            animation: anime 5s infinite;
+        }
+        /* Chrome, Safari, Opera */
+        @-webkit-keyframes anime {
+            from {background-color: dodgerblue;}
+            to {background-color: blue;}
+        }
+
+        /* Standard syntax */
+        @keyframes anime {
+            from {background-color: dodgerblue;}
+            to {background-color: blue;}
+        }
+        section div h3 p{
+            float: left;
+        }
+        .sectionDiv {
+            float: left;
+            width: 50%;
+            margin-right: 2%;
+            margin-left: 4%;
+            text-space: 10px;
+            font-size: 20px;
+            margin-top: 5%;
+        }
+        #input{
+            width: 50%;
+            margin: 4%;
+        }
+        #img-section{
+            float: left;
+            width: 40%;
+            margin-right: 4%;
+        }
+        .h2style {
+            color: darkslategray;
+        }
+        #ul{
+            display: block;
+        }
+
+        div.img {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 180px;
+            cursor: pointer;
+        }
+
+        div.img:hover {
+            border: 1px solid dodgerblue;
+            cursor: pointer;
+        }
+
+        div.img img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .alink {
+            margin-right: 2%;
+            color: darkslategrey;
+            cursor: pointer;
+        }
+        .alinkimg {
+            margin-right: 7%;
+            color: darkslategrey;
+            cursor: pointer;
+
+        }
+        #footer{
+            background-color: #bfbfbf;
+            /*background-image: url("../static/images/rmi-machine-icon.jpg");*/
+            /*background-color: white;*/
+
+        }
+    </style>
+</head>
+<body>
+<header class="p-3 mb-2 bg-primary text-white">
+    <div id="headerDv">
+        <img th:src="@{/images/gh-icon.jpg}" width="100px" height="70px"
+             style="margin-top: 5%; float: left; border: 1px solid blue; border-radius: 60px; margin-left: 10%">
+    </div>
+    <div>
+
+            <a th:href="@{/company-employees/employee-list}" class="btn btn-success" style="font-size: small" >Admin</a>
+        <a onmouseover="this.style.color= 'forestgreen'; this.style.textDecorationLine= 'none'" onmouseout="this.style.color= 'white'"
+           class="headerLi" th:href="@{/home-page/customer-reg}">Sign Up</a>
+        <a class="btn btn-success" th:href="@{/home-page/logon-customer}"  style="font-size: small">Clients' Account</a>
+
+    </div>
+</header>
+
+<section class="p-3 mb-2 bg-primary text-white" id="top1">
+    <div class="sectionDiv">
+        <h2>
+            We at GeneHelix, the health of our clients is our top priority. We match towards making you a winner.
+        </h2>
+        <p>Checkout your preferred manager by search and lookup on their reviews,
+            otherwise sign up under any manager of your choice.
+            We are here to make you happy with our healthcare products and services</p>
+    </div>
+    <div>
+        <img th:src="@{/images/customer-Relationship-1.png}" width="40%" height="400px" style="border-radius: 5px"/>
+    </div>
+    <div>
+        <form action="#" th:action="@{/home-search}" method="GET"
+              class="form-inline">
+
+            <input type="text" name="searchEmployeesHome" class="form-control form-control-lg" id="input"
+                   placeholder="Search for manager here"/>
+            <input type="submit" class="btn btn-success btn-lg" width="5%" value="Search">
+        </form>
+    </div>
+</section>
+
+
+<section style="margin-top: 5%">
+    <div style="background-color: dodgerblue">
+        <img th:src="@{/images/erm.jpg}" width="40%" height="400px" id="img-section"/>
+    </div>
+    <div class="sectionDiv" style="float: right; margin-top: 10%; height: 300px">
+        <h2 class="h2style">Register with an employee</h2>
+        <p>Please do leave a review to better serve you well.
+            Your reviews matters a lot...</p>
+        <a class="btn btn-secondary">Start Now  →</a>
+    </div>
+</section>
+
+    <section style="width: 80%">
+            <div class="sectionDiv" style="width:40%; float: left; font-size: 18px">
+                <h2 class="h2style" style="margin-top: 4%">
+                    Information on our products and services</h2>
+                <p>GeneHelix is here to make you live a healthy life style</p>
+                <p>Our Services </p>
+                <ul id="ul" style="width: 100%">
+                    <li><a href="#" class="alink">Personal Medical Service</a></li>
+                    <li><a href="#" class="alink">Health Informatics</a></li>
+                    <li><a href="#" class="alink">DNA and Data Analysis</a></li>
+                    <li><a href="#" class="alink">PCR</a></li>
+                    <li><a href="#" class="alink">Biomedical Research</a></li>
+                  <li><a href="#" class="alink">Agricultural Research for Food Security</a></li>
+                    <li><a href="#" class="alink">Training and Consultancy</a></li>
+                </ul>
+            </div>
+        <img th:src="@{/images/dna-image.jpg}" width="35%" height="400px"
+             style="float: right; margin-top: 5%; border-radius: 5px"/>
+    </section>
+
+<div style="float: left" ><img th:src="@{/images/location-map.JPG}" width="50%" height="400px" style="margin-top: 5%;
+border-radius: 20px"/>
+    <address style="float: right; margin-top: 10%; margin-right: 20%; color: darkslategrey">
+        No 03 Omodudu Close <br>
+        Off Solomon Street, Ketu Alapere <br>
+        Lagos State Nigeria.<br>
+        Phone: +2348154981788<br>
+        Email: info.gh@geneHelix.com.ng
+    </address>
+</div>
+<div style="clear: both"></div>
+<section style="width: 80%; text-align: center">
+    <div style="margin-top: 5%">
+        <h2 class="h2style">
+            Be smarter, become healthier with
+            GeneHelix
+        </h2>
+        <h2 class="h2style">Company of different environ support GeneHelix</h2>
+    </div>
+</section>
+<section style="width: 80%">
+<div style="align-content: center;width: 100%; margin-left: 10%; margin-top: 5%">
+    <div class="img">
+        <a>
+            <img th:src="@{/images/ncbc-icon.jpg}" width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">NCBC</div>
+    </div>
+
+    <div class="img">
+        <a >
+            <img th:src="@{/images/cbc-icon.jpg}" width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">CBC</div>
+    </div>
+
+    <div class="img">
+        <a target="_blank" href="img_lights.jpg">
+            <img th:src="@{/images/oracle-icon.png}"  width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">Oracle</div>
+    </div>
+
+    <div class="img">
+        <a target="_blank" href="img_mountains.jpg">
+            <img th:src="@{/images/k-devs-icon.jpg}"  width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">K-Devs System</div>
+    </div>
+    <div class="img">
+        <a target="_blank" href="img_mountains.jpg">
+            <img th:src="@{/images/ibm-icon.png}" width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">IBM</div>
+    </div>
+    <div class="img">
+        <a target="_blank" href="img_mountains.jpg">
+            <img th:src="@{/images/google-icon.png}"  width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">Google Ng</div>
+    </div>
+
+    <div class="img">
+        <a target="_blank" href="img_mountains.jpg">
+            <img th:src="@{/images/genetech-icon.png}"  width="600" height="400" style="height: 80px">
+        </a>
+        <div class="desc">Genentech Ltd</div>
+    </div>
+
+    <div class="img">
+        <a target="_blank" href="img_mountains.jpg">
+            <img th:src="@{/images/andela-icon.png}" src="../static/images/andela-icon.png" width="600" height="400"
+                 style="height: 80px">
+        </a>
+        <div class="desc">Andela</div>
+    </div>
+</div>
+        <a style="margin-left: 35%; width:40%; font-size: 20px; margin-top: 5%" class="btn btn-secondary">Find out why →</a>
+
+</section>
+<section>
+<div>
+    <div  style="width: 100%">
+        <img th:src="@{/images/gh-icon.jpg}" src="../static/images/gh-icon.jpg" width="150px" height="100px"
+             style="margin-top: 5%; float: left">
+    </div>
+    <div style="clear: both;"></div>
+
+    <div id="aboutus"  class="sectionDiv" style=" float: left; margin-top:15%; margin-left: 10%"  >
+        <h2  class="h2style">What you must know</h2>
+        GeneHelix is a Biomedical company with mission to end the scourge of diseases of public health importance
+        especially in low-income communities through research, local and foreign collaborations.
+        It is founded by G.O Olanipekun PhD on 12/06/2030 and currently operational in two states in Nigeria
+        (Lagos and Abuja) and have mini-LAB in about 10 low-income communities in Nigeria.
+    </div>
+    <div ><img th:src="@{/images/doctor.jpg}" src="../static/images/doctor.jpg" width="300px" height="400px"
+               style="margin-top: 5%; margin-left: 10%; float: left; border-radius: 5px">
+        </div>
+</div>
+
+    <div style="clear:both">
+
+    </div>
+    <div style="margin-top: 5%"><hr style="border: 1px solid "></div>
+</section>
+<div style="clear: both"></div>
+
+<footer id="footer" style="margin-top: 5%" >
+    <br>
+    <div style="text-align: center" >
+        <h4>Get started</h4>
+        <a class="alink" th:href="@{/home-page/customer-reg}">Sign up</a>
+        <a class="alink">Guide</a>
+        <a class="alink">Value</a>
+        <a href="#ul" class="alink">Products & Services</a>
+    </div>
+    <div style="text-align: center; margin-top: 3%" >
+        <h4>Company</h4>
+        <a class="alink" href="#aboutus">About us</a>
+        <a class="alink">Jobs</a>
+        <a class="alink">Kind of Employee</a>
+        <a class="alink">Openings</a>
+    </div>
+  <div style="text-align: center; margin-left: 37%" >
+      <img class="alinkimg" th:src="@{/images/facebook.png}" width="30px" height="30px" style="margin-top: 5%; float: left">
+      <img class="alinkimg" th:src="@{/images/instagram.png}" width="30px" height="30px" style="margin-top: 5%; float: left">
+      <img class="alinkimg" th:src="@{/images/twitter.png}" width="30px" height="30px" style="margin-top: 5%; float: left">
+      <img class="alinkimg"  th:src="@{/images/linkedin.png}" width="30px" height="30px" style="margin-top: 5%; float: left">
+  </div>
+    <div style="clear: both"></div>
+    <div style="text-align: center; margin-top: 3%" >
+        <a class="alink">Privacy</a>
+        <a class="alink">Terms & Conditions</a>
+        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gh-brown.jpg}"
+                                                           src="../static/images/gh-brown.jpg"
+                                                          width="24px"
+                                                                height="23px"></sup>  Copyright<sup>&copy;</sup> 2020. All rights Research </p>
+    </div>
+<br>
+</footer>
+</body>
+</html>

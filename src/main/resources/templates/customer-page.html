@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xlmns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>customer-page</title>
+    <style>
+        body{
+            width: 80%;
+            margin-left: 10%;
+        }
+        #headerDv{
+            float: left;
+            margin-left: 1%;
+        }
+        header div a {
+            float: right ;
+        }
+        header{
+            margin-bottom: 15%;
+            height: 70px;
+            position: fixed;
+            width: 80%;
+            top: 0%;
+        }
+
+        .profileName {
+            text-space: 10px;
+            font-size: 18px;
+            text-align: center;
+            margin-top: 5%;
+            margin-right: 5%;
+            cursor: pointer;
+            float: right;
+            position: relative;
+            display: inline-block;
+        }
+
+        .profileName-content {
+            text-align: left;
+            font-size: 15px;
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            padding: 12px 16px;
+        }
+
+        .profileName:hover .profileName-content {
+            display: block;
+        }
+
+        .headerSpan{
+            float: left;
+            color: dodgerblue;
+            margin-right: 4px;
+            font-size: 10px;
+            text-decoration: none;
+        }
+        .headerSpan:hover {
+            color: blue;
+            text-decoration: none;
+        }
+        .fontAwesoneDrop{
+            margin-right: 8px;
+        }
+        .fontAwesoneDropContent{
+            margin-right: 8px;
+        }
+        .fontAwesoneDropContent:hover{
+            color: blue;
+        }
+        div.img {
+            margin: 5px;
+            border: 1px solid #ccc;
+            float: left;
+            width: 180px;
+            cursor: pointer;
+        }
+
+        div.img:hover {
+            border: 1px solid dodgerblue;
+            cursor: pointer;
+        }
+
+        div.img img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+
+        div.desc {
+            padding: 15px;
+            text-align: center;
+            z-index: 1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<script src="https://use.fontawesome.com/3de845719c.js"></script>
+<body>
+<header>
+    <div id="headerDv">
+        <img th:src="@{/images/gh-icon.jpg}" width="100px" height="70px" src="../static/images/gh-icon.jpg"
+             style="margin-top: 5%; margin-left: 10%"/>
+    </div>
+
+    <div class="profileName">
+        <p><span  class="fontAwesoneDrop">Gafar Olanipekun</span> <span><i class="fa fa-bell" aria-hidden="true"></i></span></p>
+        <div class="profileName-content">
+            <div style="text-align: center">
+                <img th:src="@{/images/gh-icon.jpg}" width="50px" height="50px"
+                     style="margin-top: 5%; margin-left:0"/>
+            </div>
+      <p><span class="fontAwesoneDrop"><i class="fa fa-at" aria-hidden="true"></i></span>
+          <span class="fontAwesoneDropContent">lanusg@gmail.com</span></p>
+            <p><span class="fontAwesoneDrop"><i class="fa fa-globe" aria-hidden="true"></i></span>
+                <span class="fontAwesoneDropContent">Ondo, Nigeria</span></p>
+            <p><span class="fontAwesoneDrop"><i class="fa fa-bell" aria-hidden="true"></i></span>
+                <span class="fontAwesoneDropContent">Notification</span></p>
+            <p><span class="fontAwesoneDrop"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
+                <span class="fontAwesoneDropContent">Sign Out</span></p>
+            <hr>
+            <div>
+                    <a  href="#" class="headerSpan">Privacy policies |</a>
+                <a href="#" class="headerSpan">Terms & Conditions</a>
+            </div>
+
+
+        </div>
+
+    </div>
+</header>
+
+<nav>
+    <div>
+        <span></span><p>Profile</p>
+        <span></span><p>Manager</p>
+        <span></span><p>Document</p>
+        <span></span><p>Service</p>
+        <span></span><p></p>
+        <hr>
+        <span></span><p>Fast-Link</p>
+</div>
+</nav>
+<section>
+     <span th:if="${totalPage > 1}">
+            <span class="pag-item">
+                            <a class="page-link" th:if="${currentPage > 1}"
+                               th:href="@{'/hpage/'+ ${currentPage - 1}}">Previous</a>
+                            <span  class="page-link" th:unless="${currentPage > 1}">Previous</span>
+                        </span>
+        </span>
+
+    <div  style="float: right; width: 80%; margin-right: 5%">
+        <div class="img">
+            <a target="_blank" href="img_mountains.jpg">
+                <img th:src="@{/images/andela-icon.png}" src="../static/images/andela-icon.png" width="600" height="400"
+                     style="height: 80px">
+            </a>
+            <div class="desc">Andela</div>
+        </div>
+        <span th:if="${totalPage > 1}">
+             <span class="page-item">
+                            <a class="page-link" th:if="${currentPage < totalPage}"
+                               th:href="@{'/hpage/'+ ${currentPage + 1}}">Next</a>
+                            <span  class="page-link" th:unless="${currentPage < totalPage}">Next</span>
+                        </span>
+        </span>
+
+        <div  th:if="${totalPage > 1}" >
+            <div  class="row col-sm-12">
+                <div aria-label="Page navigation example">
+                    <div class="pagination">
+
+                        <span class="page-item " th:each="i : ${#numbers.sequence(1, totalPage)}">
+                    <a  class="page-link" th:if="${currentPage != i}" th:href="@{'/hpage/'+ ${i}}">[[${i}]]</a>
+                      <span style="background-color: blue" class="page-link" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div style=" padding: 5px">
+
+        <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${employee}" method="POST">
+            <h2>Do you have a question?</h2>
+            <p>Ask your manager →</p>
+            <input type="hidden" th:field="*{id}"/>
+            <table style="width: 40%" >
+                <tbody >
+                <tr>
+                    <td><input type="text" th:text="${firstName}"  class="form-control"
+                               placeholder="first name here"></td>
+<!--                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName Error</td>-->
+                </tr>
+                <tr>
+                    <td><input type="text" th:text="${lastName}" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td><input type="email" th:text="${email}" class="form-control" ></td>
+                </tr>
+                <tr>
+                    <td><textarea  cols="50" rows="15" class="form-control" >
+                        Type your message here.
+                    </textarea></td>
+                </tr>
+                <tr>
+                    <td> <input type="submit" value="Send Message"  class="btn btn-outline-primary"/></td>
+                </tr>
+                <div style="clear:both"></div>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</section>
+<div>
+    <h2>What Service do you want?</h2>
+    <p>Choose Another Service....</p>
+    <a th:href="@{/update-customer-service}">Choose Service →</a>
+    <a></a>
+</div>
+
+
+
+</body>
+</html>

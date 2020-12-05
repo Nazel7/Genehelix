@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+    <style>
+        .error{color: red}
+    </style>
+</head>
+<body>
+<div class="Container" style="margin: 2% 10%">
+
+    <div class="bg-primary" style="text-align: center; padding: 5px; width: 40%">
+        <h3>ERM- EMPLOYEE RELATIONSHIP MANAGER</h3>
+    </div>
+
+    <div style="width: 40%"><hr ></div>
+
+    <div style=" padding: 5px">
+        <form action="#" th:action="@{/company-employees/customers/postCustomerReview(customerId=${customerId})}"
+              th:object="${newReview}"
+              method="POST">
+            <h4 >Save New Review for Customer</h4>
+            <input type="hidden" th:field="*{id}"/>
+            <table style="width: 40%" >
+                <tbody >
+                <tr>
+                    <td><input type="text" th:field="*{reviewMessage}" class="form-control"
+                               placeholder="Type new review message here"></td>
+                    <td th:if="${#fields.hasErrors('reviewMessage')}" class="error" th:errors="*{reviewMessage}">Review-Message Error</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="hidden" name="customerId" th:field="*{customer}" class="form-control">
+                        <input type="number" name="customerId" th:value="${customerId}"
+                               disabled class="form-control">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td> <input type="submit" value="Save"
+                                onclick="if(!(confirm('Are you sure to Save Review?' +
+                                 ' Once Saved you cannot Delete or Update'))) return false"
+                                class="btn btn-outline-primary"/></td>
+                </tr>
+                <div style="clear:both"></div>
+
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+</html>
