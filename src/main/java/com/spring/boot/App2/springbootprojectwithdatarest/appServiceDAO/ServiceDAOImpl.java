@@ -1,9 +1,9 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.employeeServiceDAO;
+package com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeDAO.CustomerRepo;
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeDAO.EmployeeRepository;
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeDAO.ReviewRepo;
+import com.spring.boot.App2.springbootprojectwithdatarest.appDAO.CustomerRepo;
+import com.spring.boot.App2.springbootprojectwithdatarest.appDAO.EmployeeRepository;
+import com.spring.boot.App2.springbootprojectwithdatarest.appDAO.ReviewRepo;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;

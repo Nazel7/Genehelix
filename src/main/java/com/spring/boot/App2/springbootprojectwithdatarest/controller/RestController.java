@@ -1,7 +1,7 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.controller;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeServiceDAO.EmployeeServiceDAO;
+import com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO.EmployeeServiceDAO;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

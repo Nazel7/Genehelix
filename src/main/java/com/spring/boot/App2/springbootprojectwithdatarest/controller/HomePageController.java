@@ -1,10 +1,8 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.controller;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeServiceDAO.EmployeeServiceDAO;
+import com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO.EmployeeServiceDAO;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;
-import com.spring.boot.App2.springbootprojectwithdatarest.securityConfig.datasourceSecurityConfig.CustomerSecurityAdapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 public class HomePageController {

@@ -1,6 +1,6 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.employeeServiceDAO;
+package com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeDAO.UserRepopository;
+import com.spring.boot.App2.springbootprojectwithdatarest.appDAO.UserRepopository;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.MyUserDetails;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

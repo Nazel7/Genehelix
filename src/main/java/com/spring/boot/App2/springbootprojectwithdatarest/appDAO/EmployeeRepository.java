@@ -1,9 +1,8 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.employeeDAO;
+package com.spring.boot.App2.springbootprojectwithdatarest.appDAO;
 
 
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,18 +1,12 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.controller;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.employeeServiceDAO.EmployeeServiceDAO;
+import com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO.EmployeeServiceDAO;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;
-import org.hibernate.mapping.Property;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 @Controller
 @RequestMapping("/company-employees")

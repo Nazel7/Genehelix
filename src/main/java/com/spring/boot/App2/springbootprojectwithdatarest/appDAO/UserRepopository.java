@@ -1,4 +1,4 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.employeeDAO;
+package com.spring.boot.App2.springbootprojectwithdatarest.appDAO;
 
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
