@@ -103,9 +103,7 @@ public class HomePageController {
       model.addAttribute("employeeSearchId", employeeID);
         reviewList = employeeServiceDAO.showReviews(employeeID);
 
-        AppController controller= new AppController();
-
-       return controller.errorMessage(reviewList,
+       return new AppController().errorMessage(reviewList,
                 "There is no review found.....",
                 "empty-review-home",
                 "home-review-list", model,
