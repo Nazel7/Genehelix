@@ -16,10 +16,14 @@
         body{
             width: 80%;
             margin-left: 10%;
+            background-color: #f8f9fc;
         }
         #headerDv{
             float: left;
             margin-left: 1%;
+            top: 0;
+            position: absolute;
+            overflow: auto;
         }
        header div a {
             float: right ;
@@ -67,6 +71,7 @@
             text-space: 10px;
             font-size: 20px;
             margin-top: 5%;
+            color: darkslategray;
         }
         #input{
             width: 50%;
@@ -128,12 +133,12 @@
     </style>
 </head>
 <body>
-<header class="p-3 mb-2 bg-primary text-white">
+<header class="p-3 mb-2  bg-primary text-white" style="height: 70px">
     <div id="headerDv">
-        <img th:src="@{/images/gh-icon.jpg}" width="100px" height="70px"
-             style="margin-top: 5%; float: left; border: 1px solid blue; border-radius: 60px; margin-left: 10%">
+        <img th:src="@{/images/gh-right.png}" src="../static/images/gh-right.png" width="80px" height="70px"
+             style=" float: left; margin-left: 10%; margin-top: 1%; margin-bottom: 10px">
     </div>
-    <div>
+    <div style="width: 60%; float: right">
 
             <a th:href="@{/company-employees/employee-list}" class="btn btn-success" style="font-size: small" >Admin</a>
         <a onmouseover="this.style.color= 'forestgreen'; this.style.textDecorationLine= 'none'" onmouseout="this.style.color= 'white'"
@@ -152,8 +157,9 @@
             otherwise sign up under any manager of your choice.
             We are here to make you happy with our healthcare products and services</p>
     </div>
-    <div>
-        <img th:src="@{/images/customer-Relationship-1.png}" width="40%" height="400px" style="border-radius: 5px"/>
+    <div class="shadow-sm p-3 mb-5 bg-white rounded" style="background-color: azure">
+        <img th:src="@{/images/customer-Relationship-1.png}" width="40%" height="400px"
+             style="border-radius: 5px; margin-right: 2%" class="shadow-sm bg-white rounded"/>
     </div>
     <div>
         <form action="#" th:action="@{/home-search}" method="GET"
@@ -169,7 +175,8 @@
 
 <section style="margin-top: 5%">
     <div style="background-color: dodgerblue">
-        <img th:src="@{/images/erm.jpg}" width="40%" height="400px" id="img-section"/>
+        <img th:src="@{/images/erm.jpg}" width="40%" height="400px" id="img-section"
+             class="shadow-sm mb-5 bg-white rounded"/>
     </div>
     <div class="sectionDiv" style="float: right; margin-top: 10%; height: 300px">
         <h2 class="h2style">Register with an employee</h2>
@@ -196,11 +203,12 @@
                 </ul>
             </div>
         <img th:src="@{/images/dna-image.jpg}" width="35%" height="400px"
-             style="float: right; margin-top: 5%; border-radius: 5px"/>
+             style="float: right; margin-top: 5%; border-radius: 5px" class="shadow-sm  mb-5 bg-white rounded"/>
     </section>
 
 <div style="float: left" ><img th:src="@{/images/location-map.JPG}" width="50%" height="400px" style="margin-top: 5%;
-border-radius: 20px"/>
+border-radius: 20px"
+                               class="shadow-sm mb-5 bg-white rounded"/>
     <address style="float: right; margin-top: 10%; margin-right: 20%; color: darkslategrey">
         No 03 Omodudu Close <br>
         Off Solomon Street, Ketu Alapere <br>
@@ -220,7 +228,8 @@ border-radius: 20px"/>
     </div>
 </section>
 <section style="width: 80%">
-<div style="align-content: center;width: 100%; margin-left: 10%; margin-top: 5%">
+<div style="align-content: center;width: 100%; margin-left: 10%; margin-top: 5%"
+     >
     <div class="img">
         <a>
             <img th:src="@{/images/ncbc-icon.jpg}" width="600" height="400" style="height: 80px">
@@ -282,7 +291,7 @@ border-radius: 20px"/>
 <section>
 <div>
     <div  style="width: 100%">
-        <img th:src="@{/images/gh-icon.jpg}" src="../static/images/gh-icon.jpg" width="150px" height="100px"
+        <img th:src="@{/images/gh-right.png}" src="../static/images/gh-right.png" width="70px" height="70px"
              style="margin-top: 5%; float: left">
     </div>
     <div style="clear: both;"></div>
@@ -295,7 +304,8 @@ border-radius: 20px"/>
         (Lagos and Abuja) and have mini-LAB in about 10 low-income communities in Nigeria.
     </div>
     <div ><img th:src="@{/images/doctor.jpg}" src="../static/images/doctor.jpg" width="300px" height="400px"
-               style="margin-top: 5%; margin-left: 10%; float: left; border-radius: 5px">
+               style="margin-top: 5%; margin-left: 5%; float: left; border-radius: 5px"
+               class="shadow-sm mb-5 bg-white rounded">
         </div>
 </div>
 
@@ -332,8 +342,8 @@ border-radius: 20px"/>
     <div style="text-align: center; margin-top: 3%" >
         <a class="alink">Privacy</a>
         <a class="alink">Terms & Conditions</a>
-        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gh-brown.jpg}"
-                                                           src="../static/images/gh-brown.jpg"
+        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gh-right.png}"
+                                                           src="../static/images/gh-right.png"
                                                           width="24px"
                                                                 height="23px"></sup>  Copyright<sup>&copy;</sup> 2020. All rights Research </p>
     </div>
