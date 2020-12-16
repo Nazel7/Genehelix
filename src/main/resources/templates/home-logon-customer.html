@@ -24,8 +24,8 @@
 
     <form th:action="@{/home-customers/search}" class="form-inline">
 
-        <input  class="form-control  ml-5 mr-sm-2 mb-3" type="text" name="searchHomeLogonCustomer"
-               placeholder="Search by name" />
+        <input class="form-control  ml-5 mr-sm-2 mb-3" type="text" name="searchHomeLogonCustomer"
+               placeholder="Search by name"/>
 
         <input class="btn btn-success mb-3" type="submit" value="Search">
     </form>
@@ -43,8 +43,8 @@
         <tbody>
         <tr th:each="logonCustomer : ${homeCustomers}">
 
-            <td th:text="${logonCustomer.firstName}" />
-            <td th:text="${logonCustomer.lastName}" />
+            <td th:text="${logonCustomer.firstName}"/>
+            <td th:text="${logonCustomer.lastName}"/>
 
             <td>
                 <!-- Add "update" button/link -->
@@ -62,14 +62,14 @@
     <div style="clear: both"></div>
     <div>
         <a th:href="@{/home-page}" class="btn btn-outline-primary mt-2" style="margin-top: 11px">
-           Home page
+            Home page
         </a>
-        <div  style="float: right; width: 80%; margin-right: 5%; margin-top: 10px">
-            <div  th:if="${totalPage > 1}" >
+        <div style="float: right; width: 80%; margin-right: 5%; margin-top: 10px">
+            <div th:if="${totalPage > 1}">
                 <div class="row col-sm-12">
                     <div class="col-sm-3">
-                       <span class="btn btn-primary" >Customers:
-                           <span  class="badge badge-light">[[${totalItems}]]
+                       <span class="btn btn-primary">Customers:
+                           <span class="badge badge-light">[[${totalItems}]]
                        </span>
                        </span>
                     </div>
@@ -78,32 +78,33 @@
                         <div class="page-item">
                             <a class="page-link" th:if="${currentPage > 1}"
                                th:href="@{'/homecustomer-page/'+ ${1}} ">First</a>
-                            <span  class="page-link" th:unless="${currentPage > 1}">First</span>
+                            <span class="page-link" th:unless="${currentPage > 1}">First</span>
                         </div>
                         <div>
                             <a class="page-link" th:if="${currentPage > 1}"
                                th:href="@{'/homecustomer-page/'+ ${currentPage - 1}} ">Previous</a>
-                            <span  class="page-link" th:unless="${currentPage > 1}">Previous</span>
+                            <span class="page-link" th:unless="${currentPage > 1}">Previous</span>
                         </div>
 
                         <span class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}">
                     <a class="page-link" th:if="${currentPage != i}"
                        th:href="@{'/homecustomer-page/'+ ${i}}">
                         [[${i}]]</a>
-                    <span style="background-color: blue" class="page-link" th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
+                    <span style="background-color: blue" class="page-link"
+                          th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
 
                         <div class="page-item">
                             <a class="page-link" th:if="${currentPage < totalPage}"
                                th:href="@{'/homecustomer-page/'+ ${currentPage + 1}}">
                                 Next</a>
-                            <span  class="page-link" th:unless="${currentPage < totalPage}">Next</span>
+                            <span class="page-link" th:unless="${currentPage < totalPage}">Next</span>
                         </div>
 
                         <div class="page-item">
                             <a class="page-link" th:if="${currentPage < totalPage}"
                                th:href="@{'/homecustomer-page/'+ ${totalPage}}">
                                 Last</a>
-                            <span  class="page-link" th:unless="${currentPage < totalPage}">Last</span>
+                            <span class="page-link" th:unless="${currentPage < totalPage}">Last</span>
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.controller;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO.EmployeeServiceDAO;
+import com.spring.boot.App2.springbootprojectwithdatarest.appServices.EmployeeService;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;
@@ -32,7 +32,7 @@ public class AppController {
     }
 
     @Autowired
-    private EmployeeServiceDAO employeeServiceDAO;
+    private EmployeeService employeeService;
 
     @InitBinder
     public void dataTrimmer(WebDataBinder dataBinder) {
@@ -48,7 +48,7 @@ public class AppController {
     @GetMapping("/page/{pageNo}")
     public String paginatedPage(@PathVariable("pageNo") int pageNo, Model model) {
         int pageSize = 5;
-        Page<Employee> page = employeeServiceDAO.findPaginated(pageNo, pageSize);
+        Page<Employee> page = employeeService.findPaginated(pageNo, pageSize);
         System.out.println(page.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalItems", page.getTotalElements());
@@ -70,28 +70,28 @@ public class AppController {
         if (bindingResult.hasErrors()) {
             return "add-employee";
         } else {
-            employeeServiceDAO.addEmployee(employee);
+            employeeService.addEmployee(employee);
             return "redirect:/company-employees/employee-list";
         }
     }
 
     @GetMapping("/updateEmployee")
     public String updateEmployee(@RequestParam("updateLink") int id, Model model) {
-        Employee employee = employeeServiceDAO.getEmployee(id);
+        Employee employee = employeeService.getEmployee(id);
         model.addAttribute("employee", employee);
         return "add-employee";
     }
 
     @GetMapping("/deleteEmployee")
     public String deleteEmployee(@RequestParam("deleteLink") int id) {
-        employeeServiceDAO.deleteEmployee(id);
+        employeeService.deleteEmployee(id);
         return "redirect:/company-employees/employee-list";
     }
 
     @GetMapping("/search")
     public String searchEmployee(@RequestParam("searchEmployees") String employee, Model model) {
 
-        Page<Employee> page = employeeServiceDAO.getSearchPaginatedEmployeeHome(employee, 1, 5);
+        Page<Employee> page = employeeService.getSearchPaginatedEmployeeHome(employee, 1, 5);
         employees = page.getContent();
         if (employees.isEmpty()) {
             String emptyEmployee = "There is no employee found!";
@@ -112,7 +112,7 @@ public class AppController {
     public String reviewList(@RequestParam("showReviews") int employeeID, Model model) {
         System.out.println("wpe=" + employeeID);
 
-        reviewList = employeeServiceDAO.showReviews(employeeID);
+        reviewList = employeeService.showReviews(employeeID);
         return errorMessage(reviewList,
                 "There is no review found.....",
                 "empty-review-home",
@@ -126,7 +126,7 @@ public class AppController {
     public String customerList(@RequestParam("showCustomers") int employeeID, Model model) {
         System.out.println("EmployeeId: " + employeeID);
         model.addAttribute("employeeId", employeeID);
-        customers = employeeServiceDAO.getEmployeeCustomerList(employeeID);
+        customers = employeeService.getEmployeeCustomerList(employeeID);
 
         if (customers.isEmpty()) {
             String emptyCustomer = "There is no customer found.....";
@@ -146,7 +146,7 @@ public class AppController {
         int pageSize = 3;
 
         System.out.println(employeeId);
-        Page<Customer> page = employeeServiceDAO.findPaginatedCustomer(pageNo, pageSize, employeeId);
+        Page<Customer> page = employeeService.findPaginatedCustomer(pageNo, pageSize, employeeId);
         model.addAttribute("employeeId", employeeId);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalItems", page.getTotalElements());
@@ -174,10 +174,10 @@ public class AppController {
         } else {
             System.out.println("employee123: " + employeeId);
             model.addAttribute("employeeIdUpdateCustomer", employeeId);
-            Employee employee = employeeServiceDAO.getEmployee(employeeId);
+            Employee employee = employeeService.getEmployee(employeeId);
             if (employee != null) {
                 customer.setEmployee(employee);
-                employeeServiceDAO.addEmployeeCustomer(customer);
+                employeeService.addEmployeeCustomer(customer);
             }
             return "redirect:/company-employees/employee-list";
         }
@@ -187,7 +187,7 @@ public class AppController {
     public String customerUpdate(@RequestParam("customerUpdate") int id,
                                  Model model) {
         System.out.println("CustomerID: " + id);
-        Customer customer = employeeServiceDAO.getCustomerById(id);
+        Customer customer = employeeService.getCustomerById(id);
         model.addAttribute("customer", customer);
         return "add-update-customer";
 
@@ -197,7 +197,7 @@ public class AppController {
     public String updateEmployeeCustomer(@ModelAttribute("customer") Customer customer) {
 
         if (customer.getEmployee().getId() > 0)
-            employeeServiceDAO.addEmployeeCustomer(customer);
+            employeeService.addEmployeeCustomer(customer);
 
         return "redirect:/company-employees/employee-list";
     }
@@ -205,7 +205,7 @@ public class AppController {
     @GetMapping("/customers/search")
     public String searchCustomer(@RequestParam("searchEmployeeCustomer") String customerName,
                                  @RequestParam("employeeId") int employeeId, Model model) {
-        customers = employeeServiceDAO.searchEmployeeCustomer(customerName, employeeId);
+        customers = employeeService.searchEmployeeCustomer(customerName, employeeId);
         return errorMessage(customers,
                 "There is no customer(s) found.....",
                 "empty-customer",
@@ -218,14 +218,14 @@ public class AppController {
 
     @GetMapping("/delete")
     public String deleteEmployeeCustomer(@RequestParam("customerDelete") int employeeCustomerId) {
-        employeeServiceDAO.deleteEmployeeCustomer(employeeCustomerId);
+        employeeService.deleteEmployeeCustomer(employeeCustomerId);
 
         return "redirect:/company-employees/employee-list";
     }
 
     @GetMapping("/showFormForEmployeeCustomerReview")
     public String showEmployeeCustomerReview(@RequestParam("customerReview") int customerId, Model model) {
-        reviewList = employeeServiceDAO.showCustomerReviewList(customerId);
+        reviewList = employeeService.showCustomerReviewList(customerId);
         model.addAttribute("customerId", customerId);
 
         return errorMessage(reviewList,
@@ -250,10 +250,10 @@ public class AppController {
     public String postCustomerReview(@ModelAttribute("newReview") Review review,
                                      @RequestParam("customerId") int customerId) {
         System.out.println("ReviewCustomerId: " + customerId);
-        Customer customer = employeeServiceDAO.getCustomerById(customerId);
+        Customer customer = employeeService.getCustomerById(customerId);
         if (customer != null) {
             review.setCustomer(customer);
-            employeeServiceDAO.addNewReview(review);
+            employeeService.addNewReview(review);
         }
         return "redirect:/company-employees/employee-list";
     }

@@ -1,6 +1,7 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.securityConfig.datasourceSecurityConfig;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO.UserServiceImpl;
+import com.spring.boot.App2.springbootprojectwithdatarest.appServices.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -16,10 +17,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 @Primary
 public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
+    @Autowired
+   private SimpleAuthenticationSuccessfulHandler successfulHandler;
 
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserServiceImpl();
+
     }
 
     @Bean
@@ -39,7 +43,9 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
+
     }
+
 
 
     @Override
@@ -47,15 +53,15 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/home-page").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/customer-page").hasRole("CUSTOMER")
-                .antMatchers("/employee-page").hasRole("EMPLOYEE")
-                .antMatchers("/company-employees/employee-list").hasRole("ADMIN")
-                .antMatchers("/company-employees/**").hasRole("ADMIN")
+                .antMatchers("/company-employees/employee-list", "/company-employees/**").hasRole("ADMIN")
+                .antMatchers("/customer-page", "/customer-page/**").hasRole("CUSTOMER")
+                .antMatchers( "/company-employees/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/login-page")
                 .loginProcessingUrl("/loginProcessing")
                 .permitAll()
+                .successHandler(successfulHandler)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/logout")

@@ -15,24 +15,26 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
           crossorigin="anonymous">
     <style>
-        body{
+        body {
             width: 80%;
             margin-left: 10%;
             background-color: #f8f9fc;
         }
 
-        #headerDv{
+        #headerDv {
             float: left;
             position: fixed;
             top: 0;
         }
+
         header div a {
-            float: right ;
+            float: right;
         }
-        header{
+
+        header {
             margin-bottom: 14.5%;
             height: 80px;
-          background-color: dodgerblue;
+            background-color: dodgerblue;
             color: white;
             position: fixed;
             border-bottom: 3px solid dodgerblue;
@@ -40,12 +42,14 @@
             top: 0;
             z-index: 1;
         }
-        nav{
+
+        nav {
             color: darkslategray;
             width: 25%;
         }
-        #divProfile{
-            position:fixed;
+
+        #divProfile {
+            position: fixed;
             top: 11.1%;
             padding: 0;
             line-height: 1;
@@ -62,7 +66,8 @@
             float: left;
             z-index: 1;
         }
-        .divProfileSpan{
+
+        .divProfileSpan {
             background-color: white;
             color: blue;
             width: 100%;
@@ -70,12 +75,13 @@
 
 
         }
-        .divProfileSpan:hover{
+
+        .divProfileSpan:hover {
             background-color: white;
             color: blue;
         }
 
-        ul{
+        ul {
             position: fixed;
             top: 49.5%;
             padding: 0;
@@ -101,24 +107,28 @@
 
 
         }
-        ul li{
+
+        ul li {
             border-bottom: 1px solid lavender;
             border-top: 1px solid lavender;
         }
-       ul li a:hover{
+
+        ul li a:hover {
             background-color: azure;
             color: dodgerblue;
-           text-decoration: none;
-           width: 100%;
+            text-decoration: none;
+            width: 100%;
 
         }
-        ul li a:hover i{
+
+        ul li a:hover i {
             background-color: azure;
             color: dodgerblue;
             text-decoration: none;
 
         }
-        ul li:last-child a:hover i{
+
+        ul li:last-child a:hover i {
             background-color: azure;
             color: red;
             text-decoration: none;
@@ -133,9 +143,11 @@
             transition: all 0.3s ease;
 
         }
-       ul li a i {
-           margin-right: 8px;
-       }
+
+        ul li a i {
+            margin-right: 8px;
+        }
+
         .notification {
             text-space: 10px;
             font-size: 18px;
@@ -170,13 +182,14 @@
             position: absolute;
             right: 3%;
             min-width: 160px;
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
             padding: 12px 16px;
             margin-top: 5%;
             color: darkslategray;
             transition: all 1s ease;
         }
-        .profileName-content:hover{
+
+        .profileName-content:hover {
             transition: all 1s ease;
         }
 
@@ -185,39 +198,47 @@
             transition: all 1s ease;
         }
 
-        .headerSpan{
+        .headerSpan {
             float: left;
             color: dodgerblue;
             margin-right: 4px;
             font-size: 8px;
             text-decoration: none;
         }
+
         .headerSpan:hover {
             color: blue;
             text-decoration: none;
         }
-        .primaryDrop{
+
+        .primaryDrop {
             margin-top: 5%;
             font-size: 20px;
             width: 100%;
         }
-        .primaryDrop:hover{
+
+        .primaryDrop:hover {
             color: blue;
         }
+
         .fontAwesoneDrop {
             margin-right: 8px;
         }
-        .fontAwesoneDropContent{
+
+        .fontAwesoneDropContent {
             margin-right: 8px;
             font-size: 12px;
             color: darkslategray;
         }
-        .fontAwesoneDrop-P:hover{
+
+        .fontAwesoneDrop-P:hover {
             color: dodgerblue;
         }
-        .fontAwesoneDropContent:hover{
+
+        .fontAwesoneDropContent:hover {
             color: dodgerblue;
         }
+
         div.img {
             margin: 5px;
             border: 1px solid #ccc;
@@ -243,16 +264,19 @@
             z-index: 1;
             cursor: pointer;
         }
+
         /*div p:hover span i::selection:last-child{*/
         /*    color: red;*/
         /*}*/
-        div p:hover span{
+        div p:hover span {
             color: dodgerblue;
         }
-        div p:hover:nth-last-child(1) span i{
+
+        div p:hover:nth-last-child(1) span i {
             color: red;
         }
-        section{
+
+        section {
             float: left;
             margin-left: 27%;
             margin-top: 7.9%;
@@ -260,17 +284,19 @@
             z-index: -1;
 
 
-
         }
-        .sectionh2{
+
+        .sectionh2 {
             color: dodgerblue;
             font-size: 24px;
             text-space: 30px;
         }
-        table tbody tr{
+
+        table tbody tr {
             margin-bottom: 5%;
         }
-        .divProfilespanpDatails{
+
+        .divProfilespanpDatails {
             color: darkslategray;
             border: 1px solid lightgray;
             padding: 6px;
@@ -278,22 +304,27 @@
             margin-top: 10%;
             font-size: 15px;
         }
-        .divProfilespanpDatails:hover{
+
+        .divProfilespanpDatails:hover {
             color: darkslategray;
             background-color: white;
         }
-        aside{
+
+        aside {
             top: 12%;
             position: fixed;
 
         }
-        .carouselH6{
+
+        .carouselH6 {
             margin-left: 5%;
         }
-        #carouselNext:hover{
+
+        #carouselNext:hover {
             background-color: darkgray;
         }
-        #carouselPrevious:hover{
+
+        #carouselPrevious:hover {
             background-color: darkgray;
         }
 
@@ -311,7 +342,8 @@
         <div class="primaryDrop">My Account</div>
         <div class="profileName-content">
             <div style="text-align: center">
-                <img th:src="@{/images/google-icon.png}" src="../static/images/k-devs-icon.jpg" width="50px" height="50px"
+                <img th:src="@{/images/google-icon.png}" src="../static/images/k-devs-icon.jpg" width="50px"
+                     height="50px"
                      style="margin-top: 5%; margin-left:0"/>
             </div>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fas fa-user-tie"></i></span>
@@ -320,25 +352,28 @@
                 <span class="fontAwesoneDropContent">My Profile</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="far fa-file-pdf"></i></span>
                 <span class="fontAwesoneDropContent">My Resume</span></p>
-           <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fas fa-tasks"></i></span>
-          <span class="fontAwesoneDropContent">Manager</span></p>
+            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fas fa-tasks"></i></span>
+                <span class="fontAwesoneDropContent">Manager</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fas fa-file-medical"></i></span>
                 <span class="fontAwesoneDropContent">Medical Result</span></p>
-            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fa fa-globe" aria-hidden="true"></i></span>
+            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fa fa-globe"
+                                                                          aria-hidden="true"></i></span>
                 <span class="fontAwesoneDropContent">HC-Service History</span></p>
-            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fa fa-bell" aria-hidden="true"></i></span>
+            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fa fa-bell"
+                                                                          aria-hidden="true"></i></span>
                 <span class="fontAwesoneDropContent">Notification</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fas fa-key"></i></span>
                 <span class="fontAwesoneDropContent">Change Password</span></p>
-            <p >
-                <span onmouseover="this.style.color='red'; this.style.width='100%'" onmouseout="this.style.color='darkslategray'"><i class="fa fa-sign-out" aria-hidden="true"></i>
+            <p>
+                <span onmouseover="this.style.color='red'; this.style.width='100%'"
+                      onmouseout="this.style.color='darkslategray'"><i class="fa fa-sign-out" aria-hidden="true"></i>
                     <span style="margin-left: 8px" class="fontAwesoneDropContent">Sign Out</span>
                 </span>
             </p>
             <hr>
 
             <div>
-                    <a  href="#" class="headerSpan">Privacy policies |</a>
+                <a href="#" class="headerSpan">Privacy policies |</a>
                 <a href="#" class="headerSpan">Terms & Conditions</a>
             </div>
 
@@ -351,13 +386,13 @@
 
 <nav>
     <div>
-<div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile" >
-   <img th:src="@{/images/k-devs-icon.jpg}" src="../static/images/k-devs-icon.jpg" width="120px" height="120px"
-        class="shadow pt-1 pb-1 mb-3 bg-white rounded">
-    <div style="text-align: center; margin-bottom: 6%">
-        <form >
-            <input type="button" value="Uploader"
-                   style="
+        <div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile">
+            <img th:src="@{/images/k-devs-icon.jpg}" src="../static/images/k-devs-icon.jpg" width="120px" height="120px"
+                 class="shadow pt-1 pb-1 mb-3 bg-white rounded">
+            <div style="text-align: center; margin-bottom: 6%">
+                <form>
+                    <input type="button" value="Uploader"
+                           style="
                    width: 30%;
                    background-color: white;
                    color: dodgerblue;
@@ -365,64 +400,66 @@
                    font-size: 13px;
                    border-radius: 5px;
                    border: 1px solid dodgerblue "
-                   onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
-                   onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'"/>
-        </form>
-    </div>
-    <div class="divProfileSpan">
+                           onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
+                           onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'"/>
+                </form>
+            </div>
+            <div class="divProfileSpan">
            <span class="divProfileSpan" style="width: 50%; font-size: 20px">
         <span class="divProfileSpan" th:text="${patient.firstName}"> Gafar Olanipekun</span>
         <span th:text="${patient.lastName}"/></span> <br>
-        <span class="divProfileSpan" style="color: darkslategray; margin-top: 1%; font-size: 15px" th:text="${patient.occupation}">Java Software Engineer</span>
-    </div>
-</div>
+                <span class="divProfileSpan" style="color: darkslategray; margin-top: 1%; font-size: 15px"
+                      th:text="${patient.occupation}">Java Software Engineer</span>
+            </div>
+        </div>
 
         <ul class="shadow-sm pt-1 pb-1 mb-5 bg-white rounded" style="color: darkslategray">
             <li>
                 <a href="https://community.andela.com/index.php/user-dashboard/">
                     <i class="fas fa-user-tie"></i>
-                    <span>Dashboard</span>                            </a>
+                    <span>Dashboard</span> </a>
             </li>
             <li>
                 <a href="https://community.andela.com/index.php/user-dashboard/?tab=dashboard-settings">
                     <i class="far fa-id-card"></i>
-                    <span>My Profile</span>                                           </a>
+                    <span>My Profile</span> </a>
             </li>
             <li class="active">
                 <a href="https://community.andela.com/index.php/user-dashboard/?tab=my-resume">
                     <i class="far fa-file-pdf"></i>
-                    <span>My Resume </span>                                           </a>
+                    <span>My Resume </span> </a>
             </li>
             <li>
                 <a href="https://community.andela.com/index.php/user-dashboard/?tab=applied-jobs">
                     <i class="fas fa-tasks"></i>
-                    <span>Manager </span>                                         </a>
+                    <span>Manager </span> </a>
             </li>
             <li>
                 <a href="https://community.andela.com/index.php/user-dashboard/?tab=cv-manager">
                     <i class="fas fa-file-medical"></i>
-                    <span>Medical Result</span>                                           </a>
+                    <span>Medical Result</span> </a>
             </li>
             <li>
                 <a href="https://community.andela.com/index.php/user-dashboard/?tab=favourite-jobs">
                     <i class="fa fa-globe" aria-hidden="true"></i>
-                    <span>HC-Service History</span>                                          </a>
+                    <span>HC-Service History</span> </a>
             </li>
             <li>
                 <a href="https://community.andela.com/index.php/user-dashboard/?tab=my-emails">
                     <i class="fa fa-bell" aria-hidden="true"></i>
-                    <span>Notification </span>                                          </a>
+                    <span>Notification </span> </a>
             </li>
-            <li >
-                <a  href="https://community.andela.com/index.php/user-dashboard/?tab=change-password">
-                    <i  class="fas fa-key"></i>
-                    <span >Change Password </span>                                           </a>
+            <li>
+                <a href="https://community.andela.com/index.php/user-dashboard/?tab=change-password">
+                    <i class="fas fa-key"></i>
+                    <span>Change Password </span> </a>
             </li>
 
             <li style="color: red; border-bottom: none">
                 <a href="https://community.andela.com/wp-login.php?action=logout&amp;redirect_to=https%3A%2F%2Fcommunity.andela.com%2Findex.php%2F&amp;_wpnonce=878146671f">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <span onmouseover="this.style.color='lightgray'" onmouseout="this.style.color='darkslategray'">Sign Out </span>                       </a>
+                    <span onmouseover="this.style.color='lightgray'" onmouseout="this.style.color='darkslategray'">Sign Out </span>
+                </a>
             </li>
 
         </ul>
@@ -438,15 +475,15 @@
         <p style="font-size: 15px; color: darkslategray">Ask your manager →</p>
         <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${employee}" method="POST">
             <input type="hidden" th:field="*{id}"/>
-            <table style="width: 80%;font-size: 15px; color: darkslategray" >
-                <tbody >
+            <table style="width: 80%;font-size: 15px; color: darkslategray">
+                <tbody>
                 <tr>
                     <td><label>First Name:</label></td>
                 </tr>
                 <tr>
                     <td><input type="text" th:text="${firstName}"
-                               class="form-control" style="width: 50%; font-size: 15px" ></td>
-<!--                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName Error</td>-->
+                               class="form-control" style="width: 50%; font-size: 15px"></td>
+                    <!--                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName Error</td>-->
                 </tr>
                 <tr>
                     <td><label>Last Name:</label></td>
@@ -459,7 +496,7 @@
                     <td><label>Message:</label></td>
                 </tr>
                 <tr>
-                    <td><textarea  cols="50" rows="5" class="form-control" style="text-align: left; font-size: 15px">
+                    <td><textarea cols="50" rows="5" class="form-control" style="text-align: left; font-size: 15px">
 
                     </textarea></td>
                 </tr>
@@ -468,8 +505,8 @@
                 </tr>
                 <tr>
 
-                    <td> <input type="submit" value="Send Message"
-                                class="btn btn-outline-primary" style="font-size: 15px"/></td>
+                    <td><input type="submit" value="Send Message"
+                               class="btn btn-outline-primary" style="font-size: 15px"/></td>
                 </tr>
                 </tbody>
             </table>
@@ -499,8 +536,10 @@
             <label style="margin-right: 30.5%; margin-left: 0">Twitter:</label><label>LinkedIn:</label>
         </span>
         <br>
-        <span th:text="${patient.twitter}" class="divProfilespanpDatails" style="margin-top: 5%">twitter.com/nazel01</span>
-        <span th:text="${patient.linkedin}" class="divProfilespanpDatails" style="margin-top: 5%">linkedin.com/in/go98</span>
+        <span th:text="${patient.twitter}" class="divProfilespanpDatails"
+              style="margin-top: 5%">twitter.com/nazel01</span>
+        <span th:text="${patient.linkedin}" class="divProfilespanpDatails"
+              style="margin-top: 5%">linkedin.com/in/go98</span>
     </div>
 
 </section>
@@ -529,7 +568,8 @@
         </span>
         <br>
         <span th:text="${patient.email}" class="divProfilespanpDatails" style="margin-top: 5%">lanusg2@gmail.com</span>
-        <span th:text="${patient.phoneNumber}" class="divProfilespanpDatails" style="margin-top: 5%">+2348154981788</span>
+        <span th:text="${patient.phoneNumber}" class="divProfilespanpDatails"
+              style="margin-top: 5%">+2348154981788</span>
     </div>
 
 </section>
@@ -541,48 +581,49 @@
 </section>
 <div style="clear: both"/>
 
-    <div class="container"  style="float: left; width: 20%;
+<div class="container" style="float: left; width: 20%;
      margin-left: 60%; height: 200px; position: fixed; top: 12%;">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 106%; margin-left: 0">
-<!--            &lt;!&ndash; Indicators &ndash;&gt;-->
-<!--            <ol class="carousel-indicators">-->
-<!--                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>-->
-<!--                <li data-target="#myCarousel" data-slide-to="1"></li>-->
-<!--                <li data-target="#myCarousel" data-slide-to="2"></li>-->
-<!--            </ol>-->
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 106%; margin-left: 0">
+        <!--            &lt;!&ndash; Indicators &ndash;&gt;-->
+        <!--            <ol class="carousel-indicators">-->
+        <!--                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>-->
+        <!--                <li data-target="#myCarousel" data-slide-to="1"></li>-->
+        <!--                <li data-target="#myCarousel" data-slide-to="2"></li>-->
+        <!--            </ol>-->
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" style="width: 100%">
-                <div class="item active" style="width: 100%;">
-                    <img src="../static/images/rmi-machine-icon.jpg" alt="rmi machine" style="width:100%;height: 200px">
-                    <h5 class="carouselH6" style="color: dodgerblue">Cancer Research Success</h5>
-                    <p class="carouselH6">NCBC has given visibility on the modalities to tackle cervicae cancer in 2021.. </p>
-                </div>
-
-                <div class="item" style="width: 100%;">
-                    <img src="../static/images/ncbc-icon.jpg" alt="ncbc" style="width:100%;height: 200px">
-                    <h5 class="carouselH6" style="color: dodgerblue">Stem cell Research is taking the world</h5>
-                    <p class="carouselH6">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
-                </div>
-
-                <div class="item" style="width: 100%;">
-                    <img src="../static/images/linkedin.png" alt=linkedIn style="width:100%;height: 200px">
-                    <h5 class="carouselH6" style="color: dodgerblue">Diabetes can be cured!</h5>
-                    <p class="carouselH6">A new research choose the cells responsible for insulin activation can be..</p>
-                </div>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" style="width: 100%">
+            <div class="item active" style="width: 100%;">
+                <img src="../static/images/rmi-machine-icon.jpg" alt="rmi machine" style="width:100%;height: 200px">
+                <h5 class="carouselH6" style="color: dodgerblue">Cancer Research Success</h5>
+                <p class="carouselH6">NCBC has given visibility on the modalities to tackle cervicae cancer in
+                    2021.. </p>
             </div>
 
-            <!-- Left and right controls -->
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev" >
-                <span class="glyphicon glyphicon-chevron-left" id="carouselPrevious"></span>
-                <span class="sr-only" >Previous</span>
-            </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next" >
-                <span class="glyphicon glyphicon-chevron-right" id="carouselNext"></span>
-                <span class="sr-only">Next</span>
-            </a>
+            <div class="item" style="width: 100%;">
+                <img src="../static/images/ncbc-icon.jpg" alt="ncbc" style="width:100%;height: 200px">
+                <h5 class="carouselH6" style="color: dodgerblue">Stem cell Research is taking the world</h5>
+                <p class="carouselH6">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
+            </div>
+
+            <div class="item" style="width: 100%;">
+                <img src="../static/images/linkedin.png" alt=linkedIn style="width:100%;height: 200px">
+                <h5 class="carouselH6" style="color: dodgerblue">Diabetes can be cured!</h5>
+                <p class="carouselH6">A new research choose the cells responsible for insulin activation can be..</p>
+            </div>
         </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" id="carouselPrevious"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" id="carouselNext"></span>
+            <span class="sr-only">Next</span>
+        </a>
     </div>
+</div>
 <aside style="float: left; width: 19%;  margin-left: 61%; height: 200px; margin-top: 24%;
 position: fixed">
     <form>
@@ -612,7 +653,8 @@ position: fixed">
         <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gh-right.png}"
                                                           src="../static/images/gh-right.png"
                                                           width="24px"
-                                                          height="23px"></sup>Copyright<sup>&copy;</sup>2020. All rights Research</p>
+                                                          height="23px"></sup>Copyright<sup>&copy;</sup>2020. All rights
+            Research</p>
     </div>
     <br>
 </aside>

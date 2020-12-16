@@ -1,5 +1,7 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.entity;
 
+import com.spring.boot.App2.springbootprojectwithdatarest.interfaces.IUser;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -10,23 +12,23 @@ import java.util.List;
 @Entity(name = "customer")
 @Table(name = "customer")
 @Access(AccessType.FIELD)
-public class Customer {
+public class Customer implements IUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
     @NotNull(message = "is required")
-    @Size(min=2, message = "at least one value is required")
+    @Size(min = 2, message = "at least one value is required")
     @Column(name = "first_name")
     private String firstName;
 
     @NotNull(message = "is required")
-    @Size(min=2, message = "at least one value is required")
+    @Size(min = 2, message = "at least one value is required")
     @Column(name = "last_name")
     private String lastName;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Review> reviewList= new ArrayList<>();
+    private List<Review> reviewList = new ArrayList<>();
 
     @NotNull(message = "is required")
     @ManyToOne(cascade = {CascadeType.MERGE,
@@ -50,7 +52,6 @@ public class Customer {
         this.lastName = lastName;
         this.reviewList = reviewList;
     }
-
 
 
     public int getId() {

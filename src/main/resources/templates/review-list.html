@@ -20,11 +20,11 @@
 <hr>
 <h3>Employee Review List</h3>
 <div>
-<div> <a th:href="@{/company-employees/customers/showFormForAddReview(customerId=${customerId})}"
-         class="btn btn-primary btn-sm mr-5 mb-3">
-    Add Review
-</a>
-</div>
+    <div><a th:href="@{/company-employees/customers/showFormForAddReview(customerId=${customerId})}"
+            class="btn btn-primary btn-sm mr-5 mb-3">
+        Add Review
+    </a>
+    </div>
     <div th:each="review : ${reviews}">
 
         <span style="color: blue; background-color: blue; float: left">.</span>
