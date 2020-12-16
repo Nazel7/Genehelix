@@ -31,3 +31,12 @@ build/
 
 ### VS Code ###
 .vscode/
+
+## MVN and Log ###
+.mvn/wrapper
+.hs_err_pid17156.log
+.DS_Store
+mvnw
+mvnw.cmd
+
+
