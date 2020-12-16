@@ -1,4 +1,4 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appDAO;
+package com.spring.boot.App2.springbootprojectwithdatarest.appRepositories;
 
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
 import org.springframework.data.domain.Page;
@@ -20,7 +20,7 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
     List<Customer> getSearchCustomers(String name, int employeeId);
 
     @Query("SELECT r.reviewMessage from review r where r.customer.id= ?1 order by r.id desc")
-    List<String> getCustomerReviews( int customerId);
+    List<String> getCustomerReviews(int customerId);
 
     List<Customer> findAllByOrderByIdDesc();
 

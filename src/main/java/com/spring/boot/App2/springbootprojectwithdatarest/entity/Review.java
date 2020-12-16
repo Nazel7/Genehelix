@@ -4,24 +4,24 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity(name= "review")
-@Table(name= "review")
+@Entity(name = "review")
+@Table(name = "review")
 @Access(AccessType.FIELD)
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private int id;
 
     @NotNull(message = "is required")
-    @Size(min=3, message = "at least one value is required")
-    @Column(name="review_message")
+    @Size(min = 3, message = "at least one value is required")
+    @Column(name = "review_message")
     private String reviewMessage;
 
     @ManyToOne
     Customer customer = null;
 
-    public Review(){
+    public Review() {
         super();
     }
 
@@ -60,7 +60,7 @@ public class Review {
 
     @Override
     public String toString() {
-        return "[ "+this.id+ "/n"+
-                this.reviewMessage + "/n"+ "]";
+        return "[ " + this.id + "/n" +
+                this.reviewMessage + "/n" + "]";
     }
 }

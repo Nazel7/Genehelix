@@ -12,7 +12,9 @@
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
           crossorigin="anonymous">
     <style>
-        .error{color: red}
+        .error {
+            color: red
+        }
     </style>
 </head>
 <body>
@@ -22,36 +24,41 @@
         <h3>ERM- EMPLOYEE RELATIONSHIP MANAGER</h3>
     </div>
 
-    <div style="width: 40%"><hr ></div>
+    <div style="width: 40%">
+        <hr>
+    </div>
 
     <div style=" padding: 5px">
         <form action="#" th:action="@{/company-employees/customers/postEmployeeCustomer(employeeID=${employeeId})}"
               th:object="${newEmployeeCustomer}"
-               method="POST">
-            <h4 >Save New Customer for Employee</h4>
+              method="POST">
+            <h4>Save New Customer for Employee</h4>
             <input type="hidden" th:field="*{id}"/>
-            <table style="width: 40%" >
-                <tbody >
+            <table style="width: 40%">
+                <tbody>
                 <tr>
                     <td><input type="text" th:field="*{firstName}" class="form-control"
                                placeholder="first name here"></td>
-                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName Error</td>
+                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName
+                        Error
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="text" th:field="*{lastName}" class="form-control"
                                placeholder="last name here"></td>
-                    <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error</td>
+                    <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
+                    </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="number" name="employeeId" th:field="*{employee}"  class="form-control">
+                        <input type="number" name="employeeId" th:field="*{employee}" class="form-control">
                         <input type="text" name="employeeId" th:value="${ 'enter value: '+ employeeId}"
-                              disabled class="form-control">
+                               disabled class="form-control">
                     </td>
 
                 </tr>
                 <tr>
-                    <td> <input type="submit" value="Save"  class="btn btn-outline-primary"/></td>
+                    <td><input type="submit" value="Save" class="btn btn-outline-primary"/></td>
                 </tr>
                 <div style="clear:both"></div>
 

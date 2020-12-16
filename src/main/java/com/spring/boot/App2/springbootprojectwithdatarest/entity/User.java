@@ -3,23 +3,33 @@ package com.spring.boot.App2.springbootprojectwithdatarest.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name= "users" )
+@Table(name = "users")
 @Access(AccessType.FIELD)
 public class User {
     @Id
-    @Column(name="id")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="username")
+    @Column(name = "username")
     private String userName;
-    @Column(name="password")
+    @Column(name = "password")
     private String passWord;
-    @Column(name="enabled")
+    @Column(name = "enabled")
     private boolean tinyint;
-    @Column(name="authority")
+    @Column(name = "authority")
     private String authority;
 
-    public User(){
+//    @Column(name = "customer_id")
+//    @OneToOne
+    @Transient
+    private Customer customer = new Customer();
+
+//    @Column(name = "employee_id")
+//    @OneToOne
+@Transient
+    private Employee employee = new Employee();
+
+    public User() {
         super();
     }
 
@@ -28,6 +38,22 @@ public class User {
         this.passWord = passWord;
         this.tinyint = tinyint;
         this.authority = authority;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public int getId() {
@@ -74,7 +100,7 @@ public class User {
     public String toString() {
         return this.userName + "\n" +
                 this.passWord + "\n" +
-                this.tinyint+ "\n"+
+                this.tinyint + "\n" +
                 this.authority;
     }
 }

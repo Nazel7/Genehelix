@@ -1,7 +1,7 @@
 package com.spring.boot.App2.springbootprojectwithdatarest.entity;
 
 
-
+import com.spring.boot.App2.springbootprojectwithdatarest.interfaces.IUser;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
@@ -10,10 +10,10 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name= "employee")
-@Table(name="employee")
+@Entity(name = "employee")
+@Table(name = "employee")
 @Access(AccessType.FIELD)
-public class Employee {
+public class Employee implements IUser {
 
     public Employee() {
         super();
@@ -40,21 +40,21 @@ public class Employee {
     private int id;
 
     @NotNull(message = "is required")
-    @Size(min=2, message = "at least one value is required")
-    @Column(name= "first_name")
+    @Size(min = 2, message = "at least one value is required")
+    @Column(name = "first_name")
     private String firstName;
 
     @NotNull(message = "is required")
-    @Size(min=2, message = "at least one value is required")
-    @Column(name= "last_name")
+    @Size(min = 2, message = "at least one value is required")
+    @Column(name = "last_name")
     private String lastName;
 
     @NotNull(message = "is required")
-    @Size(min=2, message = "at least one value is required")
-    @Column(name= "email")
+    @Size(min = 2, message = "at least one value is required")
+    @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "employee", cascade= {CascadeType.MERGE,
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Customer> customerList = new ArrayList<>();
 
@@ -99,15 +99,15 @@ public class Employee {
         this.customerList = customerList;
     }
 
-    public void addCustomer(Customer customer){
+    public void addCustomer(Customer customer) {
         customerList.add(customer);
     }
 
     @Override
     public String toString() {
-        return "[ firstName:  "+ firstName+
-                " lastName: "+ lastName+
-                " email: "+ email +
+        return "[ firstName:  " + firstName +
+                " lastName: " + lastName +
+                " email: " + email +
                 "]";
     }
 }

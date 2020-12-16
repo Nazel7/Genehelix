@@ -1,4 +1,4 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appServiceDAO;
+package com.spring.boot.App2.springbootprojectwithdatarest.appServices;
 
 
 import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface EmployeeServiceDAO {
+public interface EmployeeService {
     List<Employee> getEmployees();
 
     Employee getEmployee(int empID);
