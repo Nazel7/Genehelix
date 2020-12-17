@@ -1,4 +1,4 @@
-package com.genehelix.controllers;
+package com.genehelix.controllers.views;
 
 import com.genehelix.interfaces.IEmployeeService;
 import com.genehelix.entities.Customer;

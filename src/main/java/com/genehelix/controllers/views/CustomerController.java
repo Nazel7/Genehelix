@@ -1,4 +1,4 @@
-package com.genehelix.controllers;
+package com.genehelix.controllers.views;
 
 import org.springframework.web.bind.annotation.GetMapping;
 
