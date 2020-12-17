@@ -1,4 +1,4 @@
-package com.genehelix.controllers;
+package com.genehelix.controllers.rests;
 
 
 import com.genehelix.interfaces.IEmployeeService;
