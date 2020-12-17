@@ -34,7 +34,7 @@ public class SecurityController {
     }
 
     @GetMapping("/dashboard")
-    public String getUserDashBoard(@AuthenticationPrincipal UserDetailService userDetails, Model model) {
+    public String getUserDashboard(@AuthenticationPrincipal UserDetailService userDetails, Model model) {
         IUser user = userDetails.getActiveUser();
         System.out.println(user.getFirstName());
         model.addAttribute("activeUser", user);
