@@ -1,4 +1,4 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.entity;
+package com.spring.boot.App2.springbootprojectwithdatarest.entities;
 
 public class ErrorResponseClass {
     private String errorStatus;

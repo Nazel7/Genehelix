@@ -1,8 +1,8 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appRepositories;
+package com.spring.boot.App2.springbootprojectwithdatarest.repositories;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Customer;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
     //    SearchAll orderly
     @Query("SELECT e from employee e order by e.id desc")
     List<Employee> findAllByOrderByIdDesc();

@@ -1,6 +1,6 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.securityConfig.datasourceSecurityConfig;
+package com.spring.boot.App2.springbootprojectwithdatarest.configs;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appServices.UserServiceImpl;
+import com.spring.boot.App2.springbootprojectwithdatarest.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,7 +53,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/home-page").permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/company-employees/employee-list", "/company-employees/**").hasRole("ADMIN")
+                .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
+                .antMatchers("/company-employees/employee-list", "/company-employees/**", "/dashboard/**").hasRole("ADMIN")
                 .antMatchers("/customer-page", "/customer-page/**").hasRole("CUSTOMER")
                 .antMatchers( "/company-employees/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()

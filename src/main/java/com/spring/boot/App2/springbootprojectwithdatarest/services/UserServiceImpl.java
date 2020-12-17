@@ -1,8 +1,8 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appServices;
+package com.spring.boot.App2.springbootprojectwithdatarest.services;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appRepositories.UserRepopository;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.MyUserDetails;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.User;
+import com.spring.boot.App2.springbootprojectwithdatarest.repositories.UserRepo;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.MyUserDetails;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserDetailsService {
     @Autowired
-    private UserRepopository userRepopository;
+    private UserRepo userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("IAMHERE");
-        User user = userRepopository.getUser(username);
+        User user = userRepo.getUser(username);
         if (username == null) {
             throw new UsernameNotFoundException("user not found");
         }
@@ -27,6 +27,6 @@ public class UserServiceImpl implements UserDetailsService {
 
     public User getUserByUserName(String username){
 
-        return userRepopository.findByUserName(username);
+        return userRepo.findByUserName(username);
     }
 }

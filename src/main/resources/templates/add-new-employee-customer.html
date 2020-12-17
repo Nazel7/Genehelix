@@ -32,7 +32,7 @@
         <form action="#" th:action="@{/company-employees/customers/postEmployeeCustomer(employeeID=${employeeId})}"
               th:object="${newEmployeeCustomer}"
               method="POST">
-            <h4>Save New Customer for Employee</h4>
+            <h4>New Customer Form </h4>
             <input type="hidden" th:field="*{id}"/>
             <table style="width: 40%">
                 <tbody>
@@ -47,6 +47,12 @@
                     <td><input type="text" th:field="*{lastName}" class="form-control"
                                placeholder="last name here"></td>
                     <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" th:field="*{email}" class="form-control"
+                               placeholder="last name here"></td>
+                    <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
                     </td>
                 </tr>
                 <tr>

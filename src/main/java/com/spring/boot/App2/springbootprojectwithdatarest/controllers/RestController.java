@@ -1,8 +1,8 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.controller;
+package com.spring.boot.App2.springbootprojectwithdatarest.controllers;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appServices.EmployeeService;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
+import com.spring.boot.App2.springbootprojectwithdatarest.services.EmployeeService;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

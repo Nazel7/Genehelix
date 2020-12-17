@@ -1,7 +1,7 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.controller;
+package com.spring.boot.App2.springbootprojectwithdatarest.controllers;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.DataNotFund;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.ErrorResponseClass;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.DataNotFund;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.ErrorResponseClass;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

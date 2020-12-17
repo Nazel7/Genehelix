@@ -1,4 +1,4 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.entity;
+package com.spring.boot.App2.springbootprojectwithdatarest.entities;
 
 import javax.persistence.*;
 
@@ -10,24 +10,28 @@ public class User {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(name = "username")
     private String userName;
+
     @Column(name = "password")
     private String passWord;
+
     @Column(name = "enabled")
     private boolean tinyint;
+
     @Column(name = "authority")
     private String authority;
 
-//    @Column(name = "customer_id")
-//    @OneToOne
-    @Transient
-    private Customer customer = new Customer();
+    @OneToOne(cascade = {CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "customeruser_id")
+    private Customer customer;
 
-//    @Column(name = "employee_id")
-//    @OneToOne
-@Transient
-    private Employee employee = new Employee();
+    @OneToOne(cascade = {CascadeType.MERGE,
+            CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "employeeuser_id")
+    private Employee employee;
 
     public User() {
         super();
