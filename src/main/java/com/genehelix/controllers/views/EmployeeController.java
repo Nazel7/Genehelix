@@ -4,7 +4,7 @@ package com.genehelix.controllers.views;
 import com.genehelix.interfaces.IEmployeeService;
 import com.genehelix.entities.Customer;
 import com.genehelix.entities.Employee;
-import com.genehelix.entities.Review;
+import com.genehelix.utils.ErrorMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -24,12 +24,11 @@ import java.util.List;
 public class EmployeeController {
     private List<String> reviewList;
     List<Employee> employees;
-    List<Customer> customers;
+
 
     public EmployeeController() {
         this.reviewList = new ArrayList<>();
         this.employees = new ArrayList<>();
-        this.customers = new ArrayList<>();
     }
 
     @Autowired
@@ -68,10 +67,10 @@ public class EmployeeController {
     public String postEmployee(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add-employee";
-        } else {
+        }
             IEmployeeService.addEmployee(employee);
             return "redirect:/company-employees/employee-list";
-        }
+
     }
 
     @GetMapping("/updateEmployee")
@@ -112,7 +111,7 @@ public class EmployeeController {
         System.out.println("wpe=" + employeeID);
 
         reviewList = IEmployeeService.showReviews(employeeID);
-        return errorMessage(reviewList,
+        return ErrorMessageUtil.errorMessage(reviewList,
                 "There is no review found.....",
                 "empty-review-home",
                 "review-list", model,
@@ -121,48 +120,9 @@ public class EmployeeController {
         );
     }
 
-    @GetMapping("/showEmployeeCustomers")
-    public String customerList(@RequestParam("showCustomers") int employeeID, Model model) {
-        System.out.println("EmployeeId: " + employeeID);
-        model.addAttribute("employeeId", employeeID);
-        customers = IEmployeeService.getEmployeeCustomerList(employeeID);
 
-        if (customers.isEmpty()) {
-            String emptyCustomer = "There is no customer found.....";
-            System.out.println("Customer-MESSAGE: " + emptyCustomer);
-            model.addAttribute("emptyCustomer", emptyCustomer);
-            return "empty-customer";
-        } else {
-            return paginatedCustomer(1, employeeID, model);
-        }
 
-    }
 
-    @GetMapping("/customerPage/{pageNo}")
-    public String paginatedCustomer(@PathVariable("pageNo") int pageNo,
-                                    @ModelAttribute("employeeId") int employeeId, Model model) {
-
-        int pageSize = 3;
-
-        System.out.println(employeeId);
-        Page<Customer> page = IEmployeeService.findPaginatedCustomer(pageNo, pageSize, employeeId);
-        model.addAttribute("employeeId", employeeId);
-        model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalItems", page.getTotalElements());
-        model.addAttribute("totalPage", page.getTotalPages());
-        model.addAttribute("employeeCustomers", page.getContent());
-
-        return "customer-for-employee-list";
-
-    }
-
-    @GetMapping("/customers/showFormForAdd")
-    public String showFormToAddEmployeeCustomer(@RequestParam("employeeId") int employeeId, Model model) {
-        Customer customer = new Customer();
-        model.addAttribute("newEmployeeCustomer", customer);
-        model.addAttribute("employeeId", employeeId);
-        return "add-new-employee-customer";
-    }
 
     @PostMapping("/customers/postEmployeeCustomer")
     public String postEmployeeCustomer(@Valid @ModelAttribute("newEmployeeCustomer") Customer customer,
@@ -182,96 +142,9 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/showFormForCustomerUpdate")
-    public String customerUpdate(@RequestParam("customerUpdate") int id,
-                                 Model model) {
-        System.out.println("CustomerID: " + id);
-        Customer customer = IEmployeeService.getCustomerById(id);
-        model.addAttribute("customer", customer);
-        return "add-update-customer";
 
-    }
 
-    @PostMapping("/customers/postUpdateEmployeeCustomer")
-    public String updateEmployeeCustomer(@ModelAttribute("customer") Customer customer) {
 
-        if (customer.getEmployee().getId() > 0)
-            IEmployeeService.addEmployeeCustomer(customer);
 
-        return "redirect:/company-employees/employee-list";
-    }
-
-    @GetMapping("/customers/search")
-    public String searchCustomer(@RequestParam("searchEmployeeCustomer") String customerName,
-                                 @RequestParam("employeeId") int employeeId, Model model) {
-        customers = IEmployeeService.searchEmployeeCustomer(customerName, employeeId);
-        return errorMessage(customers,
-                "There is no customer(s) found.....",
-                "empty-customer",
-                "customer-for-employee-list", model,
-                "emptyCustomer",
-                "employeeCustomers"
-        );
-
-    }
-
-    @GetMapping("/delete")
-    public String deleteEmployeeCustomer(@RequestParam("customerDelete") int employeeCustomerId) {
-        IEmployeeService.deleteEmployeeCustomer(employeeCustomerId);
-
-        return "redirect:/company-employees/employee-list";
-    }
-
-    @GetMapping("/showFormForEmployeeCustomerReview")
-    public String showEmployeeCustomerReview(@RequestParam("customerReview") int customerId, Model model) {
-        reviewList = IEmployeeService.showCustomerReviewList(customerId);
-        model.addAttribute("customerId", customerId);
-
-        return errorMessage(reviewList,
-                "There is no review found....",
-                "review-not-found",
-                "review-list", model,
-                "emptyReview",
-                "reviews"
-        );
-
-    }
-
-    @GetMapping("/customers/showFormForAddReview")
-    public String formForCustomerReview(@RequestParam("customerId") int customerId, Model model) {
-        Review review = new Review();
-        model.addAttribute("newReview", review);
-        model.addAttribute("customerId", customerId);
-        return "add-new-review";
-    }
-
-    @PostMapping("/customers/postCustomerReview")
-    public String postCustomerReview(@ModelAttribute("newReview") Review review,
-                                     @RequestParam("customerId") int customerId) {
-        System.out.println("ReviewCustomerId: " + customerId);
-        Customer customer = IEmployeeService.getCustomerById(customerId);
-        if (customer != null) {
-            review.setCustomer(customer);
-            IEmployeeService.addNewReview(review);
-        }
-        return "redirect:/company-employees/employee-list";
-    }
-
-    public String errorMessage(List<?> list,
-                               String message,
-                               String returnText1,
-                               String returnText2,
-                               Model model,
-                               String modelAtt1,
-                               String modelAtrr2) {
-        if (list.isEmpty()) {
-            System.out.println("methodMessage: " + message);
-            model.addAttribute(modelAtt1, message);
-            return returnText1;
-        } else {
-            model.addAttribute(modelAtrr2, list);
-            return returnText2;
-        }
-    }
 
 }

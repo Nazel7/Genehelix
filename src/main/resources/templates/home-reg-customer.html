@@ -51,7 +51,12 @@
                     <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
                     </td>
                 </tr>
-
+                <tr>
+                    <td><input type="text" th:field="*{email}" class="form-control"
+                               placeholder="last name here"></td>
+                    <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
+                    </td>
+                </tr>
                 <tr>
                     <td>
                         <i style="font-size: 10px" class="error">Search employee in home page for ID</i>

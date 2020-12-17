@@ -16,7 +16,7 @@ import com.genehelix.utils.EmployeeUtil;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class SecurityController {
+public class DashboardController {
 
     @Autowired
     private IEmployeeService IEmployeeService;

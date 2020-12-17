@@ -1,12 +1,158 @@
 package com.genehelix.controllers.views;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import com.genehelix.entities.Customer;
+import com.genehelix.interfaces.IEmployeeService;
+import com.genehelix.utils.ErrorMessageUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Controller
 public class CustomerController {
+
+    @Autowired
+    private IEmployeeService IEmployeeService;
+
+   private  List<Customer> customers;
+
+
+    public CustomerController() {
+        this.customers = new ArrayList<>();
+    }
 
     @GetMapping("/customer")
     public String customerPage(){
 
         return "customer-page";
     }
+
+    @GetMapping("/customers")
+    public String customerList(@RequestParam("showCustomers") int employeeID, Model model) {
+        System.out.println("EmployeeId: " + employeeID);
+        model.addAttribute("employeeId", employeeID);
+        customers = IEmployeeService.getEmployeeCustomerList(employeeID);
+
+        if (customers.isEmpty()) {
+            String emptyCustomer = "There is no customer found.....";
+            System.out.println("Customer-MESSAGE: " + emptyCustomer);
+            model.addAttribute("emptyCustomer", emptyCustomer);
+            return "empty-customer";
+        } else {
+            return paginatedCustomer(1, employeeID, model);
+        }
+
+    }
+
+    @GetMapping("/customerPage/{pageNo}")
+    public String paginatedCustomer(@PathVariable("pageNo") int pageNo,
+                                    @ModelAttribute("employeeId") int employeeId, Model model) {
+
+        int pageSize = 3;
+
+        System.out.println(employeeId);
+        Page<Customer> page = IEmployeeService.findPaginatedCustomer(pageNo, pageSize, employeeId);
+        model.addAttribute("employeeId", employeeId);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("totalPage", page.getTotalPages());
+        model.addAttribute("employeeCustomers", page.getContent());
+
+        return "customer-for-employee-list";
+
+    }
+
+    @GetMapping("/customers/search")
+    public String searchCustomer(@RequestParam("searchEmployeeCustomer") String customerName,
+                                 @RequestParam("employeeId") int employeeId, Model model) {
+        customers = IEmployeeService.searchEmployeeCustomer(customerName, employeeId);
+        return ErrorMessageUtil.errorMessage(customers,
+                "There is no customer(s) found.....",
+                "empty-customer",
+                "customer-for-employee-list", model,
+                "emptyCustomer",
+                "employeeCustomers"
+        );
+
+    }
+
+    @GetMapping("/customers/showFormForAdd")
+    public String showFormToAddEmployeeCustomer(@RequestParam("employeeId") int employeeId, Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("newEmployeeCustomer", customer);
+        model.addAttribute("employeeId", employeeId);
+        return "add-new-employee-customer";
+    }
+    @GetMapping("/customer/showFormForCustomerUpdate")
+    public String customerUpdate(@RequestParam("customerUpdate") int id,
+                                 Model model) {
+        System.out.println("CustomerID: " + id);
+        Customer customer = IEmployeeService.getCustomerById(id);
+        model.addAttribute("customer", customer);
+        return "add-update-customer";
+
+    }
+
+    @PostMapping("/customer/postUpdateEmployeeCustomer")
+    public String updateEmployeeCustomer(@ModelAttribute("customer") Customer customer) {
+
+        if (customer.getEmployee().getId() > 0)
+            IEmployeeService.addEmployeeCustomer(customer);
+
+        return "redirect:/company-employees/employee-list";
+    }
+
+
+
+    @GetMapping("/customer/delete")
+    public String deleteEmployeeCustomer(@RequestParam("customerDelete") int employeeCustomerId) {
+        IEmployeeService.deleteEmployeeCustomer(employeeCustomerId);
+
+        return "redirect:/company-employees/employee-list";
+    }
+
+    @GetMapping("/customers/general-list")
+    public String homeLogonCustomer(Model model) {
+
+        return homeCustomerPaginated(1, model);
+    }
+
+    @GetMapping("/customers-generalist/{pageNo}")
+    public String homeCustomerPaginated(@PathVariable("pageNo") int pageNo, Model model) {
+        int pageSize = 5;
+        Page<Customer> page = IEmployeeService.getAllCustomers(pageNo, pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("Customers_list", page.getContent());
+        model.addAttribute("totalPage", page.getTotalPages());
+
+        return "customer-general-page";
+    }
+
+    @GetMapping("/customers-generalist/search")
+    public String SearchCustomerGeneralist(@RequestParam("searchHomeLogonCustomer") String customerProperty, Model model) {
+
+        Page<Customer> page = IEmployeeService.getAllCustomers(customerProperty, 1, 5);
+
+        List<Customer> customers = page.getContent();
+        if (customers.isEmpty()) {
+            String emptyCustomer = "There is no customer found.....";
+            System.out.println("REVIEWMESSAGE: " + emptyCustomer);
+            model.addAttribute("emptyCustomer", emptyCustomer);
+            return "empty-customer";
+        }
+        model.addAttribute("searchCustomers-generalist", customerProperty);
+        model.addAttribute("currentPage", 1);
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("Customers_list", page.getContent());
+        model.addAttribute("totalPage", page.getTotalPages());
+
+        return "customer-general-page";
+    }
+
 }
