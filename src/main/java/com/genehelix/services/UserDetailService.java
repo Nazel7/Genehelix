@@ -21,6 +21,7 @@ public class UserDetailService implements UserDetails, UserDetailsService {
     private UserRepo userRepo;
 
     public UserDetailService() {
+        super();
     }
 
     public UserDetailService(User user) {

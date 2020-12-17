@@ -22,8 +22,8 @@
     <h3>Employee Customers Data</h3>
     <hr>
 
-    <form th:action="@{/company-employees/customers/search}" class="form-inline">
-        <a th:href="@{/company-employees/customers/showFormForAdd(employeeId=${employeeId})}"
+    <form th:action="@{/customers/search}" class="form-inline">
+        <a th:href="@{/customers/showFormForAdd(employeeId=${employeeId})}"
            class="btn btn-primary btn-sm mr-5 mb-3">
             Add Customer
         </a>
@@ -41,6 +41,7 @@
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
+            <th>Email</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -50,22 +51,23 @@
 
             <td th:text="${employeeCustomer.firstName}"/>
             <td th:text="${employeeCustomer.lastName}"/>
+            <td th:text="${employeeCustomer.email}"/>
 
             <td>
                 <!-- Add "update" button/link -->
-                <a th:href="@{/company-employees/showFormForCustomerUpdate(customerUpdate=${employeeCustomer.getId()})}"
+                <a th:href="@{/customer/showFormForCustomerUpdate(customerUpdate=${employeeCustomer.getId()})}"
                    class="btn btn-info btn-sm">
                     Update
                 </a>
 
                 <!-- Add "delete" button/link -->
-                <a th:href="@{/company-employees/delete(customerDelete=${employeeCustomer.getId()})}"
+                <a th:href="@{/customer/delete(customerDelete=${employeeCustomer.getId()})}"
                    class="btn btn-danger btn-sm"
                    onclick="if (!(confirm('Are you sure you want to delete this customer?'))) return false">
                     Delete
                 </a>
 
-                <a th:href="@{/company-employees/showFormForEmployeeCustomerReview(customerReview=${employeeCustomer.getId()})}"
+                <a th:href="@{/reviews/showFormForEmployeeCustomerReview(customerReview=${employeeCustomer.getId()})}"
                    class="btn btn-info btn-sm">
                     Reviews
                 </a>
@@ -87,32 +89,32 @@
                     <div class="pagination">
                         <div class="page-item">
                             <a class="page-link" th:if="${currentPage > 1}"
-                               th:href="@{'/company-employees/customerPage/'+ ${1}+ '?employeeId='+${employeeId}} ">First</a>
+                               th:href="@{'/customerPage/'+ ${1}+ '?employeeId='+${employeeId}} ">First</a>
                             <span class="page-link" th:unless="${currentPage > 1}">First</span>
                         </div>
                         <div>
                             <a class="page-link" th:if="${currentPage > 1}"
-                               th:href="@{'/company-employees/customerPage/'+ ${currentPage - 1}+ '?employeeId='+${employeeId}} ">Previous</a>
+                               th:href="@{'/customerPage/'+ ${currentPage - 1}+ '?employeeId='+${employeeId}} ">Previous</a>
                             <span class="page-link" th:unless="${currentPage > 1}">Previous</span>
                         </div>
 
                         <span class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}">
                     <a class="page-link" th:if="${currentPage != i}"
-                       th:href="@{'/company-employees/customerPage/'+ ${i}+ '?employeeId='+${employeeId}}">
+                       th:href="@{'/customerPage/'+ ${i}+ '?employeeId='+${employeeId}}">
                         [[${i}]]</a>
                     <span style="background-color: blue" class="page-link"
                           th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
 
                         <div class="page-item">
                             <a class="page-link" th:if="${currentPage < totalPage}"
-                               th:href="@{'/company-employees/customerPage/'+ ${currentPage + 1}+ '?employeeId='+${employeeId}}">
+                               th:href="@{'/customerPage/'+ ${currentPage + 1}+ '?employeeId='+${employeeId}}">
                                 Next</a>
                             <span class="page-link" th:unless="${currentPage < totalPage}">Next</span>
                         </div>
 
                         <div class="page-item">
                             <a class="page-link" th:if="${currentPage < totalPage}"
-                               th:href="@{'/company-employees/customerPage/'+ ${totalPage}+ '?employeeId='+${employeeId}}">
+                               th:href="@{'/customerPage/'+ ${totalPage}+ '?employeeId='+${employeeId}}">
                                 Last</a>
                             <span class="page-link" th:unless="${currentPage < totalPage}">Last</span>
                         </div>

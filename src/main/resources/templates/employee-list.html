@@ -33,7 +33,8 @@
         <input type="text" name="searchEmployees" class="form-control  ml-5 mr-sm-2 mb-3"
                placeholder="Search by name"/>
         <input type="submit" class="btn btn-success mb-3" value="Search">
-        <a class="btn btn-success mb-3" th:href="@{/home-page/logon-customer}" style="float: left; margin-left: 30%">Clients' Account</a>
+        <a class="btn btn-success mb-3" th:href="@{/customers/general-list}" style="float: left;
+        margin-left: 30%">Customer-List</a>
     </form>
 
 
@@ -66,7 +67,7 @@
                 <a class="btn btn-success btn-sm"
                    th:href="@{/company-employees/showEmployeeReview(showReviews=${employeeDatas.getId()})}">Reviews</a>
                 <a class="btn btn-primary btn-sm"
-                   th:href="@{/company-employees/showEmployeeCustomers(showCustomers=${employeeDatas.getId()})}">Customers</a>
+                   th:href="@{/customers(showCustomers=${employeeDatas.getId()})}">Customers</a>
             </td>
         </tr>
         </tbody>
