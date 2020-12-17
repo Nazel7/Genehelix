@@ -1,9 +1,9 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appServices;
+package com.spring.boot.App2.springbootprojectwithdatarest.services;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Customer;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Employee;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Review;
 import org.springframework.data.domain.Page;
 
 import java.util.List;

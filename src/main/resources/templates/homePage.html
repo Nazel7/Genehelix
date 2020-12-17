@@ -45,7 +45,7 @@
         .headerLi {
             color: white;
             text-decoration: none;
-            font-size: 17px;
+            font-size: 19px;
             margin-right: 15px;
             margin-left: 15px;
             font-weight: bold;
@@ -166,11 +166,10 @@
     </div>
     <div style="width: 60%; float: right">
 
-        <a th:href="@{/login-page}" class="btn btn-success" style="font-size: small">Admin</a>
+        <a th:href="@{/login-page}" class="btn btn-success" style="font-size: small">Log In</a>
         <a onmouseover="this.style.color= 'forestgreen'; this.style.textDecorationLine= 'none'"
            onmouseout="this.style.color= 'white'"
            class="headerLi" th:href="@{/home-page/customer-reg}">Sign Up</a>
-        <a class="btn btn-success" th:href="@{/home-page/logon-customer}" style="font-size: small">Clients' Account</a>
 
     </div>
 </header>

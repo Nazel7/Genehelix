@@ -1,7 +1,6 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.entity;
+package com.spring.boot.App2.springbootprojectwithdatarest.entities;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class passwordEncoder {
     public static void main(String[] args) {

@@ -1,8 +1,7 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.entity;
+package com.spring.boot.App2.springbootprojectwithdatarest.entities;
 
 
 import com.spring.boot.App2.springbootprojectwithdatarest.interfaces.IUser;
-import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,25 +13,6 @@ import java.util.List;
 @Table(name = "employee")
 @Access(AccessType.FIELD)
 public class Employee implements IUser {
-
-    public Employee() {
-        super();
-    }
-
-    public Employee(String firstName, String lastName, String email, List<Customer> customerList) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.customerList = customerList;
-    }
-
-    public Employee(int id, String firstName, String lastName, String email, List<Customer> customerList) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.customerList = customerList;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,9 +34,32 @@ public class Employee implements IUser {
     @Column(name = "email")
     private String email;
 
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "employee")
+    private User user;
+
     @OneToMany(mappedBy = "employee", cascade = {CascadeType.MERGE,
             CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Customer> customerList = new ArrayList<>();
+
+    public Employee() {
+        super();
+    }
+
+    public Employee(String firstName, String lastName, String email, List<Customer> customerList) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.customerList = customerList;
+    }
+
+    public Employee(int id, String firstName, String lastName, String email, List<Customer> customerList) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.customerList = customerList;
+    }
+
 
     public int getId() {
         return id;
@@ -88,6 +91,14 @@ public class Employee implements IUser {
 
     public void setEmail(String company) {
         this.email = company;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Customer> getCustomerList() {

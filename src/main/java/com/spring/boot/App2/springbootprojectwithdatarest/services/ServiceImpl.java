@@ -1,12 +1,12 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appServices;
+package com.spring.boot.App2.springbootprojectwithdatarest.services;
 
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appRepositories.CustomerRepo;
-import com.spring.boot.App2.springbootprojectwithdatarest.appRepositories.EmployeeRepository;
-import com.spring.boot.App2.springbootprojectwithdatarest.appRepositories.ReviewRepo;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Review;
+import com.spring.boot.App2.springbootprojectwithdatarest.repositories.CustomerRepo;
+import com.spring.boot.App2.springbootprojectwithdatarest.repositories.EmployeeRepo;
+import com.spring.boot.App2.springbootprojectwithdatarest.repositories.ReviewRepo;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Customer;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Employee;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Review;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @Service
 public class ServiceImpl implements EmployeeService {
     @Autowired
-    private EmployeeRepository repository;
+    private EmployeeRepo repository;
     @Autowired
     private CustomerRepo customerRepo;
     @Autowired

@@ -1,6 +1,6 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.appRepositories;
+package com.spring.boot.App2.springbootprojectwithdatarest.repositories;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

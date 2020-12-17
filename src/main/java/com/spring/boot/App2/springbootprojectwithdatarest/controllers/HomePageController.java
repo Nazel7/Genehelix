@@ -1,8 +1,8 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.controller;
+package com.spring.boot.App2.springbootprojectwithdatarest.controllers;
 
-import com.spring.boot.App2.springbootprojectwithdatarest.appServices.EmployeeService;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Customer;
-import com.spring.boot.App2.springbootprojectwithdatarest.entity.Employee;
+import com.spring.boot.App2.springbootprojectwithdatarest.services.EmployeeService;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Customer;
+import com.spring.boot.App2.springbootprojectwithdatarest.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -104,7 +104,7 @@ public class HomePageController {
 
         model.addAttribute("employeeSearchId", employeeID);
         reviewList = employeeService.showReviews(employeeID);
-        return new AppController().errorMessage(reviewList,
+        return new EmployeeController().errorMessage(reviewList,
                 "There is no review found.....",
                 "empty-review-home",
                 "home-review-list", model,

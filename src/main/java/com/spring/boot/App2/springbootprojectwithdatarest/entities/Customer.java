@@ -1,9 +1,8 @@
-package com.spring.boot.App2.springbootprojectwithdatarest.entity;
+package com.spring.boot.App2.springbootprojectwithdatarest.entities;
 
 import com.spring.boot.App2.springbootprojectwithdatarest.interfaces.IUser;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -17,15 +16,20 @@ public class Customer implements IUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @NotNull(message = "is required")
+    @NotNull(message = " at least 1 character is required")
     @Size(min = 2, message = "at least one value is required")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotNull(message = "is required")
+    @NotNull(message = "at least 1 character is required")
     @Size(min = 2, message = "at least one value is required")
     @Column(name = "last_name")
     private String lastName;
+
+    @NotNull(message = "at least 11 character is required")
+    @Size(min = 11, message = "at least 11 character is required")
+    @Column(name = "email")
+    private String email;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviewList = new ArrayList<>();
@@ -35,6 +39,9 @@ public class Customer implements IUser {
             CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id")
     private Employee employee;
+
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    private User user;
 
     public Customer() {
         super();
@@ -78,6 +85,14 @@ public class Customer implements IUser {
         this.lastName = last_name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public List<Review> getReviewList() {
         return reviewList;
     }
@@ -94,6 +109,14 @@ public class Customer implements IUser {
         return employee;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
@@ -102,6 +125,7 @@ public class Customer implements IUser {
     public String toString() {
         return "[ " + this.id + "/n" +
                 this.firstName + "/n" +
-                this.lastName + " ]";
+                this.lastName +"/n" +
+                this.email + " ]";
     }
 }
