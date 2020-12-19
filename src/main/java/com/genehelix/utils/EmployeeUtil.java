@@ -5,6 +5,9 @@ import com.genehelix.entities.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EmployeeUtil {
 
     public static String getEmployeePage(Model model, IEmployeeService IEmployeeService, int pageNo) {

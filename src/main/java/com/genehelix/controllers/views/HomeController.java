@@ -4,6 +4,7 @@ import com.genehelix.interfaces.IEmployeeService;
 import com.genehelix.entities.Customer;
 import com.genehelix.entities.Employee;
 import com.genehelix.utils.ErrorMessageUtil;
+import com.genehelix.utils.HomeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -18,13 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class HomePageController {
+public class HomeController {
 
     @Autowired
     private IEmployeeService IEmployeeService;
     private List<String> reviewList;
 
-    public HomePageController() {
+    public HomeController() {
         this.reviewList = new ArrayList<>();
     }
 
@@ -123,12 +124,5 @@ public class HomePageController {
 
         return "redirect:/home-page";
     }
-
-//    @GetMapping("/home-page/logonCustomer")
-//    public String customerPage(@RequestParam("homeCustomerUpdateID") int customerId, Model model) {
-//        Customer customer = IEmployeeService.getCustomerById(customerId);
-//        model.addAttribute("customer", customer);
-//        return "customer-page";
-//    }
 
 }

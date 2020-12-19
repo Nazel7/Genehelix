@@ -4,6 +4,7 @@ package com.genehelix.controllers.views;
 import com.genehelix.interfaces.IEmployeeService;
 import com.genehelix.entities.Customer;
 import com.genehelix.entities.Employee;
+import com.genehelix.utils.CustomerUtil;
 import com.genehelix.utils.ErrorMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -64,7 +65,8 @@ public class EmployeeController {
     }
 
     @PostMapping("/postEmployee")
-    public String postEmployee(@Valid @ModelAttribute("employee") Employee employee, BindingResult bindingResult) {
+    public String postEmployee(@Valid @ModelAttribute("employee") Employee employee,
+                               BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "add-employee";
         }
@@ -90,7 +92,7 @@ public class EmployeeController {
     public String searchEmployee(@RequestParam("searchEmployees") String employee, Model model) {
 
         Page<Employee> page = IEmployeeService.getSearchPaginatedEmployeeHome(employee, 1, 5);
-        employees = page.getContent();
+        List<Employee> employees = page.getContent();
         if (employees.isEmpty()) {
             String emptyEmployee = "There is no employee found!";
             model.addAttribute("emptyEmployee", emptyEmployee);
@@ -104,46 +106,6 @@ public class EmployeeController {
 
         return "employee-list";
     }
-
-
-    @GetMapping("/showEmployeeReview")
-    public String reviewList(@RequestParam("showReviews") int employeeID, Model model) {
-        System.out.println("wpe=" + employeeID);
-
-        reviewList = IEmployeeService.showReviews(employeeID);
-        return ErrorMessageUtil.errorMessage(reviewList,
-                "There is no review found.....",
-                "empty-review-home",
-                "review-list", model,
-                "emptyReview",
-                "reviews"
-        );
-    }
-
-
-
-
-
-    @PostMapping("/customers/postEmployeeCustomer")
-    public String postEmployeeCustomer(@Valid @ModelAttribute("newEmployeeCustomer") Customer customer,
-                                       @RequestParam("employeeID") int employeeId, Model model, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-
-            return "add-new-employee-customer";
-        } else {
-            System.out.println("employee123: " + employeeId);
-            model.addAttribute("employeeIdUpdateCustomer", employeeId);
-            Employee employee = IEmployeeService.getEmployee(employeeId);
-            if (employee != null) {
-                customer.setEmployee(employee);
-                IEmployeeService.addEmployeeCustomer(customer);
-            }
-            return "redirect:/company-employees/employee-list";
-        }
-    }
-
-
-
 
 
 
