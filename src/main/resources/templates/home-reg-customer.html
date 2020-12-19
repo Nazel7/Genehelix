@@ -52,8 +52,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="text" th:field="*{email}" class="form-control"
-                               placeholder="last name here"></td>
+                    <td><input type="email" th:field="*{email}" class="form-control"
+                               placeholder="email here"></td>
                     <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
                     </td>
                 </tr>

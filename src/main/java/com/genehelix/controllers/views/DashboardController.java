@@ -21,12 +21,6 @@ public class DashboardController {
     @Autowired
     private IEmployeeService IEmployeeService;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    private UserRepo userRepo;
-
     @GetMapping("/login-page")
     public String login() {
 

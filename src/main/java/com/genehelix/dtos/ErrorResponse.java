@@ -1,11 +1,11 @@
-package com.genehelix.exceptions;
+package com.genehelix.dtos;
 
-public class ErrorResponseClass {
+public class ErrorResponse {
     private String errorStatus;
     private String errorMessage;
     private String timeLapse;
 
-    public ErrorResponseClass() {
+    public ErrorResponse() {
         super();
     }
 

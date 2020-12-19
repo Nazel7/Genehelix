@@ -29,7 +29,7 @@
     </div>
 
     <div style=" padding: 5px">
-        <form action="#" th:action="@{/company-employees/customers/postCustomerReview(customerId=${customerId})}"
+        <form action="#" th:action="@{/reviews/postCustomerReview(customerId=${customerId})}"
               th:object="${newReview}"
               method="POST">
             <h4>Save New Review for Customer</h4>

@@ -61,4 +61,18 @@ public class ReviewController {
 
     }
 
+    @GetMapping("reviews/showEmployeeReview")
+    public String reviewList(@RequestParam("showReviews") int employeeID, Model model) {
+        System.out.println("wpe=" + employeeID);
+
+        reviewList = IEmployeeService.showReviews(employeeID);
+        return ErrorMessageUtil.errorMessage(reviewList,
+                "There is no review found.....",
+                "empty-review-home",
+                "review-list", model,
+                "emptyReview",
+                "reviews"
+        );
+    }
+
 }

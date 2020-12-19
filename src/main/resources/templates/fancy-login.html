@@ -17,15 +17,16 @@
 
 </head>
 
-<body>
-
-<div>
-
+<body style="background-color: azure; align-content: center; ">
+        <span><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
+                   style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">
+    </span>
+    <span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;
+    color: darkslategray">Please login here</span>
+<div style="position: fixed; top: 5%; width: 100%; left: 20%">
     <div id="loginbox" style="margin-top: 50px;"
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
-
         <div class="panel panel-info">
-
             <div class="panel-heading">
                 <div th:if="${logoutMessage == null}">
                     <div class="panel-title">Sign In</div>
@@ -109,14 +110,19 @@
                             </div>
                         </div>
                     </div>
-                    <div><a th:href="@{/home-page}"
-                            style="margin-left: 20%; color: red; cursor: pointer" onmouseover="this.style.color= 'green';
+                    <br>
+                    <div><a href="#"
+                            style="margin-left: 25%;margin-top: 10%; color: dodgerblue; cursor: pointer" onmouseover="this.style.color= 'blue';
 								this.style.textDecorationLine= 'none'"
-                            onmouseout="this.style.color= 'red'"><i>Client login from Home page!</i>
-                    </a>
+                            onmouseout="this.style.color= 'dodgerblue'"><i>Forgot password ?</i>
+                    </a><br>
+                        <hr>
+                        <span  ><a class="btn-sm btn-primary" style="text-decoration-line: none"
+                                   th:href="@{/home-page/customer-reg}">Create Account</a></span>
                     </div>
 
                 </Form>
+                <p></p>
 
             </div>
 
@@ -125,6 +131,14 @@
     </div>
 
 </div>
-
+        <span style="bottom: 16%; width: 20%;left: 39%; position: fixed; font-size: 14px;
+    color: darkslategray"><div style="text-align: center">
+        <a class="alink">Privacy</a>
+        <a class="alink">Terms & Conditions</a>
+        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gene-app.png}"
+                                                          src="../static/images/gene-app.png"
+                                                          width="24px"
+                                                          height="23px"></sup>Copyright<sup>&copy;</sup> 2020. All rights Research</p>
+    </div></span>
 </body>
 </html>

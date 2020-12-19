@@ -65,7 +65,7 @@
                    onclick="if(!(confirm('Are you sure, you want to delete this employee data?')))
                            return false">Delete</a>
                 <a class="btn btn-success btn-sm"
-                   th:href="@{/company-employees/showEmployeeReview(showReviews=${employeeDatas.getId()})}">Reviews</a>
+                   th:href="@{/reviews/showEmployeeReview(showReviews=${employeeDatas.getId()})}">Reviews</a>
                 <a class="btn btn-primary btn-sm"
                    th:href="@{/customers(showCustomers=${employeeDatas.getId()})}">Customers</a>
             </td>
