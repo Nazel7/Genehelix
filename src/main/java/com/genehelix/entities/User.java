@@ -33,6 +33,10 @@ public class User {
     @JoinColumn(name = "employeeuser_id")
     private Employee employee;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customerDetails")
+    private CustomerDetails customerDetails;
+
     public User() {
         super();
     }
@@ -100,11 +104,25 @@ public class User {
         this.authority = authority;
     }
 
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
+    }
+
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
+    }
+
     @Override
     public String toString() {
-        return this.userName + "\n" +
-                this.passWord + "\n" +
-                this.tinyint + "\n" +
-                this.authority;
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", tinyint=" + tinyint +
+                ", authority='" + authority + '\'' +
+                ", customer=" + customer +
+                ", employee=" + employee +
+                ", customerDetails=" + customerDetails +
+                '}';
     }
 }

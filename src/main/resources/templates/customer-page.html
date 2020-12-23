@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xlmns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xlmns="http://www.w3.org/1999/xhtml"
+      xmlns:spanth="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>customer-page</title>
@@ -449,12 +450,19 @@
             </div>
             <div class="divProfileSpan">
            <span class="divProfileSpan" style="width: 50%; font-size: 20px">
-        <span class="divProfileSpan" th:text="${activeUser.firstName}"></span>
-        <span class="divProfileSpan" th:text="${activeUser.lastName}"></span> <br>
-<!--                <span class="divProfileSpan" style="color: darkslategray; margin-top: 1%; font-size: 15px"-->
-<!--                      th:text="${patient.occupation}">Java Software Engineer</span>-->
+           <span class="divProfileSpan" th:text="${activeUser.firstName}"></span>
+            <span class="divProfileSpan" th:text="${activeUser.lastName}"></span> <br>
 
-                <span class="divProfileSpan" style="color: darkslategray; margin-top: 1%; font-size: 15px">Java Software Engineer</span>
+                <span th:if="${userDetail != null}" >
+                    <span th:text="${userDetail.occupation}" class="divProfileSpan" style="color: darkslategray;
+                margin-top: 1%; font-size: 15px"></span>
+                </span>
+               <span th:unless="${userDetail != null}" >
+                    <span class="divProfileSpan" style="color: darkslategray;
+                margin-top: 1%; font-size: 15px"> Data Empty</span>
+                </span>
+
+<!--                <span class="divProfileSpan" style="color: darkslategray; margin-top: 1%; font-size: 15px">Java Software Engineer</span>-->
             </div>
         </div>
 
@@ -506,10 +514,6 @@
                     <input style="border: none" onmouseover="this.style.color='lightgray'"
                            onmouseout="this.style.color='darkslategray'" type="submit" value="Logout">
                 </form>
-<!--                <a href="#">-->
-<!--                    <i class="fa fa-sign-out" aria-hidden="true"></i>-->
-<!--                    <span onmouseover="this.style.color='lightgray'" onmouseout="this.style.color='darkslategray'">Sign Out </span>-->
-<!--                </a>-->
             </li>
 
         </ul>
@@ -570,11 +574,8 @@
         <hr>
         <br>
         <br>
-<!--        <span th:text="${patient.location}" class="divProfilespanpDatails"-->
-<!--              style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">Personalized Medicine</span>-->
         <span  class="divProfilespanpDatails"
               style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">Personalized Medicine</span>
-
     </div>
 
 </section>
@@ -588,14 +589,19 @@
             <label style="margin-right: 30.5%; margin-left: 0">Twitter:</label><label>LinkedIn:</label>
         </span>
         <br>
-<!--        <span th:text="${patient.twitter}" class="divProfilespanpDatails"-->
-<!--              style="margin-top: 5%">twitter.com/nazel01</span>-->
-<!--        <span th:text="${patient.linkedin}" class="divProfilespanpDatails"-->
-<!--              style="margin-top: 5%">linkedin.com/in/go98</span>-->
-        <span  class="divProfilespanpDatails"
-              style="margin-top: 5%">twitter.com/nazel01</span>
-        <span  class="divProfilespanpDatails"
+        <span th:if="${useDetail != null}">
+             <span th:text="${userDetail.twitter}" class="divProfilespanpDatails"
+                   style="margin-top: 5%">twitter.com/nazel01</span>
+        <span th:text="${userDetail.linkedin}" class="divProfilespanpDatails"
               style="margin-top: 5%">linkedin.com/in/go98</span>
+        </span>
+        <span th:unless="${userDetail != null}">
+            <span class="divProfilespanpDatails"
+                  style="margin-top: 5%">No Account set</span>
+        <span class="divProfilespanpDatails"
+              style="margin-top: 5%">No Account set</span>
+        </span>
+
     </div>
 
 </section>
@@ -607,12 +613,14 @@
         <hr>
         <br>
         <br>
-<!--        <span th:text="${patient.location}" class="divProfilespanpDatails"-->
-<!--              style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">03 Omodudu Close Off Solomon Str, Ketu, Lagos</span>-->
-        <span class="divProfilespanpDatails"
-              style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">03 Omodudu Close Off Solomon Str, Ketu, Lagos</span>
+        <span th:if="${userDetail != null}">
+            <span th:text="${userDetail.homeAddress}" class="divProfilespanpDatails"
+                  style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; "></span>
+        </span>
 
-
+        <span th:unless="${userDetail != null}">
+            <span  class="divProfilespanpDatails" style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">No Address</span>
+        </span>
     </div>
 
 </section>
@@ -626,13 +634,17 @@
             <label style="margin-right: 34%; margin-left: 0">Email:</label><label>Mobile:</label>
         </span>
         <br>
-<!--        <span th:text="${patient.email}" class="divProfilespanpDatails" style="margin-top: 5%">lanusg2@gmail.com</span>-->
-<!--        <span th:text="${patient.phoneNumber}" class="divProfilespanpDatails"-->
-<!--              style="margin-top: 5%">+2348154981788</span>-->
-
-        <span th:text="${activeUser.email}" class="divProfilespanpDatails" style="margin-top: 5%">lanusg2@gmail.com</span>
-        <span  class="divProfilespanpDatails"
+        <span th:if="${userDetail != null}">
+              <span th:text="${userDetail.email}" class="divProfilespanpDatails" style="margin-top: 5%">lanusg2@gmail.com</span>
+        <span th:text="${userDetail.mobile}" class="divProfilespanpDatails"
               style="margin-top: 5%">+2348154981788</span>
+        </span>
+      <span th:unless="${userDetail != null}">
+          <span class="divProfilespanpDatails" style="margin-top: 5%">No Email</span>
+        <span  class="divProfilespanpDatails"
+              style="margin-top: 5%">No Phone Number</span>
+      </span>
+
     </div>
 
 </section>
@@ -690,25 +702,18 @@
 <aside style="float: left; width: 19%;  margin-left: 61%; height: 200px; margin-top: 24%;
 position: fixed">
     <form>
-<!--        <div class="form-group">-->
-<!--            <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>-->
-<!--            <select th:each="service: ${hc-services}" class="form-control" id="hc-services">-->
-<!--                <option th:text="${service.title}">1</option>-->
-<!--                <option>2</option>-->
-<!--                <option>3</option>-->
-<!--                <option>4</option>-->
-<!--                <option>5</option>-->
-<!--            </select>-->
-<!--        </div>-->
 
-        <div class="form-group">
+            <div class="form-group" th:if="${userDetail != null}">
             <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>
-            <select  class="form-control" id="hc-services">
-                <option >1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+            <select th:each="service: ${userDetail.serviceKey}" class="form-control" id="hc-services" >
+                <option th:text="${service.name}"></option>
+            </select>
+        </div>
+
+        <div class="form-group" th:unless="${userDetail != null}">
+            <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>
+            <select class="form-control" id="hc-services" >
+                <option>No Data</option>
             </select>
         </div>
 
