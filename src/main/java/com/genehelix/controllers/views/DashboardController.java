@@ -1,5 +1,6 @@
 package com.genehelix.controllers.views;
 
+import com.genehelix.entities.CustomerDetails;
 import com.genehelix.interfaces.IUser;
 import com.genehelix.repositories.UserRepo;
 import com.genehelix.interfaces.IEmployeeService;
@@ -30,7 +31,11 @@ public class DashboardController {
     @GetMapping("/dashboard")
     public String getUserDashboard(@AuthenticationPrincipal UserDetailService userDetails, Model model) {
         IUser user = userDetails.getActiveUser();
+        CustomerDetails userDetail= userDetails.getCustomerDetails();
         System.out.println(user.getFirstName());
+        System.out.println("UserDetail: "+ userDetail);
+
+        model.addAttribute("userDetail", userDetail);
         model.addAttribute("activeUser", user);
         model.addAttribute("activeRole", userDetails.getActiveRole());
         switch (userDetails.getActiveRole()) {

@@ -18,7 +18,7 @@ public class Review {
     @Column(name = "review_message")
     private String reviewMessage;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     Customer customer = null;
 
     public Review() {

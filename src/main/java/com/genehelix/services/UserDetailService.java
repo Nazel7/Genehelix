@@ -1,5 +1,6 @@
 package com.genehelix.services;
 
+import com.genehelix.entities.CustomerDetails;
 import com.genehelix.interfaces.IUser;
 import com.genehelix.entities.User;
 import com.genehelix.repositories.UserRepo;
@@ -40,6 +41,9 @@ public class UserDetailService implements UserDetails, UserDetailsService {
         return customer != null ? customer : user.getEmployee();
     }
 
+    public CustomerDetails getCustomerDetails(){
+      return   user.getCustomerDetails();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

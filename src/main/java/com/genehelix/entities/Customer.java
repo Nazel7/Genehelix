@@ -123,9 +123,14 @@ public class Customer implements IUser {
 
     @Override
     public String toString() {
-        return "[ " + this.id + "/n" +
-                this.firstName + "/n" +
-                this.lastName +"/n" +
-                this.email + " ]";
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", reviewList=" + reviewList +
+                ", employee=" + employee +
+                ", user=" + user +
+                '}';
     }
 }
