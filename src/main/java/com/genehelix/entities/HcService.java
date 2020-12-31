@@ -15,17 +15,23 @@ public class HcService {
     private String name;
 
     @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinColumn(name = "customerdetails_id")
     private CustomerDetails customerDetails;
+
+    @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
+    @JoinColumn(name = "employeedetails_id")
+    private EmployeeDetails employeeDetails;
 
     public HcService(){
         super();
 
     }
 
-    public HcService(int id, String name, CustomerDetails customerDetails) {
+    public HcService(int id, String name, CustomerDetails customerDetails, EmployeeDetails employeeDetails) {
         Id = id;
         this.name = name;
         this.customerDetails = customerDetails;
+        this.employeeDetails= employeeDetails;
     }
 
     public int getId() {
@@ -50,6 +56,14 @@ public class HcService {
 
     public void setCustomerDetails(CustomerDetails customerDetails) {
         this.customerDetails = customerDetails;
+    }
+
+    public EmployeeDetails getEmployeeDetails() {
+        return employeeDetails;
+    }
+
+    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
+        this.employeeDetails = employeeDetails;
     }
 
     @Override

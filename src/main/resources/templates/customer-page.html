@@ -650,7 +650,11 @@
 </section>
 <section style="margin-top: 0.5%; margin-bottom: 3%; width: 5%">
     <div>
-        <p><a class="btn btn-primary" style="font-size: 15px" th:href="@{/setting/customerDetails}">Setting</a></p>
+        <p th:if="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
+              th:href="@{/setting/newCustomerDetails(userID=${activeUser.getId()})}">Setting</a></p>
+
+        <p th:unless="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
+              th:href="@{/setting/newCustomerDetails}">Setting</a></p>
     </div>
 
 </section>
@@ -705,7 +709,7 @@ position: fixed">
 
             <div class="form-group" th:if="${userDetail != null}">
             <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>
-            <select th:each="service: ${userDetail.serviceKey}" class="form-control" id="hc-services" >
+            <select th:each="service: ${userDetail.service}" class="form-control" id="hc-services" >
                 <option th:text="${service.name}"></option>
             </select>
         </div>
