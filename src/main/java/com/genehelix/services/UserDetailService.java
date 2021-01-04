@@ -3,6 +3,7 @@ package com.genehelix.services;
 import com.genehelix.entities.CustomerDetails;
 import com.genehelix.interfaces.IUser;
 import com.genehelix.entities.User;
+import com.genehelix.interfaces.IUserDetail;
 import com.genehelix.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -39,6 +40,11 @@ public class UserDetailService implements UserDetails, UserDetailsService {
     public IUser getActiveUser() {
         IUser customer = user.getCustomer();
         return customer != null ? customer : user.getEmployee();
+    }
+
+    public IUserDetail getActiveUserDetail(){
+        IUserDetail customerDetails= user.getCustomerDetails();
+        return customerDetails != null ? customerDetails : user.getEmployeeDetails();
     }
 
     public CustomerDetails getCustomerDetails(){

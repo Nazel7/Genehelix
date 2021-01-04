@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name= "customer_details")
+@Table(name= "employee_details")
 @Access(AccessType.FIELD)
-public class CustomerDetails implements IUserDetail {
+public class EmployeeDetails implements IUserDetail {
     @Id
     @Column(name= "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,22 +30,22 @@ public class CustomerDetails implements IUserDetail {
     @Column(name= "occupation")
     private String occupation;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customerDetails")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employeeDetails")
     private List<HcService> service = new ArrayList<>();
 
     @Column(name= "date_time")
     private String dateTime;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            mappedBy = "customerDetails")
+            mappedBy = "employeeDetails")
     private User user;
 
 
-    public CustomerDetails(){
+    public EmployeeDetails(){
         super();
     }
 
-    public CustomerDetails(int Id, String twitter, String linkedin, String homeAddress,
+    public EmployeeDetails(int Id, String twitter, String linkedin, String homeAddress,
                            String mobile, String occupation, List<HcService> service, String dateTime) {
         this.Id= Id;
         this.twitter = twitter;
