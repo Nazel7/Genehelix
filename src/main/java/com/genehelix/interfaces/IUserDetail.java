@@ -9,7 +9,7 @@ public interface IUserDetail {
 
      int getId();
 
-     String getTwitter();
+    String getTwitter();
 
     String getLinkedin();
 

@@ -1,4 +1,4 @@
-package com.genehelix.dtos;
+package com.genehelix.dtos.responses;
 
 public class ErrorResponse {
     private String errorStatus;

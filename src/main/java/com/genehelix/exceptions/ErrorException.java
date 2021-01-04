@@ -1,6 +1,6 @@
 package com.genehelix.exceptions;
 
-import com.genehelix.dtos.ErrorResponse;
+import com.genehelix.dtos.responses.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

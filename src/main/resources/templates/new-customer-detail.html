@@ -14,85 +14,101 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+    label{
+        color: darkslategray;
+    }
+    table tbody tr td{
+        padding: 12px;
+        margin-bottom: 10%;
 
+    }
+</style>
 </head>
 
 <body style="background-color: azure; align-content: center; ">
-<!--<span><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"-->
-<!--           style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">-->
-<!--    </span>-->
-<!--<span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;-->
-<!--    color: darkslategray">Please login here</span>-->
-<!--<div style="position: fixed; top: 5%; width: 100%; left: 20%">-->
-<!--    <div id="loginbox" style="margin-top: 50px;"-->
-<!--         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">-->
+<span><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
+           style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">
+    </span>
+<span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;
+    color: darkslategray">Please update your details </span>
+<div style="position: fixed; top: 5%; width: 100%; left: 20% ">
+    <div id="loginbox" style="margin-top: 50px; "
+         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
-<!--        <div style=" padding: 5px">-->
-<!--            <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${employee}" method="POST">-->
-<!--                <input type="hidden" th:field="*{id}"/>-->
-<!--                <table style="width: 40%">-->
-<!--                    <tbody>-->
-<!--                    <tr>-->
-<!--                        <td><label>Healthcare Service:</label></td>-->
-<!--                        <td><input type="text" th:field="*{firstName}" class="form-control"-->
-<!--                                   placeholder="first name here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName-->
-<!--                            Error-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><label>Date:</label></td>-->
-<!--                        <td><input type="text" th:field="*{lastName}" class="form-control"-->
-<!--                                   placeholder="last name here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><label>Twitter:</label></td>-->
-<!--                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><label>Linkedin:</label></td>-->
-<!--                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><label>Address/Location:</label></td>-->
-<!--                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><label>Email:</label></td>-->
-<!--                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><label>Phone:</label></td>-->
-<!--                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>-->
-<!--                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td><input type="submit" value="Save" class="btn btn-outline-primary"/></td>-->
-<!--                    </tr>-->
-<!--                    <div style="clear:both"></div>-->
+        <div class="Container" style=" padding: 5px; ">
+            <form action="#" th:action="@{/setting/postNewCustomerDetails}" th:object="${newCustomerDetail}" method="POST" >
+                <input type="hidden" th:field="*{id}"/>
+                <div style="border: 1px solid aqua; background-color: white; width: 128%">
+                    <table >
 
-<!--                    </tbody>-->
-<!--                </table>-->
-<!--            </form>-->
-<!--        </div>-->
+                        <tr class="form-group">
+                            <td><label for="hc-services">Healthcare Service:</label></td>
+                            <td>
+                                <select th:field="*{service}" class="form-control" id="hc-services" >
+                                    <option th:each="service: ${services}" th:value="${service}"
+                                            th:text="${service}"></option>
+                                </select>
+                            </td>
+                            <!--                            <input type="text" th:field="*{service}" class="form-control"-->
+                            <!--                                placeholder="enter service here"></td>-->
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="date">Date:</label></td>
+                            <td><input type="date" th:field="*{dateTime}" class="form-control" id="date"
+                                       placeholder="DD/MM/YYYY"></td>
+                            <!--                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error-->
+                            <!--                        </td>-->
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="twitter">Twitter:</label></td>
+                            <td><input type="text" th:field="*{twitter}" class="form-control" id="twitter"
+                                       placeholder=" twitter address here"></td>
 
-<!--    </div>-->
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="linkedin">Linkedin:</label></td>
+                            <td><input type="text" th:field="*{linkedin}" class="form-control" id="linkedin"
+                                       placeholder="linkedin address here"></td>
 
-<!--</div>-->
-<!--<span style="bottom: 16%; width: 20%;left: 39%; position: fixed; font-size: 14px;-->
-<!--    color: darkslategray"><div style="text-align: center">-->
-<!--        <a class="alink">Privacy</a>-->
-<!--        <a class="alink">Terms & Conditions</a>-->
-<!--        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gene-app.png}"-->
-<!--                                                          src="../static/images/gene-app.png"-->
-<!--                                                          width="24px"-->
-<!--                                                          height="23px"></sup>Copyright<sup>&copy;</sup> 2020. All rights Research</p>-->
-<!--    </div></span>-->
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="location">Address/Location:</label></td>
+                            <td><input type="text" th:field="*{homeAddress}" class="form-control" id="location"
+                                       placeholder="home address here"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="phone">Phone:</label></td>
+                            <td><input type="text" th:field="*{mobile}" class="form-control" id="phone"
+                                       placeholder="mobile number here"></td>
+
+                        </tr>
+                        <tr>
+                            <td><label for="occupation">occupation:</label></td>
+                            <td><input type="text" th:field="*{occupation}" class="form-control" id="occupation"
+                                       placeholder="mobile number here"></td>
+
+                        </tr>
+                        <tr class="form-group">
+                            <td><input type="submit" value="Save" class="btn btn-primary"/></td>
+                        </tr>
+                        <div style="clear:both"></div>
+                    </table>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+<span style="bottom: 10%; width: 20%;left: 40%; position: fixed; font-size: 14px;
+    color: darkslategray"><div style="text-align: center">
+        <a class="alink">Privacy</a>
+        <a class="alink">Terms & Conditions</a>
+        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gene-app.png}"
+                                                          src="../static/images/gene-app.png"
+                                                          width="24px"
+                                                          height="23px"></sup>Copyright<sup>&copy;</sup> 2020. All rights Research</p>
+    </div></span>
 </body>
 </html>
