@@ -1,5 +1,6 @@
 package com.genehelix.services;
 
+import com.genehelix.entities.HCServiceList;
 import com.genehelix.interfaces.IHCServiceListService;
 import com.genehelix.repositories.HCServiceListRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,15 @@ public class HCServiceListService implements IHCServiceListService {
 
 
     @Override
-    public List<String> getHCServiceList() {
+    public List<String> getHCServiceListTitle() {
 
         return hcServiceListRepo.getHCServiceListName();
+    }
+
+    @Override
+    public List<HCServiceList> findAll() {
+
+       return hcServiceListRepo.findAll();
+
     }
 }

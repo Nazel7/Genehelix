@@ -33,14 +33,6 @@ public class User {
     @JoinColumn(name = "employeeuser_id")
     private Employee employee;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_details")
-    private CustomerDetails customerDetails;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_details")
-    private EmployeeDetails employeeDetails;
-
     public User() {
         super();
     }
@@ -108,22 +100,6 @@ public class User {
         this.authority = authority;
     }
 
-    public CustomerDetails getCustomerDetails() {
-        return customerDetails;
-    }
-
-    public void setCustomerDetails(CustomerDetails customerDetails) {
-        this.customerDetails = customerDetails;
-    }
-
-    public EmployeeDetails getEmployeeDetails() {
-        return employeeDetails;
-    }
-
-    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
-        this.employeeDetails = employeeDetails;
-    }
-
     @Override
     public String toString() {
         return "User{" +
@@ -134,8 +110,6 @@ public class User {
                 ", authority='" + authority + '\'' +
                 ", customer=" + customer +
                 ", employee=" + employee +
-                ", customerDetails=" + customerDetails +
-                ", employeeDetails=" + employeeDetails +
                 '}';
     }
 }

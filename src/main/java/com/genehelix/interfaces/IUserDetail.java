@@ -23,8 +23,5 @@ public interface IUserDetail {
 
     String getDateTime();
 
-    User getUser();
-
-    void setUser(User user);
 
 }

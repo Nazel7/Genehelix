@@ -582,21 +582,21 @@
             <label style="margin-right: 30.5%; margin-left: 0">M-Service:</label><label>Date:</label>
         </span>
         <br>
-        <span th:if="${latestService!= null}" >
+        <span th:if="${latestService!= null}" class="spandetailHover">
              <span th:text="${latestService}" class="divProfilespanpDatails"
                     style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; margin-right: 10%"></span>
         </span>
 
-        <span th:unless="${latestService != null}">
+        <span th:unless="${latestService != null}" class="spandetailHover">
              <span  class="divProfilespanpDatails"
                     style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; margin-right: 10%">No Service</span>
         </span>
 
-        <span th:if="${latestServiceDate != null}">
+        <span th:if="${latestServiceDate != null}" class="spandetailHover">
       <span th:text="${latestServiceDate}" class="divProfilespanpDatails"
             style="margin-top: 5%; margin-left: 10%"></span>
         </span>
-        <span th:unless="${latestServiceDate != null}">
+        <span th:unless="${latestServiceDate != null}" class="spandetailHover">
  <span class="divProfilespanpDatails"
        style="margin-top: 5%; margin-left: 10%">No set Date</span>
         </span>
@@ -614,18 +614,18 @@
             <label style="margin-right: 30.5%; margin-left: 0">Twitter:</label><label>LinkedIn:</label>
         </span>
         <br>
-        <span th:if="${userDetail != null && userDetail.twitter != null}" style="margin-right: 5%">
+        <span th:if="${userDetail != null && userDetail.twitter != null}" style="margin-right: 5%" class="spandetailHover">
              <span th:text="${userDetail.twitter}" class="divProfilespanpDatails" style="margin-top: 5%"></span>
         </span>
-        <span th:unless="${userDetail != null && userDetail.twitter != null}">
+        <span th:unless="${userDetail != null && userDetail.twitter != null}" class="spandetailHover">
             <span class="divProfilespanpDatails" style="margin-top: 5%">No Account set</span>
         </span>
 
-        <span th:if="${userDetail != null && userDetail.linkedin != null}">
+        <span th:if="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
       <span th:text="${userDetail.linkedin}" class="divProfilespanpDatails"
       style="margin-top: 5%"></span>
         </span>
-        <span th:unless="${userDetail != null && userDetail.linkedin != null}">
+        <span th:unless="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
  <span class="divProfilespanpDatails"
        style="margin-top: 5%">No Account set</span>
         </span>
@@ -640,12 +640,12 @@
         <hr>
         <br>
         <br>
-        <span th:if="${userDetail != null && userDetail.homeAddress != null}">
+        <span th:if="${userDetail != null && userDetail.homeAddress != null}" class="spandetailHover">
             <span th:text="${userDetail.homeAddress}" class="divProfilespanpDatails"
                   style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; "></span>
         </span>
 
-        <span th:unless="${userDetail != null && userDetail.homeAddress != null}">
+        <span th:unless="${userDetail != null && userDetail.homeAddress != null}" class="spandetailHover">
             <span  class="divProfilespanpDatails" style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">No Address</span>
         </span>
     </div>
@@ -663,11 +663,11 @@
         <br>
         <span th:text="${activeUser.email}" class="divProfilespanpDatails" style="margin-top: 5%"></span>
 
-        <span th:if="${userDetail != null && userDetail.mobile != null}">
+        <span th:if="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
         <span th:text="${userDetail.mobile}" class="divProfilespanpDatails"
               style="margin-top: 5%"></span>
         </span>
-      <span th:unless="${userDetail != null && userDetail.mobile != null}">
+      <span th:unless="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
           <span class="divProfilespanpDatails" style="margin-top: 5%">No Email</span>
         <span  class="divProfilespanpDatails"
               style="margin-top: 5%">No Phone Number</span>
@@ -679,7 +679,7 @@
 <section style="margin-top: 0.5%; margin-bottom: 3%; width: 5%">
     <div>
         <p th:if="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
-              th:href="@{/setting/userDetails(userID=${activeUser.getId()})}">Setting</a></p>
+              th:href="@{/setting/userDetails(customerDetailID= ${userDetail.getId()})}">Setting</a></p>
 
         <p th:unless="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
               th:href="@{/setting/newCustomerDetails}">Setting</a></p>
@@ -733,24 +733,33 @@
 </div>
 <aside style="float: left; width: 19%;  margin-left: 61%; height: 200px; margin-top: 24%;
 position: fixed">
-<!--    <form th:object="${userDetail}">-->
+    <form action="#" th:object="${newHcService}" th:action="@{/customerService/submit(customerDetailId=${customerDetail.getId()})}">
 
-<!--            <div class="form-group" th:if="${userDetail != null && userDetail.service != null}">-->
-<!--            <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>-->
-<!--            <select th:field="*{service}" class="form-control" id="hc-services">-->
-<!--                <option th:each="service1: ${services}" th:value="${service1}" th:text="${service1}"></option>-->
+            <div class="form-group">
+            <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>
+            <select class="form-control" id="hc-services">
+                <option th:field="*{name}" th:type="${serviceList.getServiceTitle()}"
+                        th:value="${serviceList.getServiceTitle()}"
+                        th:each="serviceList: ${hcServiceLists}"
+                        th:text="${serviceList.getServiceTitle()}"></option>
+            </select>
+<br>
+                <label>Date: </label>
+                <input type="date" th:field="*{date}" class="form-control">
+        </div>
+
+        <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%">
+    </form>
+
+<!--    <tr class="form-group">-->
+<!--        <td><label for="hc-services">Healthcare Service:</label></td>-->
+<!--        <td th:if="${cDServices == null}">-->
+<!--            <select th:field="*{service}"  class="form-control" id="hc-services">-->
+<!--                <option th:type="${serviceList.id}"  th:each="serviceList: ${serviceListRL}"-->
+<!--                        th:text="${serviceList.getServiceTitle()}"></option>-->
 <!--            </select>-->
-<!--        </div>-->
-
-<!--        <div class="form-group" th:unless="${userDetail != null && userDetail.service != null}">-->
-<!--            <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>-->
-<!--            <select class="form-control" id="hc-services" >-->
-<!--                <option>No Data</option>-->
-<!--            </select>-->
-<!--        </div>-->
-
-<!--        <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%">-->
-<!--    </form>-->
+<!--        </td>-->
+<!--    </tr>-->
 
 </aside>
 

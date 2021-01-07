@@ -9,5 +9,7 @@ public interface IUsersDetailService {
 
     EmployeeDetails saveUserDetails(EmployeeDetails employeeDetails);
 
+    CustomerDetails getUserDetailsById(int cdId);
+
 
 }

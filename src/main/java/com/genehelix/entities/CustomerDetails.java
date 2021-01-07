@@ -36,10 +36,9 @@ public class CustomerDetails implements IUserDetail {
     @Column(name= "date_time")
     private String dateTime;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            mappedBy = "customerDetails")
-    private User user;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customerD_id")
+    private Customer customer;
 
     public CustomerDetails(){
         super();
@@ -55,6 +54,20 @@ public class CustomerDetails implements IUserDetail {
         this.occupation = occupation;
         this.service = service;
         this.dateTime = dateTime;
+    }
+
+    public CustomerDetails(int id, String twitter, String linkedin, String homeAddress, String mobile,
+                           String occupation, List<HcService> service, String dateTime,
+                           Customer customer) {
+        Id = id;
+        this.twitter = twitter;
+        this.linkedin = linkedin;
+        this.homeAddress = homeAddress;
+        this.mobile = mobile;
+        this.occupation = occupation;
+        this.service = service;
+        this.dateTime = dateTime;
+        this.customer = customer;
     }
 
     public int getId() {
@@ -121,17 +134,17 @@ public class CustomerDetails implements IUserDetail {
         this.dateTime = dateTime;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public void addService(HcService service){
         this.service.add(service);
 
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override
@@ -145,7 +158,7 @@ public class CustomerDetails implements IUserDetail {
                 ", occupation='" + occupation + '\'' +
                 ", service=" + service +
                 ", dateTime='" + dateTime + '\'' +
-                ", User=" + user +
-        '}';
+                ", customer=" + customer +
+                '}';
     }
 }

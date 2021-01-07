@@ -37,71 +37,115 @@
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
         <div class="Container" style=" padding: 5px; ">
-            <form action="#" th:action="@{/setting/postNewCustomerDetails}" th:object="${newCustomerDetail}" method="POST" >
-                <input type="hidden" th:field="*{id}"/>
-                <div style="border: 1px solid aqua; background-color: white; width: 128%">
-                    <table >
+            <div th:if="${newCustomerDetail != null}">
+                <form action="#" th:action="@{/setting/updateCustomerDetails}" th:object="${newCustomerDetail}" method="POST" >
+                    <input type="hidden" th:field="*{id}"/>
+                    <div style="border: 1px solid aqua; background-color: white; width: 128%">
+                        <table >
 
-                        <tr class="form-group">
-                            <td><label for="hc-services">Healthcare Service:</label></td>
-                            <td>
-                                <select th:field="*{service}" class="form-control" id="hc-services" >
-                                    <option th:each="service: ${services}" th:value="${service}"
-                                            th:text="${service}"></option>
-                                </select>
-                            </td>
-                            <!--                            <input type="text" th:field="*{service}" class="form-control"-->
-                            <!--                                placeholder="enter service here"></td>-->
-                        </tr>
-                        <tr class="form-group">
-                            <td><label for="date">Date:</label></td>
-                            <td><input type="date" th:field="*{dateTime}" class="form-control" id="date"
-                                       placeholder="DD/MM/YYYY"></td>
-                            <!--                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error-->
-                            <!--                        </td>-->
-                        </tr>
-                        <tr class="form-group">
-                            <td><label for="twitter">Twitter:</label></td>
-                            <td><input type="text" th:field="*{twitter}" class="form-control" id="twitter"
-                                       placeholder=" twitter address here"></td>
+                            <tr class="form-group">
+                                <td><label for="date">Date:</label></td>
+                                <td><input type="date" th:field="*{dateTime}" class="form-control" id="date"
+                                           placeholder="DD/MM/YYYY"></td>
+                                <!--                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error-->
+                                <!--                        </td>-->
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="twitter">Twitter:</label></td>
+                                <td><input type="text" th:field="*{twitter}" class="form-control" id="twitter"
+                                           placeholder=" twitter address here"></td>
 
-                        </tr>
-                        <tr class="form-group">
-                            <td><label for="linkedin">Linkedin:</label></td>
-                            <td><input type="text" th:field="*{linkedin}" class="form-control" id="linkedin"
-                                       placeholder="linkedin address here"></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="linkedin">Linkedin:</label></td>
+                                <td><input type="text" th:field="*{linkedin}" class="form-control" id="linkedin"
+                                           placeholder="linkedin address here"></td>
 
-                        </tr>
-                        <tr class="form-group">
-                            <td><label for="location">Address/Location:</label></td>
-                            <td><input type="text" th:field="*{homeAddress}" class="form-control" id="location"
-                                       placeholder="home address here"></td>
-                        </tr>
-                        <tr>
-                            <td><label for="phone">Phone:</label></td>
-                            <td><input type="text" th:field="*{mobile}" class="form-control" id="phone"
-                                       placeholder="mobile number here"></td>
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="location">Address/Location:</label></td>
+                                <td><input type="text" th:field="*{homeAddress}" class="form-control" id="location"
+                                           placeholder="home address here"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="phone">Phone:</label></td>
+                                <td><input type="text" th:field="*{mobile}" class="form-control" id="phone"
+                                           placeholder="mobile number here"></td>
 
-                        </tr>
-                        <tr>
-                            <td><label for="occupation">occupation:</label></td>
-                            <td><input type="text" th:field="*{occupation}" class="form-control" id="occupation"
-                                       placeholder="mobile number here"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="occupation">occupation:</label></td>
+                                <td><input type="text" th:field="*{occupation}" class="form-control" id="occupation"
+                                           placeholder="mobile number here"></td>
 
-                        </tr>
-                        <tr class="form-group">
-                            <td><input type="submit" value="Save" class="btn btn-primary"/></td>
-                        </tr>
-                        <div style="clear:both"></div>
-                    </table>
-                </div>
+                            </tr>
+                            <tr class="form-group">
+                                <td><input type="submit" value="Save" class="btn btn-primary"/></td>
+                            </tr>
+                            <div style="clear:both"></div>
+                        </table>
+                    </div>
 
-            </form>
+                </form>
+            </div>
+            <div th:unless="${newCustomerDetail != null}">
+                <form action="#" th:action="@{/setting/postNewCustomerDetails}"
+                      th:object="${newCustomerDetail}" method="POST" >
+                    <input type="hidden" th:field="*{id}"/>
+                    <div style="border: 1px solid aqua; background-color: white; width: 128%">
+                        <table >
+
+                            <tr class="form-group">
+                                <td><label for="date">Date:</label></td>
+                                <td><input type="date" th:field="*{dateTime}" class="form-control" id="date"
+                                           placeholder="DD/MM/YYYY"></td>
+                                <!--                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error-->
+                                <!--                        </td>-->
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="twitter">Twitter:</label></td>
+                                <td><input type="text" th:field="*{twitter}" class="form-control" id="twitter"
+                                           placeholder=" twitter address here"></td>
+
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="linkedin">Linkedin:</label></td>
+                                <td><input type="text" th:field="*{linkedin}" class="form-control" id="linkedin"
+                                           placeholder="linkedin address here"></td>
+
+                            </tr>
+                            <tr class="form-group">
+                                <td><label for="location">Address/Location:</label></td>
+                                <td><input type="text" th:field="*{homeAddress}" class="form-control" id="location"
+                                           placeholder="home address here"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="phone">Phone:</label></td>
+                                <td><input type="text" th:field="*{mobile}" class="form-control" id="phone"
+                                           placeholder="mobile number here"></td>
+
+                            </tr>
+                            <tr>
+                                <td><label for="occupation">occupation:</label></td>
+                                <td><input type="text" th:field="*{occupation}" class="form-control" id="occupation"
+                                           placeholder="mobile number here"></td>
+
+                            </tr>
+                            <tr class="form-group">
+                                <td><input type="submit" value="Save" class="btn btn-primary"/></td>
+                            </tr>
+                            <div style="clear:both"></div>
+                        </table>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
     </div>
 
 </div>
-<span style="bottom: 10%; width: 20%;left: 40%; position: fixed; font-size: 14px;
+<span style="bottom: 10%; width: 20%;left: 42%; position: fixed; font-size: 14px;
     color: darkslategray"><div style="text-align: center">
         <a class="alink">Privacy</a>
         <a class="alink">Terms & Conditions</a>

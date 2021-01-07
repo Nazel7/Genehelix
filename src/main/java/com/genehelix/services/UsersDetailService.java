@@ -9,6 +9,8 @@ import com.genehelix.repositories.EmployeeDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UsersDetailService implements IUsersDetailService {
 
@@ -30,6 +32,16 @@ public class UsersDetailService implements IUsersDetailService {
     public EmployeeDetails saveUserDetails(EmployeeDetails employeeDetails) {
         if(employeeDetails != null){
             return employeeDetailsRepo.save(employeeDetails);
+        }
+        return null;
+    }
+
+    @Override
+    public CustomerDetails getUserDetailsById(int cdId) {
+        Optional<CustomerDetails> customerDetails = customerDetailsRepo.findById(cdId);
+        if(customerDetails.isPresent()){
+            CustomerDetails customerDetails1= customerDetails.get();
+            return customerDetails1;
         }
         return null;
     }
