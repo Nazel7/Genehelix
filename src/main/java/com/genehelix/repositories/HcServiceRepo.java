@@ -14,7 +14,7 @@ public interface HcServiceRepo extends JpaRepository<HcService, Integer> {
     List<String> getHCServiceName(int customerDetailID);
 
 
-    @Query("SELECT new com.genehelix.dtos.responses.HcServiceResponse(s.name, s.Date) " +
+    @Query("SELECT new com.genehelix.dtos.responses.HcServiceResponse(s.name, s.date) " +
             "from HcService s inner join CustomerDetails c on c.Id=s.customerDetails.Id" +
             " where c.Id= ?1 order by s.Id")
     List<HcServiceResponse> getHCServiceNameAndDate(int customerDetailID);

@@ -40,8 +40,12 @@ public class Customer implements IUser {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "customer")
+    private CustomerDetails customerDetails;
+
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "customer")
     private User user;
+
 
     public Customer() {
         super();
@@ -107,6 +111,14 @@ public class Customer implements IUser {
 
     public Employee getEmployee() {
         return employee;
+    }
+
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
+    }
+
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+        this.customerDetails = customerDetails;
     }
 
     public User getUser() {

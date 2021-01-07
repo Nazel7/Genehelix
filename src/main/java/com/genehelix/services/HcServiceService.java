@@ -1,6 +1,7 @@
 package com.genehelix.services;
 
 import com.genehelix.dtos.responses.HcServiceResponse;
+import com.genehelix.entities.HcService;
 import com.genehelix.interfaces.IService;
 import com.genehelix.repositories.HcServiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,11 @@ public class HcServiceService implements IService {
     public List<HcServiceResponse> getHCServiceNameAndDate(int customerDetailID) {
           List<HcServiceResponse> hcServiceResponses= hcServiceRepo.getHCServiceNameAndDate(customerDetailID);
         return hcServiceResponses;
+    }
+
+    @Override
+    public void saveHcService(HcService service) {
+
+        hcServiceRepo.save(service);
     }
 }

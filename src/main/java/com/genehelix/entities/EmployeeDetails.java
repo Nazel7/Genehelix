@@ -36,10 +36,10 @@ public class EmployeeDetails implements IUserDetail {
     @Column(name= "date_time")
     private String dateTime;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-            mappedBy = "employeeDetails")
-    private User user;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employeeD_id")
+    private Employee employee;
 
     public EmployeeDetails(){
         super();
@@ -55,6 +55,19 @@ public class EmployeeDetails implements IUserDetail {
         this.occupation = occupation;
         this.service = service;
         this.dateTime = dateTime;
+    }
+
+    public EmployeeDetails(int id, String twitter, String linkedin, String homeAddress, String mobile,
+                           String occupation, List<HcService> service, String dateTime, Employee employee) {
+        Id = id;
+        this.twitter = twitter;
+        this.linkedin = linkedin;
+        this.homeAddress = homeAddress;
+        this.mobile = mobile;
+        this.occupation = occupation;
+        this.service = service;
+        this.dateTime = dateTime;
+        this.employee = employee;
     }
 
     public int getId() {
@@ -121,22 +134,22 @@ public class EmployeeDetails implements IUserDetail {
         this.dateTime = dateTime;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public void addService(HcService service){
         this.service.add(service);
 
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public String toString() {
-        return "CustomerDetails{" +
+        return "EmployeeDetails{" +
                 "Id=" + Id +
                 ", twitter='" + twitter + '\'' +
                 ", linkedin='" + linkedin + '\'' +
@@ -145,7 +158,7 @@ public class EmployeeDetails implements IUserDetail {
                 ", occupation='" + occupation + '\'' +
                 ", service=" + service +
                 ", dateTime='" + dateTime + '\'' +
-                ", User=" + user +
-        '}';
+                ", employee=" + employee +
+                '}';
     }
 }

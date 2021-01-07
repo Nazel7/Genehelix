@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface HCServiceListRepo extends JpaRepository<HCServiceList, Integer> {
 
-    @Query("SELECT s.serviceTitle from HCServiceList s order by s.serviceTitle asc ")
+    @Query("SELECT s.serviceTitle from HCServiceList s order by s.Id ")
     List<String> getHCServiceListName();
 
-
+    @Override
+    List<HCServiceList> findAll();
 }

@@ -34,6 +34,9 @@ public class Employee implements IUser {
     @Column(name = "email")
     private String email;
 
+    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "employee")
+    private EmployeeDetails employeeDetails;
+
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "employee")
     private User user;
 
@@ -59,7 +62,6 @@ public class Employee implements IUser {
         this.email = email;
         this.customerList = customerList;
     }
-
 
     public int getId() {
         return id;
@@ -91,6 +93,14 @@ public class Employee implements IUser {
 
     public void setEmail(String company) {
         this.email = company;
+    }
+
+    public EmployeeDetails getEmployeeDetails() {
+        return employeeDetails;
+    }
+
+    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
+        this.employeeDetails = employeeDetails;
     }
 
     public User getUser() {

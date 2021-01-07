@@ -15,7 +15,7 @@ public class HcService {
     private String name;
 
     @Column(name = "date_time")
-    private String Date;
+    private String date;
 
     @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
     @JoinColumn(name = "customerdetails_id")
@@ -40,7 +40,7 @@ public class HcService {
     public HcService(int id, String name, String date, CustomerDetails customerDetails, EmployeeDetails employeeDetails) {
         Id = id;
         this.name = name;
-        Date = date;
+        this.date = date;
         this.customerDetails = customerDetails;
         this.employeeDetails = employeeDetails;
     }
@@ -62,11 +62,11 @@ public class HcService {
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public CustomerDetails getCustomerDetails() {
@@ -90,7 +90,7 @@ public class HcService {
         return "HcService{" +
                 "Id=" + Id +
                 ", name='" + name + '\'' +
-                ", Date='" + Date + '\'' +
+                ", Date='" + date + '\'' +
                 ", customerDetails=" + customerDetails +
                 ", employeeDetails=" + employeeDetails +
                 '}';
