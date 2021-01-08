@@ -41,7 +41,7 @@ public class UserDetailService implements UserDetails, UserDetailsService {
         IUser customer = user.getCustomer();
         return customer != null ? customer : user.getEmployee();
     }
-    
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.getUser(username);

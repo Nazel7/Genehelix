@@ -579,7 +579,7 @@
         <br>
         <br>
         <span class="divProfilespanpDatails" style="margin-top: 3%; border: none;">
-            <label style="margin-right: 30.5%; margin-left: 0">M-Service:</label><label>Date:</label>
+            <label style="margin-right: 32%; margin-left: 0">M-Service:</label><label>Date:</label>
         </span>
         <br>
         <span th:if="${latestService!= null}" class="spandetailHover">
@@ -679,7 +679,7 @@
 <section style="margin-top: 0.5%; margin-bottom: 3%; width: 5%">
     <div>
         <p th:if="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
-              th:href="@{/setting/userDetails(customerDetailID= ${userDetail.getId()})}">Setting</a></p>
+              th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a></p>
 
         <p th:unless="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
               th:href="@{/setting/newCustomerDetails}">Setting</a></p>
@@ -733,14 +733,15 @@
 </div>
 <aside style="float: left; width: 19%;  margin-left: 61%; height: 200px; margin-top: 24%;
 position: fixed">
-    <form action="#" th:object="${newHcService}" th:action="@{/customerService/submit(customerDetailId=${customerDetail.getId()})}">
+    <form action="#" th:object="${newHcService}"
+          th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST">
 
             <div class="form-group">
             <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>
-            <select class="form-control" id="hc-services">
-                <option th:field="*{name}" th:type="${serviceList.getServiceTitle()}"
-                        th:value="${serviceList.getServiceTitle()}"
+            <select th:field="*{name}" class="form-control" id="hc-services">
+                <option  th:type="${serviceList.getServiceTitle()}"
                         th:each="serviceList: ${hcServiceLists}"
+                        th:value="${serviceList.getServiceTitle()}"
                         th:text="${serviceList.getServiceTitle()}"></option>
             </select>
 <br>
@@ -748,7 +749,9 @@ position: fixed">
                 <input type="date" th:field="*{date}" class="form-control">
         </div>
 
-        <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%">
+        <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%"
+               onclick="if(!(confirm('Are you sure, to register for this service?')))
+                           return false">
     </form>
 
 <!--    <tr class="form-group">-->

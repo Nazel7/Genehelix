@@ -1,10 +1,7 @@
 package com.genehelix.controllers.views;
 
 import com.genehelix.dtos.responses.HcServiceResponse;
-import com.genehelix.entities.CustomerDetails;
-import com.genehelix.entities.HCServiceList;
-import com.genehelix.entities.HcService;
-import com.genehelix.entities.User;
+import com.genehelix.entities.*;
 import com.genehelix.interfaces.*;
 import com.genehelix.services.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,38 +68,48 @@ public class DashboardController {
         IUser user = userDetails.getActiveUser();
         model.addAttribute("activeUser", user);
         model.addAttribute("activeRole", userDetails.getActiveRole());
-//        System.out.println(user.getFirstName());
-//        System.out.println(userDetail.getTwitter());
 
-
-//        serviceListTitle = ihcServiceListService.getHCServiceListTitle();
-
-
-
-//         model.addAttribute("myUserDetails", userDetails);
-//        model.addAttribute("userDetail", userDetail);
-//        model.addAttribute("serviceLists", serviceListTitle);
-
-//     FOR ROLE_CUSTOMER
-//        int userdetailsId= userDetail.getId();
-//        hcServiceResponse= iService.getHCServiceNameAndDate(userdetailsId);
-//        int lastIndex= hcServiceResponse.size()-1;
-//        HcServiceResponse serviceResponse= hcServiceResponse.get(lastIndex);
-//
-////        set Customer new Service on select-option
-//        hcServiceLists= ihcServiceListService.findAll();
-//        HcService hcService= new HcService();
-//        model.addAttribute("customerDetail", userDetail);
-//        model.addAttribute("newHcService", hcService);
-//        model.addAttribute("hcServiceLists", hcServiceLists);
-//        model.addAttribute("latestService", serviceResponse.getName());
-//        model.addAttribute("latestServiceDate", serviceResponse.getDate());
+//        set User new Service on select-option
+          hcServiceLists= ihcServiceListService.findAll();
+        System.out.println(hcServiceLists.get(0).getServiceTitle());
+          HcService hcService= new HcService();
+        model.addAttribute("newHcService", hcService);
 
         switch (userDetails.getActiveRole()) {
             case "ROLE_ADMIN":
                 return gotoEmployeePage(model);
             case "ROLE_CUSTOMER":
-                return gotoCustomerPage();
+                CustomerDetails customerDetails= iUsersDetailService.getCustomerDetailsByCustomerId(user.getId());
+                if(customerDetails != null){
+                int customersId= user.getId();
+                System.out.println("CCCC::"+ customersId);
+                hcServiceResponse= iService.getHCServiceNameAndDate(customersId);
+                    int lastIndex1= hcServiceResponse.size()-1;
+                    System.out.println("index "+lastIndex1);
+                    if(lastIndex1 >= 0){
+                HcServiceResponse serviceResponse1= hcServiceResponse.get(lastIndex1);
+                        model.addAttribute("hcServiceResponse", hcServiceResponse);
+                        model.addAttribute("hcServiceResponseIndex", lastIndex1);
+                        model.addAttribute("hcServiceLists", hcServiceLists);
+                        model.addAttribute("latestServiceDate", serviceResponse1.getDate());
+                        model.addAttribute("latestService", serviceResponse1.getName());
+                        model.addAttribute("userDetail", customerDetails);
+
+                        return gotoCustomerPage();
+                    }
+                    else {
+                        model.addAttribute("hcServiceLists", hcServiceLists);
+                        model.addAttribute("userDetail", customerDetails);
+                        return gotoCustomerPage();
+                    }
+
+
+                }else{
+                    model.addAttribute("hcServiceLists", hcServiceLists);
+                    return gotoCustomerPage();
+                }
+
+
             case "ROLE_EMPLOYEE":
                 return gotoEmployeePage();
             default:
@@ -115,6 +122,7 @@ public class DashboardController {
     }
 
     private String gotoCustomerPage(){
+
 
         return "customer-page";
     }
@@ -138,13 +146,12 @@ public class DashboardController {
 
 
     @PostMapping("/customerService/submit")
-    public String postNewCustomerDetailService(@RequestParam("customerDetailId") int cDId,
+    public String postNewCustomerDetailService(@RequestParam("customerId") int cDId,
                                                @ModelAttribute("newHcService") HcService hcService){
 
-      CustomerDetails customerDetails= iUsersDetailService.getUserDetailsById(cDId);
-        System.out.println("custDTSErvice:: "+ customerDetails.getMobile());
-
-        hcService.setCustomerDetails(customerDetails);
+      Customer customer= IEmployeeService.getCustomerById(cDId);
+        System.out.println("custDTSErvice:: "+ customer.getEmail());
+        hcService.setCustomerh(customer);
 
         iService.saveHcService(hcService);
 
@@ -153,9 +160,9 @@ public class DashboardController {
 
     // Associate another postMapping
     @GetMapping("/setting/userDetails")
-     public String updateCustomerDetails(@RequestParam("customerDetailID") int cdId, Model model){
+     public String updateCustomerDetails(@RequestParam("customerId") int cdId, Model model){
         System.out.println("CustomerDID: "+ cdId);
-        CustomerDetails customerDetail= iUsersDetailService.getUserDetailsById(cdId);
+        CustomerDetails customerDetail= iUsersDetailService.getCustomerDetailsByCustomerId(cdId);
         System.out.println(customerDetail.getHomeAddress());
             model.addAttribute("newCustomerDetail", customerDetail);
 

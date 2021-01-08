@@ -11,5 +11,7 @@ public interface IUsersDetailService {
 
     CustomerDetails getUserDetailsById(int cdId);
 
+    CustomerDetails getCustomerDetailsByCustomerId(int cId);
+
 
 }
