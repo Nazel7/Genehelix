@@ -46,4 +46,11 @@ public class UsersDetailService implements IUsersDetailService {
         return null;
     }
 
+    @Override
+    public CustomerDetails getCustomerDetailsByCustomerId(int cId) {
+        CustomerDetails customerDetails= customerDetailsRepo.getCustomerDetailsByCustomerId(cId);
+
+        return customerDetails;
+    }
+
 }

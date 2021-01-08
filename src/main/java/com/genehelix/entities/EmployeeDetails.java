@@ -30,15 +30,12 @@ public class EmployeeDetails implements IUserDetail {
     @Column(name= "occupation")
     private String occupation;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employeeDetails")
-    private List<HcService> service = new ArrayList<>();
-
     @Column(name= "date_time")
     private String dateTime;
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employeeD_id")
+    @JoinColumn(name = "employeed_id")
     private Employee employee;
 
     public EmployeeDetails(){
@@ -46,26 +43,24 @@ public class EmployeeDetails implements IUserDetail {
     }
 
     public EmployeeDetails(int Id, String twitter, String linkedin, String homeAddress,
-                           String mobile, String occupation, List<HcService> service, String dateTime) {
+                           String mobile, String occupation, String dateTime) {
         this.Id= Id;
         this.twitter = twitter;
         this.linkedin = linkedin;
         this.homeAddress = homeAddress;
         this.mobile = mobile;
         this.occupation = occupation;
-        this.service = service;
         this.dateTime = dateTime;
     }
 
     public EmployeeDetails(int id, String twitter, String linkedin, String homeAddress, String mobile,
-                           String occupation, List<HcService> service, String dateTime, Employee employee) {
+                           String occupation, String dateTime, Employee employee) {
         Id = id;
         this.twitter = twitter;
         this.linkedin = linkedin;
         this.homeAddress = homeAddress;
         this.mobile = mobile;
         this.occupation = occupation;
-        this.service = service;
         this.dateTime = dateTime;
         this.employee = employee;
     }
@@ -118,14 +113,6 @@ public class EmployeeDetails implements IUserDetail {
         this.occupation = occupation;
     }
 
-    public List<HcService> getService() {
-        return service;
-    }
-
-    public void setService(List<HcService> service) {
-        this.service = service;
-    }
-
     public String getDateTime() {
         return dateTime;
     }
@@ -142,11 +129,6 @@ public class EmployeeDetails implements IUserDetail {
         this.employee = employee;
     }
 
-    public void addService(HcService service){
-        this.service.add(service);
-
-    }
-
     @Override
     public String toString() {
         return "EmployeeDetails{" +
@@ -156,7 +138,6 @@ public class EmployeeDetails implements IUserDetail {
                 ", homeAddress='" + homeAddress + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", occupation='" + occupation + '\'' +
-                ", service=" + service +
                 ", dateTime='" + dateTime + '\'' +
                 ", employee=" + employee +
                 '}';

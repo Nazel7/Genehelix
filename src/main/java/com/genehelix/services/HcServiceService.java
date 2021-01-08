@@ -15,15 +15,15 @@ public class HcServiceService implements IService {
     private HcServiceRepo hcServiceRepo;
 
     @Override
-    public List<String> getHcServiceNames(int cdId) {
-        List<String> hcServiceNames= hcServiceRepo.getHCServiceName(cdId);
+    public List<String> getHcServiceNames(int customerId) {
+        List<String> hcServiceNames= hcServiceRepo.getHCServiceName(customerId);
 
         return hcServiceNames;
     }
 
     @Override
-    public List<HcServiceResponse> getHCServiceNameAndDate(int customerDetailID) {
-          List<HcServiceResponse> hcServiceResponses= hcServiceRepo.getHCServiceNameAndDate(customerDetailID);
+    public List<HcServiceResponse> getHCServiceNameAndDate(int customerID) {
+          List<HcServiceResponse> hcServiceResponses= hcServiceRepo.getHCServiceNameAndDate(customerID);
         return hcServiceResponses;
     }
 

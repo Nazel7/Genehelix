@@ -37,6 +37,9 @@ public class Employee implements IUser {
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "employee")
     private EmployeeDetails employeeDetails;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employeeh")
+    private List<HcService> service = new ArrayList<>();
+
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "employee")
     private User user;
 
@@ -103,6 +106,24 @@ public class Employee implements IUser {
         this.employeeDetails = employeeDetails;
     }
 
+    @Override
+    public CustomerDetails getCustomerDetails() {
+        return null;
+    }
+
+    @Override
+    public void setCustomerDetails(CustomerDetails customerDetails) {
+
+    }
+
+    public List<HcService> getService() {
+        return service;
+    }
+
+    public void setService(List<HcService> service) {
+        this.service = service;
+    }
+
     public User getUser() {
         return user;
     }
@@ -126,9 +147,15 @@ public class Employee implements IUser {
 
     @Override
     public String toString() {
-        return "[ firstName:  " + firstName +
-                " lastName: " + lastName +
-                " email: " + email +
-                "]";
+        return "Employee{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", employeeDetails=" + employeeDetails +
+                ", service=" + service +
+                ", user=" + user +
+                ", customerList=" + customerList +
+                '}';
     }
 }

@@ -18,31 +18,31 @@ public class HcService {
     private String date;
 
     @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
-    @JoinColumn(name = "customerdetails_id")
-    private CustomerDetails customerDetails;
+    @JoinColumn(name = "customerh_id")
+    private Customer customerh;
 
     @ManyToOne( cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH})
-    @JoinColumn(name = "employeedetails_id")
-    private EmployeeDetails employeeDetails;
+    @JoinColumn(name = "employeeh_id")
+    private Employee employeeh;
 
     public HcService(){
         super();
 
     }
 
-    public HcService(int id, String name, CustomerDetails customerDetails, EmployeeDetails employeeDetails) {
+    public HcService(int id, String name, Customer customerh, Employee employeeh) {
         Id = id;
         this.name = name;
-        this.customerDetails = customerDetails;
-        this.employeeDetails= employeeDetails;
+        this.customerh = customerh;
+        this.employeeh= employeeh;
     }
 
-    public HcService(int id, String name, String date, CustomerDetails customerDetails, EmployeeDetails employeeDetails) {
+    public HcService(int id, String name, String date, Customer customerh, Employee employeeh) {
         Id = id;
         this.name = name;
         this.date = date;
-        this.customerDetails = customerDetails;
-        this.employeeDetails = employeeDetails;
+        this.customerh = customerh;
+        this.employeeh = employeeh;
     }
 
     public int getId() {
@@ -69,20 +69,21 @@ public class HcService {
         this.date = date;
     }
 
-    public CustomerDetails getCustomerDetails() {
-        return customerDetails;
+    public Customer getCustomerh() {
+        return customerh;
     }
 
-    public void setCustomerDetails(CustomerDetails customerDetails) {
-        this.customerDetails = customerDetails;
+    public void setCustomerh(Customer customerh) {
+        this.customerh= customerh;
     }
 
-    public EmployeeDetails getEmployeeDetails() {
-        return employeeDetails;
+
+    public Employee getEmployeeh() {
+        return employeeh;
     }
 
-    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
-        this.employeeDetails = employeeDetails;
+    public void setEmployeeh(Employee employeeh) {
+        this.employeeh = employeeh;
     }
 
     @Override
@@ -91,8 +92,8 @@ public class HcService {
                 "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", Date='" + date + '\'' +
-                ", customerDetails=" + customerDetails +
-                ", employeeDetails=" + employeeDetails +
+                ", customerDetails=" + customerh +
+                ", employeeDetails=" + employeeh +
                 '}';
     }
 }

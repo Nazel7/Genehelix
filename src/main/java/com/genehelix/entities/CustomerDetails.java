@@ -30,14 +30,13 @@ public class CustomerDetails implements IUserDetail {
     @Column(name= "occupation")
     private String occupation;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customerDetails")
-    private List<HcService> service = new ArrayList<>();
+
 
     @Column(name= "date_time")
     private String dateTime;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customerD_id")
+    @JoinColumn(name = "customerd_id")
     private Customer customer;
 
     public CustomerDetails(){
@@ -45,19 +44,18 @@ public class CustomerDetails implements IUserDetail {
     }
 
     public CustomerDetails(int Id, String twitter, String linkedin, String homeAddress,
-                           String mobile, String occupation, List<HcService> service, String dateTime) {
+                           String mobile, String occupation, String dateTime) {
         this.Id= Id;
         this.twitter = twitter;
         this.linkedin = linkedin;
         this.homeAddress = homeAddress;
         this.mobile = mobile;
         this.occupation = occupation;
-        this.service = service;
         this.dateTime = dateTime;
     }
 
     public CustomerDetails(int id, String twitter, String linkedin, String homeAddress, String mobile,
-                           String occupation, List<HcService> service, String dateTime,
+                           String occupation, String dateTime,
                            Customer customer) {
         Id = id;
         this.twitter = twitter;
@@ -65,7 +63,6 @@ public class CustomerDetails implements IUserDetail {
         this.homeAddress = homeAddress;
         this.mobile = mobile;
         this.occupation = occupation;
-        this.service = service;
         this.dateTime = dateTime;
         this.customer = customer;
     }
@@ -118,14 +115,6 @@ public class CustomerDetails implements IUserDetail {
         this.occupation = occupation;
     }
 
-    public List<HcService> getService() {
-        return service;
-    }
-
-    public void setService(List<HcService> service) {
-        this.service = service;
-    }
-
     public String getDateTime() {
         return dateTime;
     }
@@ -142,11 +131,6 @@ public class CustomerDetails implements IUserDetail {
         this.customer = customer;
     }
 
-    public void addService(HcService service){
-        this.service.add(service);
-
-    }
-
     @Override
     public String toString() {
         return "CustomerDetails{" +
@@ -156,7 +140,6 @@ public class CustomerDetails implements IUserDetail {
                 ", homeAddress='" + homeAddress + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", occupation='" + occupation + '\'' +
-                ", service=" + service +
                 ", dateTime='" + dateTime + '\'' +
                 ", customer=" + customer +
                 '}';

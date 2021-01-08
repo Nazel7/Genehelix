@@ -8,7 +8,7 @@ import java.util.List;
 public interface IService {
     List<String> getHcServiceNames(int cdId);
 
-    List<HcServiceResponse> getHCServiceNameAndDate(int customerDetailID);
+    List<HcServiceResponse> getHCServiceNameAndDate(int userID);
 
     void saveHcService(HcService service);
 }

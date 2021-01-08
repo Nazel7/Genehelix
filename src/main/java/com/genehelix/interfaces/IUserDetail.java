@@ -19,9 +19,8 @@ public interface IUserDetail {
 
     String getOccupation();
 
-    List<HcService> getService();
-
     String getDateTime();
+
 
 
 }
