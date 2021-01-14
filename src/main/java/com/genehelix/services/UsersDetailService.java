@@ -8,6 +8,7 @@ import com.genehelix.repositories.CustomerDetailsRepo;
 import com.genehelix.repositories.EmployeeDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,18 +23,16 @@ public class UsersDetailService implements IUsersDetailService {
 
     @Override
     public CustomerDetails saveUserDetails(CustomerDetails customerDetails) {
-             if(customerDetails != null){
               return    customerDetailsRepo.save(customerDetails);
-             }
-      return null;
+
+
     }
 
     @Override
     public EmployeeDetails saveUserDetails(EmployeeDetails employeeDetails) {
-        if(employeeDetails != null){
-            return employeeDetailsRepo.save(employeeDetails);
-        }
-        return null;
+                return employeeDetailsRepo.save(employeeDetails);
+
+
     }
 
     @Override

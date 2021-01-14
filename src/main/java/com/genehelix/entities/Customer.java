@@ -16,7 +16,7 @@ public class Customer implements IUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    @NotNull(message = " at least 1 character is required")
+    @NotNull(message = " at least 2 character is required")
     @Size(min = 2, message = "at least one value is required")
     @Column(name = "first_name")
     private String firstName;
@@ -34,14 +34,15 @@ public class Customer implements IUser {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviewList = new ArrayList<>();
 
-    @NotNull(message = "is required")
-    @ManyToOne(cascade = {CascadeType.MERGE,
-            CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "customer")
+    @OneToOne(cascade= CascadeType.ALL, mappedBy = "customer")
     private CustomerDetails customerDetails;
+
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "customer")
+    private UserResume userResume;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customerh")
     private List<HcService> service = new ArrayList<>();
@@ -61,12 +62,12 @@ public class Customer implements IUser {
         this.employee = employee;
     }
 
-    public Customer(String firstName, String lastName, List<Review> reviewList) {
+    public Customer(String firstName, String lastName, List<Review> reviewList, CustomerDetails customerDetails) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.reviewList = reviewList;
+        this.customerDetails= customerDetails;
     }
-
 
     public int getId() {
         return id;
@@ -94,16 +95,6 @@ public class Customer implements IUser {
 
     public String getEmail() {
         return email;
-    }
-
-    @Override
-    public EmployeeDetails getEmployeeDetails() {
-        return null;
-    }
-
-    @Override
-    public void setEmployeeDetails(EmployeeDetails employeeDetails) {
-
     }
 
     public void setEmail(String email) {
@@ -134,6 +125,14 @@ public class Customer implements IUser {
         this.customerDetails = customerDetails;
     }
 
+    public UserResume getUserResume() {
+        return userResume;
+    }
+
+    public void setUserResume(UserResume userResume) {
+        this.userResume = userResume;
+    }
+
     public List<HcService> getService() {
         return service;
     }
@@ -154,18 +153,5 @@ public class Customer implements IUser {
         this.employee = employee;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", reviewList=" + reviewList +
-                ", employee=" + employee +
-                ", customerDetails=" + customerDetails +
-                ", service=" + service +
-                ", user=" + user +
-                '}';
-    }
+
 }

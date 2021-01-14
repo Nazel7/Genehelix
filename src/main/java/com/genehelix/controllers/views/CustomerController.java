@@ -2,9 +2,12 @@ package com.genehelix.controllers.views;
 
 import com.genehelix.entities.Customer;
 import com.genehelix.entities.Employee;
+import com.genehelix.entities.UserResume;
 import com.genehelix.interfaces.IEmployeeService;
-import com.genehelix.utils.CustomerUtil;
+import com.genehelix.interfaces.IUserResumeService;
+import com.genehelix.repositories.UserResumeRepo;
 import com.genehelix.utils.ErrorMessageUtil;
+import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -13,9 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -23,6 +30,12 @@ public class CustomerController {
 
     @Autowired
     private IEmployeeService IEmployeeService;
+
+    @Autowired
+    private IUserResumeService iUserResumeService;
+
+    @Autowired
+    private UserResumeRepo userResumeRepo;
 
    private  List<Customer> customers;
 
@@ -122,10 +135,10 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/showFormForCustomerUpdate")
-    public String customerUpdate(@RequestParam("customerUpdate") int id,
-                                 Model model) {
-        System.out.println("CustomerID: " + id);
+    public String customerUpdate(@RequestParam("customerUpdate") int id, Model model) {
+        System.out.println("CustomerID2: " + id);
         Customer customer = IEmployeeService.getCustomerById(id);
+        System.out.println("RealCustomer: "+ customer.getId());
         model.addAttribute("customer", customer);
 
         return "add-update-customer";
@@ -133,9 +146,12 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/postUpdateEmployeeCustomer")
-    public String updateEmployeeCustomer(@ModelAttribute("customer") Customer customer) {
-
-        if (customer.getEmployee().getId() > 0)
+    public String updateEmployeeCustomer(@ModelAttribute("customer") Customer customer,
+                                         @RequestParam("employeeId") int employeeId) {
+        System.out.println("ECId: "+ employeeId);
+        Employee employee= IEmployeeService.getEmployee(employeeId);
+        if (employee != null)
+             customer.setEmployee(employee);
             IEmployeeService.addEmployeeCustomer(customer);
 
         return "redirect:/company-employees/employee-list";
@@ -192,4 +208,40 @@ public class CustomerController {
         return "customer-general-page";
     }
 
+    @GetMapping("/customer/resumeUpload")
+    public String uploadProfilePhoto(@RequestParam("userId") int cDId, Model model){
+        UserResume resume= new UserResume();
+        model.addAttribute("customerIdR", cDId);
+        model.addAttribute("resumeObject", resume);
+        return "customer-resume";
+    }
+
+    @PostMapping("/customer/uploaded_resume")
+    public String customerUploadResume(@RequestParam("muiltiPartFile")MultipartFile file,
+                                       @RequestParam("userId")int cdId,
+                                       @ModelAttribute("resumeObject") UserResume resume,
+                                       RedirectAttributes redirectAttributes){
+        Customer customer= IEmployeeService.getCustomerById(cdId);
+        String fileName= Util.fileConvertToString(file);
+        System.out.println("FileNameP: "+ fileName);
+        System.out.println("YESCDID: "+ customer.getId());
+        try{
+            if(!fileName.trim().isEmpty()) {
+                System.out.println("File:"+ file.getOriginalFilename());
+                resume.setCustomer(customer);
+                resume.setDate(new Date());
+                iUserResumeService.saveUserResume(file, resume);
+                redirectAttributes.addFlashAttribute("message", "File Upload Successfully!");
+                return "redirect:/dashboard";
+            }
+            return "customer-resume";
+
+        }catch (IOException e){
+
+            e.printStackTrace();
+            return "customer-resume";
+
+        }
+
+    }
 }

@@ -129,17 +129,4 @@ public class EmployeeDetails implements IUserDetail {
         this.employee = employee;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeDetails{" +
-                "Id=" + Id +
-                ", twitter='" + twitter + '\'' +
-                ", linkedin='" + linkedin + '\'' +
-                ", homeAddress='" + homeAddress + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", occupation='" + occupation + '\'' +
-                ", dateTime='" + dateTime + '\'' +
-                ", employee=" + employee +
-                '}';
-    }
 }

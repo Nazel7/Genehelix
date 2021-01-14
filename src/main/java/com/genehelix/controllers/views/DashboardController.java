@@ -88,6 +88,7 @@ public class DashboardController {
                     System.out.println("index "+lastIndex1);
                     if(lastIndex1 >= 0){
                 HcServiceResponse serviceResponse1= hcServiceResponse.get(lastIndex1);
+                        model.addAttribute("customerId", customersId);
                         model.addAttribute("hcServiceResponse", hcServiceResponse);
                         model.addAttribute("hcServiceResponseIndex", lastIndex1);
                         model.addAttribute("hcServiceLists", hcServiceLists);
@@ -164,6 +165,7 @@ public class DashboardController {
         System.out.println("CustomerDID: "+ cdId);
         CustomerDetails customerDetail= iUsersDetailService.getCustomerDetailsByCustomerId(cdId);
         System.out.println(customerDetail.getHomeAddress());
+        model.addAttribute("customerId", cdId);
             model.addAttribute("newCustomerDetail", customerDetail);
 
             return "new-customer-detail";
@@ -172,12 +174,9 @@ public class DashboardController {
         @PostMapping("/setting/updateCustomerDetails")
         public String postUpdateCustomerDetail(@ModelAttribute("newCustomerDetail") CustomerDetails customerDetails){
 
-        if(customerDetails.getId() > 0)
+            iUsersDetailService.saveUserDetails(customerDetails);
 
-        iUsersDetailService.saveUserDetails(customerDetails);
-
-        return "redirect:/dashboard";
-
+            return "redirect:/dashboard";
 
         }
 
@@ -208,6 +207,8 @@ public class DashboardController {
 
         return "redirect:/dashboard";
     }
+
+
 
 
 }

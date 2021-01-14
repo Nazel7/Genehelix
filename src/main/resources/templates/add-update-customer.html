@@ -30,7 +30,7 @@
 
     <div style=" padding: 5px">
         <form action="#"
-              th:action="@{/customer/postUpdateEmployeeCustomer(employeeId=${employeeId})}"
+              th:action="@{/customer/postUpdateEmployeeCustomer(employeeId=${customer.getEmployee().getId()})}"
               th:object="${customer}"
               method="POST">
             <h4>Update Customer for Employee</h4>
@@ -58,8 +58,6 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="hidden" name="employeeId" th:field="*{employee}"
-                               class="form-control">
 
                         <input type="number" name="employeeId" th:value="${customer.employee.id}"
                                disabled class="form-control">

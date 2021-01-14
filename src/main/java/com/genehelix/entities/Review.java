@@ -58,9 +58,9 @@ public class Review {
         this.customer = customer;
     }
 
-    @Override
-    public String toString() {
-        return "[ " + this.id + "/n" +
-                this.reviewMessage + "/n" + "]";
-    }
+//    @Override
+//    public String toString() {
+//        return "[ " + this.id + "/n" +
+//                this.reviewMessage + "/n" + "]";
+//    }
 }

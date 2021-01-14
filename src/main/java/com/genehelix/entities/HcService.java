@@ -85,15 +85,15 @@ public class HcService {
     public void setEmployeeh(Employee employeeh) {
         this.employeeh = employeeh;
     }
-
-    @Override
-    public String toString() {
-        return "HcService{" +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-                ", Date='" + date + '\'' +
-                ", customerDetails=" + customerh +
-                ", employeeDetails=" + employeeh +
-                '}';
-    }
+//
+//    @Override
+//    public String toString() {
+//        return "HcService{" +
+//                "Id=" + Id +
+//                ", name='" + name + '\'' +
+//                ", Date='" + date + '\'' +
+//                ", customerDetails=" + customerh +
+//                ", employeeDetails=" + employeeh +
+//                '}';
+//    }
 }

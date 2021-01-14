@@ -54,11 +54,12 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home-page").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
-                .antMatchers("/company-employees/employee-list", "/company-employees/**", "/dashboard/**",
-                        "/reviews","/customers",
-                        "/customer/**","/customers/**", "/reviews/**").hasRole("ADMIN")
-                .antMatchers("/customer-page", "/customer-page/**").hasRole("CUSTOMER")
-                .antMatchers( "/company-employees/**").hasAnyRole("ADMIN", "EMPLOYEE")
+                .antMatchers("/company-employees/employee-list", "/customers/general-list/**","/customers/search**",
+                        "/customers/showFormForAdd**", "/company-employees/**", "/customer/showFormForCustomerUpdate**", "/dashboard/**",
+                        "/reviews","/customers**", "/customer/**","/customers/**", "/reviews/**").hasRole("ADMIN")
+                .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
+                        "/customers/**").hasRole("CUSTOMER")
+                .antMatchers( "/company-employees/**", "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/login-page")
