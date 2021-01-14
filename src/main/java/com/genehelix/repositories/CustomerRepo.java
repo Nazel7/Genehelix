@@ -29,4 +29,6 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
 
     @Query("SELECT c from customer c where c.firstName like %?1% or c.lastName like %?1% order by  c.id desc ")
     Page<Customer> getSearchedCustomers(String customerProperty, Pageable pageable);
+
+    Customer getCustomerById(int cId);
 }

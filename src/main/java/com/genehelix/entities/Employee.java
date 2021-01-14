@@ -2,6 +2,7 @@ package com.genehelix.entities;
 
 
 import com.genehelix.interfaces.IUser;
+import org.hibernate.jpa.spi.HibernateEntityManagerImplementor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -34,8 +35,11 @@ public class Employee implements IUser {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "employee")
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "employee")
     private EmployeeDetails employeeDetails;
+
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "employee")
+    private UserResume userResume;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employeeh")
     private List<HcService> service = new ArrayList<>();
@@ -106,14 +110,12 @@ public class Employee implements IUser {
         this.employeeDetails = employeeDetails;
     }
 
-    @Override
-    public CustomerDetails getCustomerDetails() {
-        return null;
+    public UserResume getUserResume() {
+        return userResume;
     }
 
-    @Override
-    public void setCustomerDetails(CustomerDetails customerDetails) {
-
+    public void setUserResume(UserResume userResume) {
+        this.userResume = userResume;
     }
 
     public List<HcService> getService() {

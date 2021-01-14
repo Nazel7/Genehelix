@@ -8,8 +8,4 @@ public interface IUser {
     String getFirstName();
     String getLastName();
     String getEmail();
-    EmployeeDetails getEmployeeDetails();
-    void setEmployeeDetails(EmployeeDetails employeeDetails);
-    CustomerDetails getCustomerDetails();
-    void setCustomerDetails(CustomerDetails customerDetails);
 }

@@ -46,7 +46,6 @@ public class EmployeeService implements IEmployeeService {
     }
 
     @Override
-    @Transactional
     public void deleteEmployee(int empID) {
         if (empID > 0) {
             repository.deleteById(empID);
@@ -108,13 +107,11 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Customer getCustomerById(int customerId) {
         Optional<Customer> customer = customerRepo.findById(customerId);
-        Customer customer1;
-        if (customer.isPresent()) {
-            customer1 = customer.get();
-            return customer1;
-        } else {
-            return null;
-        }
+  if(customer.isPresent()){
+      Customer customer1= customer.get();
+      return customer1;
+  }
+        return null;
     }
 
     @Override

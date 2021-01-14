@@ -30,12 +30,10 @@ public class CustomerDetails implements IUserDetail {
     @Column(name= "occupation")
     private String occupation;
 
-
-
     @Column(name= "date_time")
     private String dateTime;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
     @JoinColumn(name = "customerd_id")
     private Customer customer;
 
@@ -131,17 +129,4 @@ public class CustomerDetails implements IUserDetail {
         this.customer = customer;
     }
 
-    @Override
-    public String toString() {
-        return "CustomerDetails{" +
-                "Id=" + Id +
-                ", twitter='" + twitter + '\'' +
-                ", linkedin='" + linkedin + '\'' +
-                ", homeAddress='" + homeAddress + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", occupation='" + occupation + '\'' +
-                ", dateTime='" + dateTime + '\'' +
-                ", customer=" + customer +
-                '}';
-    }
 }

@@ -439,9 +439,8 @@
             <img th:src="@{/images/k-devs-icon.jpg}" src="../static/images/k-devs-icon.jpg" width="120px" height="120px"
                  class="shadow pt-1 pb-1 mb-3 bg-white rounded">
             <div style="text-align: center; margin-bottom: 6%">
-                <form>
-                    <input type="button" value="Uploader"
-                           style="
+
+               <a href="#" th:href="@{/customer/photoUpload(userId=${customerId})}" style="
                    width: 30%;
                    background-color: white;
                    color: dodgerblue;
@@ -449,9 +448,8 @@
                    font-size: 13px;
                    border-radius: 5px;
                    border: 1px solid dodgerblue "
-                           onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
-                           onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'"/>
-                </form>
+                  onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
+                  onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'">Uploader</a>
             </div>
             <div class="divProfileSpan">
            <span class="divProfileSpan" style="width: 50%; font-size: 20px">
@@ -468,6 +466,13 @@
                 </span>
            </span>
             </div>
+            <br>
+            <span class="divProfileSpan" style="float: left; color: green">
+                <span class="text-success">
+                   [[${message}]]
+                </span>
+
+            </span>
         </div>
 
         <ul class="shadow-sm pt-1 pb-1 mb-5 bg-white rounded" style="color: darkslategray">
@@ -482,7 +487,7 @@
                     <span>My Profile</span> </a>
             </li>
             <li class="active">
-                <a href="#">
+                <a href="#" th:href="@{/customer/resumeUpload(userId=${customerId})}">
                     <i class="far fa-file-pdf"></i>
                     <span>My Resume </span> </a>
             </li>
@@ -579,7 +584,7 @@
         <br>
         <br>
         <span class="divProfilespanpDatails" style="margin-top: 3%; border: none;">
-            <label style="margin-right: 32%; margin-left: 0">M-Service:</label><label>Date:</label>
+            <label style="margin-right: 32%; margin-left: 0">M-Service:</label><label>Visit-Date:</label>
         </span>
         <br>
         <span th:if="${latestService!= null}" class="spandetailHover">
@@ -745,7 +750,7 @@ position: fixed">
                         th:text="${serviceList.getServiceTitle()}"></option>
             </select>
 <br>
-                <label>Date: </label>
+                <label>Visit-Date: </label>
                 <input type="date" th:field="*{date}" class="form-control">
         </div>
 
@@ -778,6 +783,7 @@ position: fixed">
                                                           width="24px"
                                                           height="23px"></sup>Copyright<sup>&copy;</sup>2020. All rights
             Research</p>
+
     </div>
     <br>
 </aside>
