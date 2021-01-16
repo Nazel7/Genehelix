@@ -9,5 +9,9 @@ public interface IUserResumeService {
 
     void saveUserResume(MultipartFile file, UserResume userResume) throws IOException;
 
-    void saveExistingUserResume(MultipartFile file, UserResume resume);
+    void updateUserResume(MultipartFile file, UserResume resume);
+
+    UserResume getUserResumeByCustomeerId(int cDId);
+
+    UserResume getUserResumeById(int userResumeId);
 }

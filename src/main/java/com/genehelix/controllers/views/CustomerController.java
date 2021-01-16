@@ -6,11 +6,13 @@ import com.genehelix.entities.UserResume;
 import com.genehelix.interfaces.IEmployeeService;
 import com.genehelix.interfaces.IUserResumeService;
 import com.genehelix.repositories.UserResumeRepo;
+import com.genehelix.services.UserResumeService;
 import com.genehelix.utils.ErrorMessageUtil;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class CustomerController {
     private IUserResumeService iUserResumeService;
 
     @Autowired
-    private UserResumeRepo userResumeRepo;
+    private UserResumeService userResumeService;
 
    private  List<Customer> customers;
 
@@ -209,8 +213,11 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/resumeUpload")
-    public String uploadProfilePhoto(@RequestParam("userId") int cDId, Model model){
+    public String uploadResume(@RequestParam("userId") int cDId, Model model){
         UserResume resume= new UserResume();
+       UserResume userResume= userResumeService.getUserResumeByCustomeerId(cDId);
+
+       model.addAttribute("userResume", userResume);
         model.addAttribute("customerIdR", cDId);
         model.addAttribute("resumeObject", resume);
         return "customer-resume";
@@ -229,7 +236,6 @@ public class CustomerController {
             if(!fileName.trim().isEmpty()) {
                 System.out.println("File:"+ file.getOriginalFilename());
                 resume.setCustomer(customer);
-                resume.setDate(new Date());
                 iUserResumeService.saveUserResume(file, resume);
                 redirectAttributes.addFlashAttribute("message", "File Upload Successfully!");
                 return "redirect:/dashboard";
@@ -241,6 +247,24 @@ public class CustomerController {
             e.printStackTrace();
             return "customer-resume";
 
+        }
+
+
+    }
+    @GetMapping("/resume/download")
+    public void downloadResume(@Param("resumeId") int resumeId, HttpServletResponse response) throws Exception{
+
+        UserResume userResume= iUserResumeService.getUserResumeById(resumeId);
+        if(userResume != null){
+            response.setContentType("application/octet-stream");
+            String headerKey= "Content-Disposition";
+            String headerValue= "attachment; filename="+ userResume.getResumeName();
+
+            response.setHeader(headerKey, headerValue);
+
+            ServletOutputStream resumeOutputStream= response.getOutputStream();
+            resumeOutputStream.write(userResume.getResume());
+            resumeOutputStream.close();
         }
 
     }
