@@ -20,6 +20,12 @@ public class UserResume {
     @Column(name = "resume", nullable = false)
     private byte[] resume;
 
+    @Column(name = "resume_name", nullable = false)
+    private String resumeName;
+
+    @Column(name = "resume_size", nullable = false)
+    private long resumeSize;
+
     @Column(name="date")
     private Date date;
 
@@ -56,6 +62,22 @@ public class UserResume {
 
     public void setResume(byte[] resume) {
         this.resume = resume;
+    }
+
+    public String getResumeName() {
+        return resumeName;
+    }
+
+    public void setResumeName(String resumeName) {
+        this.resumeName = resumeName;
+    }
+
+    public long getResumeSize() {
+        return resumeSize;
+    }
+
+    public void setResumeSize(long resumeSize) {
+        this.resumeSize = resumeSize;
     }
 
     public Date getDate() {

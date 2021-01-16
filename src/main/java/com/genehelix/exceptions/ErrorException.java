@@ -13,7 +13,7 @@ public class ErrorException {
     public ResponseEntity<ErrorResponse> responseClassResponseEntity(NotFundException exc) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorStatus("" + HttpStatus.NOT_FOUND.value());
-        errorResponse.setErrorMessage("kindly press back to the previous page list");
+        errorResponse.setErrorMessage(exc.getMessage());
         errorResponse.setTimeLapse("" + System.currentTimeMillis());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
@@ -23,8 +23,7 @@ public class ErrorException {
     public ResponseEntity<ErrorResponse> responseClassResponseEntity(Exception exc) {
         ErrorResponse errorResponse = new ErrorResponse();
         errorResponse.setErrorStatus("" + HttpStatus.BAD_REQUEST.value());
-        errorResponse.setErrorMessage("kindly press back to the previous page list! Note: only add review to " +
-                "customer and add customer to employee ");
+        errorResponse.setErrorMessage(exc.getMessage());
         errorResponse.setTimeLapse("" + System.currentTimeMillis());
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
