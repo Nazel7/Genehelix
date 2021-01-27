@@ -5,6 +5,7 @@ import com.genehelix.interfaces.IUser;
 import com.genehelix.interfaces.IUserResumeService;
 import com.genehelix.repositories.UserResumeRepo;
 import com.genehelix.utils.Util;
+import org.hibernate.boot.InvalidMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
+import java.security.spec.InvalidParameterSpecException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Objects;
@@ -27,7 +29,7 @@ public class UserResumeService implements IUserResumeService {
 
     @Override
     public void saveUserResume(MultipartFile file, UserResume resume) throws IOException {
-        String fileName= StringUtils.cleanPath((Objects.requireNonNull(file.getOriginalFilename())));
+        String fileName= Util.fileConvertToString(file);
         System.out.println(fileName);
         if(fileName.trim().isEmpty() || fileName.trim().contains(",") || fileName.trim().contains("..")){
             throw new NoSuchFileException("Not acceptable file format. file contains any of unacceptable char in filename." +
@@ -61,6 +63,5 @@ public class UserResumeService implements IUserResumeService {
       }
       return null;
     }
-
 
 }

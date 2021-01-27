@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,9 +38,6 @@ public class CustomerController {
 
     @Autowired
     private IUserResumeService iUserResumeService;
-
-    @Autowired
-    private UserResumeService userResumeService;
 
    private  List<Customer> customers;
 
@@ -119,9 +117,11 @@ public class CustomerController {
 
 
     @PostMapping("/customers/postEmployeeCustomer")
-    public String postEmployeeCustomer(@Valid @ModelAttribute("newEmployeeCustomer") Customer customer,
-                                       @RequestParam("employeeID") int employeeId, Model model,
-                                       BindingResult bindingResult) {
+    public String postEmployeeCustomer(@ModelAttribute("newEmployeeCustomer") Customer customer,
+                                       @RequestParam("employeeCID") int employeeId,
+                                       BindingResult bindingResult,
+                                       Model model
+                                       ) {
 
         if (bindingResult.hasErrors()) {
 
@@ -143,25 +143,12 @@ public class CustomerController {
         System.out.println("CustomerID2: " + id);
         Customer customer = IEmployeeService.getCustomerById(id);
         System.out.println("RealCustomer: "+ customer.getId());
-        model.addAttribute("customer", customer);
+        model.addAttribute("employeeId", customer.getEmployee().getId());
+        model.addAttribute("newEmployeeCustomer", customer);
 
-        return "add-update-customer";
+        return "add-new-employee-customer";
 
     }
-
-    @PostMapping("/customer/postUpdateEmployeeCustomer")
-    public String updateEmployeeCustomer(@ModelAttribute("customer") Customer customer,
-                                         @RequestParam("employeeId") int employeeId) {
-        System.out.println("ECId: "+ employeeId);
-        Employee employee= IEmployeeService.getEmployee(employeeId);
-        if (employee != null)
-             customer.setEmployee(employee);
-            IEmployeeService.addEmployeeCustomer(customer);
-
-        return "redirect:/company-employees/employee-list";
-    }
-
-
 
     @GetMapping("/customer/delete")
     public String deleteEmployeeCustomer(@RequestParam("customerDelete") int employeeCustomerId) {
@@ -215,9 +202,18 @@ public class CustomerController {
     @GetMapping("/customer/resumeUpload")
     public String uploadResume(@RequestParam("userId") int cDId, Model model){
         UserResume resume= new UserResume();
-       UserResume userResume= userResumeService.getUserResumeByCustomeerId(cDId);
+        System.out.println("reUCID: "+ cDId);
+       UserResume userResume= iUserResumeService.getUserResumeByCustomeerId(cDId);
+       if(userResume == null){
+           model.addAttribute("userResume", null);
+           model.addAttribute("resumeId", null);
+           model.addAttribute("customerIdR", cDId);
+           model.addAttribute("resumeObject", resume);
+           return "customer-resume";
+       }
 
        model.addAttribute("userResume", userResume);
+       model.addAttribute("resumeId", userResume.getId());
         model.addAttribute("customerIdR", cDId);
         model.addAttribute("resumeObject", resume);
         return "customer-resume";
@@ -232,6 +228,8 @@ public class CustomerController {
         String fileName= Util.fileConvertToString(file);
         System.out.println("FileNameP: "+ fileName);
         System.out.println("YESCDID: "+ customer.getId());
+
+
         try{
             if(!fileName.trim().isEmpty()) {
                 System.out.println("File:"+ file.getOriginalFilename());
@@ -251,6 +249,20 @@ public class CustomerController {
 
 
     }
+
+    // I am working here...
+    @GetMapping("/customer/resume-update")
+    public String customerResumeUpdate(@RequestParam("userId") int cDId, Model model){
+        UserResume userResume= iUserResumeService.getUserResumeByCustomeerId(cDId);
+
+            model.addAttribute("customerIdR", cDId);
+            model.addAttribute("userResume", userResume);
+            model.addAttribute("resumeObject", userResume);
+            return "customer-resume-update";
+
+    }
+
+
     @GetMapping("/resume/download")
     public void downloadResume(@Param("resumeId") int resumeId, HttpServletResponse response) throws Exception{
 

@@ -29,9 +29,8 @@
     </div>
 
     <div style=" padding: 5px">
-        <form action="#" th:action="@{/customers/postEmployeeCustomer(employeeID=${employeeId})}"
-              th:object="${newEmployeeCustomer}"
-              method="POST">
+        <form action="#" th:action="@{/customers/postEmployeeCustomer(employeeCID=${employeeId})}"
+              th:object="${newEmployeeCustomer}" method="POST">
             <h4>New Customer Form </h4>
             <input type="hidden" th:field="*{id}"/>
             <table style="width: 40%">
@@ -54,14 +53,6 @@
                                placeholder="email here"></td>
                     <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
                     </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="number" name="employeeId" th:field="*{employee}" class="form-control">
-                        <input type="text" name="employeeId" th:value="${ 'enter value: '+ employeeId}"
-                               disabled class="form-control">
-                    </td>
-
                 </tr>
                 <tr>
                     <td><input type="submit" value="Save" class="btn btn-outline-primary"/></td>

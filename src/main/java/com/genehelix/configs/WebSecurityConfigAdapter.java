@@ -1,5 +1,6 @@
 package com.genehelix.configs;
 
+
 import com.genehelix.services.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Primary
 public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Autowired
-   private SimpleAuthenticationSuccessfulHandler successfulHandler;
+    private SimpleAuthenticationSuccessfulHandler successfulHandler;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -47,19 +48,22 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/home-page").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
-                .antMatchers("/company-employees/employee-list", "/customers/general-list/**","/customers/search**",
-                        "/customers/showFormForAdd**", "/company-employees/**", "/customer/showFormForCustomerUpdate**", "/dashboard/**",
-                        "/reviews","/customers**", "/customer/**","/customers/**", "/reviews/**").hasRole("ADMIN")
+                .antMatchers("/customers/postEmployeeCustomer", "/customer/postUpdateEmployeeCustomer").hasRole("ADMIN")
+                .antMatchers("/customer/postUpdateEmployeeCustomer**").hasRole("ADMIN")
+                .antMatchers("/company-employees/employee-list", "/customers/general-list/**",
+                        "/customers/search**", "/customers/showFormForAdd**",
+                        "/customer/delete", "/company-employees/**", "/customer/showFormForCustomerUpdate**",
+                        "/dashboard/**", "/reviews", "/customers**", "/customer/**", "/customers/**",
+                        "/customer/postUpdateEmployeeCustomer/","/reviews/**").hasRole("ADMIN")
                 .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
                         "/customers/**").hasRole("CUSTOMER")
-                .antMatchers( "/company-employees/**", "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
+                .antMatchers("/company-employees/**", "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/login-page")
@@ -77,5 +81,4 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/accessDeniedPage");
 
     }
-
 }

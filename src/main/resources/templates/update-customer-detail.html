@@ -14,16 +14,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style>
-    label{
-        color: darkslategray;
-    }
-    table tbody tr td{
-        padding: 12px;
-        margin-bottom: 10%;
+    <style>
+        label{
+            color: darkslategray;
+        }
+        table tbody tr td{
+            padding: 12px;
+            margin-bottom: 10%;
 
-    }
-</style>
+        }
+    </style>
 </head>
 
 <body style="background-color: azure; align-content: center; ">
@@ -37,9 +37,9 @@
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
         <div class="Container" style=" padding: 5px; ">
-            <div th:if="${customerDetailCheck != null}">
+            <div th:if="${updateCustomerDetail!= null}">
                 <form action="#" th:action="@{/setting/updateCustomerDetails}"
-                      th:object="${newCustomerDetail}" method="POST" >
+                      th:object="${updateCustomerDetail}" method="POST" >
                     <input type="hidden" th:field="*{id}"/>
 
                     <div style="border: 1px solid aqua; background-color: white; width: 128%">
@@ -85,56 +85,6 @@
                             <tr>
                                 <td><input type="hidden" name="customerId" th:field="*{customer}"/></td>
 
-                            </tr>
-
-                            <tr class="form-group">
-                                <td><input type="submit" value="Save" class="btn btn-primary"/></td>
-                            </tr>
-                            <div style="clear:both"></div>
-                        </table>
-                    </div>
-
-                </form>
-            </div>
-            <div th:unless="${customerDetailCheck == null}">
-                <form action="#" th:action="@{/setting/postNewCustomerDetails(customerId=${activeUserId})}"
-                      th:object="${newCustomerDetail}" method="POST" >
-                    <input type="hidden" th:field="*{id}"/>
-                    <div style="border: 1px solid aqua; background-color: white; width: 128%">
-                        <table >
-
-                            <tr class="form-group">
-                                <td><label for="date">Date:</label></td>
-                                <td><input type="date" th:field="*{dateTime}" class="form-control" id="date"
-                                           placeholder="DD/MM/YYYY"></td>
-
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="twitter">Twitter:</label></td>
-                                <td><input type="text" th:field="*{twitter}" class="form-control" id="twitter"
-                                           placeholder=" twitter address here"></td>
-
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="linkedin">Linkedin:</label></td>
-                                <td><input type="text" th:field="*{linkedin}" class="form-control" id="linkedin"
-                                           placeholder="linkedin address here"></td>
-
-                            </tr>
-                            <tr class="form-group">
-                                <td><label for="location">Address/Location:</label></td>
-                                <td><input type="text" th:field="*{homeAddress}" class="form-control" id="location"
-                                           placeholder="home address here"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="phone">Phone:</label></td>
-                                <td><input type="text" th:field="*{mobile}" class="form-control" id="phone"
-                                           placeholder="mobile number here"></td>
-                            </tr>
-                            <tr>
-                                <td><label for="occupation">occupation:</label></td>
-                                <td><input type="text" th:field="*{occupation}" class="form-control" id="occupation"
-                                           placeholder="mobile number here"></td>
                             </tr>
 
                             <tr class="form-group">

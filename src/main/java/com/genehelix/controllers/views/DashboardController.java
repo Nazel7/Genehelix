@@ -65,13 +65,16 @@ public class DashboardController {
     public String getUserDashboard(@AuthenticationPrincipal UserDetailService userDetails, Model model) {
 
         // Switching Users (Customer & Employee)
-        IUser user = userDetails.getActiveUser();
-        model.addAttribute("activeUser", user);
+        IUser user1 = userDetails.getActiveUser();
+        System.out.println("userID: "+ user1.getId());
+        model.addAttribute("activeUser", user1);
         model.addAttribute("activeRole", userDetails.getActiveRole());
 
 //        set User new Service on select-option
           hcServiceLists= ihcServiceListService.findAll();
         System.out.println(hcServiceLists.get(0).getServiceTitle());
+        int customersId= user1.getId();
+        System.out.println("uuu:"+customersId);
           HcService hcService= new HcService();
         model.addAttribute("newHcService", hcService);
 
@@ -79,10 +82,9 @@ public class DashboardController {
             case "ROLE_ADMIN":
                 return gotoEmployeePage(model);
             case "ROLE_CUSTOMER":
-                CustomerDetails customerDetails= iUsersDetailService.getCustomerDetailsByCustomerId(user.getId());
+                CustomerDetails customerDetails= iUsersDetailService.getCustomerDetailsByCustomerId(user1.getId());
                 if(customerDetails != null){
-                int customersId= user.getId();
-                System.out.println("CCCC::"+ customersId);
+                System.out.println("CC:"+ customersId);
                 hcServiceResponse= iService.getHCServiceNameAndDate(customersId);
                     int lastIndex1= hcServiceResponse.size()-1;
                     System.out.println("index "+lastIndex1);
@@ -99,13 +101,18 @@ public class DashboardController {
                         return gotoCustomerPage();
                     }
                     else {
+                        System.out.println("userIDEXP: "+ customersId);
+                        model.addAttribute("customerId", customersId);
                         model.addAttribute("hcServiceLists", hcServiceLists);
                         model.addAttribute("userDetail", customerDetails);
+
                         return gotoCustomerPage();
                     }
 
 
                 }else{
+                    System.out.println("userIDEXP: "+ customersId);
+                    model.addAttribute("customerId", customersId);
                     model.addAttribute("hcServiceLists", hcServiceLists);
                     return gotoCustomerPage();
                 }
@@ -166,9 +173,10 @@ public class DashboardController {
         CustomerDetails customerDetail= iUsersDetailService.getCustomerDetailsByCustomerId(cdId);
         System.out.println(customerDetail.getHomeAddress());
         model.addAttribute("customerId", cdId);
-            model.addAttribute("newCustomerDetail", customerDetail);
+            model.addAttribute("updateCustomerDetail", customerDetail);
 
-            return "new-customer-detail";
+
+            return "update-customer-detail";
         }
 
         @PostMapping("/setting/updateCustomerDetails")
@@ -182,10 +190,15 @@ public class DashboardController {
 
 
     @GetMapping("/setting/newCustomerDetails")
-    public String setNewCustomerDetails(@ModelAttribute("activeUser") User user, Model model){
+    public String setNewCustomerDetails(@AuthenticationPrincipal UserDetailService userDetails, Model model){
         CustomerDetails customerDetail= new CustomerDetails();
-       int activeUserId= user.getId();
+       int activeUserId= userDetails.getActiveUser().getId();
+       Customer customer= (Customer) userDetails.getActiveUser();
+       CustomerDetails customerDetails= customer.getCustomerDetails();
+        System.out.println("cdACT: "+ activeUserId);
+        System.out.println("activeUserCusId: "+ customer.getId());
         System.out.println("newCustomerDUserId: " + activeUserId);
+        model.addAttribute("customerDetailCheck", customerDetails);
         model.addAttribute("newCustomerDetail", customerDetail);
         model.addAttribute("activeUserId", activeUserId);
 
@@ -193,19 +206,24 @@ public class DashboardController {
     }
 
     @PostMapping("/setting/postNewCustomerDetails")
-    public String postNewCustomerDetails(@Valid @ModelAttribute("newCustomerDetail") CustomerDetails customerDetails,
-                                          Model model,
+    public String postNewCustomerDetails(@Valid @RequestParam("customerId") int custId,
+                                         @ModelAttribute("newCustomerDetail") CustomerDetails customerDetails,
                                          BindingResult bindingResult){
+        System.out.println("CDEEISD: "+ custId);
         if (bindingResult.hasErrors()){
 
             return "new-customer-detail";
+        }else{
+
+            Customer customer= IEmployeeService.getCustomerById(custId);
+            System.out.println("custEmail: "+customer.getEmail());
+            customerDetails.setCustomer(customer);
+            iUsersDetailService.saveUserDetails(customerDetails);
+
+
+            return "redirect:/dashboard";
         }
-//        userDetailService.setUserDetail(customerDetails);
-        CustomerDetails customerDetails1= iUsersDetailService.saveUserDetails(customerDetails);
 
-          model.addAttribute("customerDetails", customerDetails1);
-
-        return "redirect:/dashboard";
     }
 
 

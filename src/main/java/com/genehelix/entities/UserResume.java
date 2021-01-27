@@ -29,11 +29,11 @@ public class UserResume {
     @Column(name="date")
     private Date date;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,CascadeType.MERGE, CascadeType.DETACH})
+    @OneToOne
     @JoinColumn(name = "customer_resume", unique = true)
     private Customer customer;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,CascadeType.MERGE, CascadeType.DETACH})
+    @OneToOne
     @JoinColumn(name = "employee_resume", unique = true)
     private Employee employee;
 

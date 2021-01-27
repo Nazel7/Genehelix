@@ -47,7 +47,7 @@
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
         <div class="Container" style=" padding: 5px; ">
-            <div th:if="${userResume == null}">
+            <div>
                 <form action="#" th:action="@{/customer/uploaded_resume(userId=${customerIdR})}"
                       th:object="${resumeObject}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{id}"/>
@@ -62,11 +62,6 @@
                                            accept="application/pdf">
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="customerR" th:field="*{customer}">
-                                </td>
-                            </tr>
 
                             <tr class="form-group">
                                 <td><input type="submit" value="Upload" class="btn btn-primary"/></td>
@@ -75,22 +70,6 @@
                         </table>
                     </div>
                 </form>
-            </div>
-
-            <!-- For Customer File Update -->
-            <div th:unless="${userResume == null}">
-
-
-                    <div style="border: 1px solid aqua; background-color: white; width: 128%">
-                        <table>
-                            <tr class="form-group">
-                                <td><a th:href="@{/customer/resume-update(userId=${customerIdR})}"
-                                       class="btn btn-primary" style="font-size: 20px; width: 355%">Update</a></td>
-                            </tr>
-                            <div style="clear:both"></div>
-                        </table>
-                    </div>
-
             </div>
             <br>
             <br>
@@ -110,7 +89,6 @@
                             <div>([[${#numbers.formatInteger(userResume.getResumeSize(), 4, 'COMMA')}]] bytes)</div>
                         </div>
                         <br>
-
                     </div>
                 </div>
             </div>

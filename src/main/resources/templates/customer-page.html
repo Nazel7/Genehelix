@@ -673,9 +673,13 @@
               style="margin-top: 5%"></span>
         </span>
       <span th:unless="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
-          <span class="divProfilespanpDatails" style="margin-top: 5%">No Email</span>
-        <span  class="divProfilespanpDatails"
-              style="margin-top: 5%">No Phone Number</span>
+           <span th:if="${activeUser.email == null}">
+              <span class="divProfilespanpDatails" style="margin-top: 5%">No Email</span>
+          </span>
+           <span  class="divProfilespanpDatails"
+                  style="margin-top: 5%">No Phone Number</span>
+
+
       </span>
 
     </div>
@@ -751,7 +755,7 @@ position: fixed">
             </select>
 <br>
                 <label>Visit-Date: </label>
-                <input type="date" th:field="*{date}" class="form-control">
+                <input type="" th:field="*{date}" class="form-control">
         </div>
 
         <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%"
