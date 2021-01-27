@@ -5,9 +5,9 @@ import com.genehelix.entities.EmployeeDetails;
 
 public interface IUsersDetailService {
 
-    CustomerDetails saveUserDetails(CustomerDetails customerDetails);
+  void saveUserDetails(CustomerDetails customerDetails);
 
-    EmployeeDetails saveUserDetails(EmployeeDetails employeeDetails);
+  void  saveUserDetails(EmployeeDetails employeeDetails);
 
     CustomerDetails getUserDetailsById(int cdId);
 

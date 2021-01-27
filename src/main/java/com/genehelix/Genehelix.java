@@ -4,7 +4,7 @@ import com.genehelix.utils.Util;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.genehelix")
 public class Genehelix {
 
     public static void main(String[] args) {

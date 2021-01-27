@@ -22,17 +22,16 @@ public class UsersDetailService implements IUsersDetailService {
     EmployeeDetailRepo employeeDetailsRepo;
 
     @Override
-    public CustomerDetails saveUserDetails(CustomerDetails customerDetails) {
-              return    customerDetailsRepo.save(customerDetails);
+    public void   saveUserDetails(CustomerDetails customerDetails) {
+
+        customerDetailsRepo.save(customerDetails);
 
 
     }
 
     @Override
-    public EmployeeDetails saveUserDetails(EmployeeDetails employeeDetails) {
-                return employeeDetailsRepo.save(employeeDetails);
-
-
+    public void saveUserDetails(EmployeeDetails employeeDetails) {
+                 employeeDetailsRepo.save(employeeDetails);
     }
 
     @Override

@@ -34,7 +34,7 @@ public class Customer implements IUser {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviewList = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE})
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
@@ -67,6 +67,11 @@ public class Customer implements IUser {
         this.lastName = lastName;
         this.reviewList = reviewList;
         this.customerDetails= customerDetails;
+    }
+
+    public Customer(int id, UserResume userResume) {
+        this.id = id;
+        this.userResume = userResume;
     }
 
     public int getId() {
