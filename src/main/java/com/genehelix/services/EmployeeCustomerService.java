@@ -1,7 +1,7 @@
 package com.genehelix.services;
 
 
-import com.genehelix.interfaces.IEmployeeService;
+import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.repositories.CustomerRepo;
 import com.genehelix.repositories.EmployeeRepo;
 import com.genehelix.repositories.ReviewRepo;
@@ -13,15 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeService implements IEmployeeService {
+public class EmployeeCustomerService implements IEmployeeCustomerService {
     @Autowired
-    private EmployeeRepo repository;
+    private EmployeeRepo employeeRepo;
     @Autowired
     private CustomerRepo customerRepo;
     @Autowired
@@ -29,12 +28,12 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public List<Employee> getEmployees() {
-        return repository.findAllByOrderByIdDesc();
+        return employeeRepo.findAllByOrderByIdDesc();
     }
 
     @Override
     public Employee getEmployee(int empID) {
-        Optional<Employee> employee = repository.findById(empID);
+        Optional<Employee> employee = employeeRepo.findById(empID);
         Employee employee1;
         if (employee.isPresent()) {
             employee1 = employee.get();
@@ -48,7 +47,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public void deleteEmployee(int empID) {
         if (empID > 0) {
-            repository.deleteById(empID);
+            employeeRepo.deleteById(empID);
         } else {
             throw new RuntimeException("Exception thrown Employee ID: " + empID + " not found");
         }
@@ -57,13 +56,13 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public void addEmployee(Employee employee) {
-        repository.save(employee);
+        employeeRepo.save(employee);
     }
 
     @Override
     public List<Employee> searchEmployee(String employee) {
         if (employee.trim().length() > 0) {
-            return repository.findByFirstNameContainsOrLastNameContainsAllIgnoreCase(employee, employee);
+            return employeeRepo.findByFirstNameContainsOrLastNameContainsAllIgnoreCase(employee, employee);
         } else {
             return getEmployees();
         }
@@ -71,14 +70,14 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public List<String> showReviews(int employeeID) {
-        return repository.getReviews(employeeID);
+        return employeeRepo.getReviews(employeeID);
 
     }
 
     @Override
     public List<Customer> getEmployeeCustomerList(int employeeID) {
 
-        return repository.getCustomer(employeeID);
+        return employeeRepo.getCustomer(employeeID);
     }
 
 
@@ -107,11 +106,8 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Customer getCustomerById(int customerId) {
         Optional<Customer> customer = customerRepo.findById(customerId);
-  if(customer.isPresent()){
-      Customer customer1= customer.get();
-      return customer1;
-  }
-        return null;
+
+        return customer.orElse(null);
     }
 
     @Override
@@ -133,28 +129,28 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public Page<Employee> findPaginated(int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return repository.findAll(pageable);
+        return employeeRepo.findAll(pageable);
 
     }
 
     @Override
     public Page<Customer> findPaginatedCustomer(int pageNo, int pageSize, int employeeId) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        return repository.getPaginatedCustomer(employeeId, pageable);
+        return employeeRepo.getPaginatedCustomer(employeeId, pageable);
 
     }
 
     @Override
     public Page<Employee> getSearchPaginatedEmployeeHome(String entityProperty, int pageNo, int pageSize) {
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-        Page<Employee> employeePage = repository.getSearchPaginatedEmployeeHome(entityProperty, pageable);
+        Page<Employee> employeePage = employeeRepo.getSearchPaginatedEmployeeHome(entityProperty, pageable);
         return employeePage;
     }
 
     @Override
     public List<Customer> getEmployeeCustomers(String employeeName) {
 
-        return repository.getEmployeeCustomers(employeeName);
+        return employeeRepo.getEmployeeCustomers(employeeName);
     }
 
     @Override

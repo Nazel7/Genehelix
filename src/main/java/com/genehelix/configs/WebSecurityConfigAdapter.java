@@ -54,6 +54,9 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home-page").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
+                .antMatchers("/reviews/showEmployeeReview",
+                        "/reviews/showFormForEmployeeCustomerReview", "/reviews/showFormForAddReview",
+                        "/reviews/postCustomerReview").hasAnyRole("ADMIN", "CUSTOMER")
                 .antMatchers("/customers/postEmployeeCustomer", "/customer/postUpdateEmployeeCustomer").hasRole("ADMIN")
                 .antMatchers("/customer/postUpdateEmployeeCustomer**").hasRole("ADMIN")
                 .antMatchers("/company-employees/employee-list", "/customers/general-list/**",
@@ -62,7 +65,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                         "/dashboard/**", "/reviews", "/customers**", "/customer/**", "/customers/**",
                         "/customer/postUpdateEmployeeCustomer/","/reviews/**").hasRole("ADMIN")
                 .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
-                        "/customers/**").hasRole("CUSTOMER")
+                        "/customers/**", "/hcsevice-list/customer").hasRole("CUSTOMER")
                 .antMatchers("/company-employees/**", "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .and()
                 .formLogin()

@@ -1,7 +1,7 @@
 package com.genehelix.controllers.rests;
 
 
-import com.genehelix.interfaces.IEmployeeService;
+import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,32 +13,32 @@ import java.util.List;
 public class RestController {
 
     @Autowired
-    private IEmployeeService IEmployeeService;
+    private IEmployeeCustomerService IEmployeeCustomerService;
 
     @GetMapping("/employees")
 
     public List<Employee> getEmployees() {
-        return IEmployeeService.getEmployees();
+        return IEmployeeCustomerService.getEmployees();
     }
 
     @GetMapping("/employees/{ID}")
     public Employee getEmployee(@PathVariable int ID) {
-        return IEmployeeService.getEmployee(ID);
+        return IEmployeeCustomerService.getEmployee(ID);
     }
 
     @PostMapping("/employees/post")
     public void addEmployee(@RequestBody Employee employee) {
         employee.setId(0);
-        IEmployeeService.addEmployee(employee);
+        IEmployeeCustomerService.addEmployee(employee);
     }
 
     @PutMapping("/employees/put")
     public void putEmployee(@RequestBody Employee employee) {
-        IEmployeeService.addEmployee(employee);
+        IEmployeeCustomerService.addEmployee(employee);
     }
 
     @DeleteMapping("/employees/{deleteID}")
     public void deleteEmployee(@PathVariable int deleteID) {
-        IEmployeeService.deleteEmployee(deleteID);
+        IEmployeeCustomerService.deleteEmployee(deleteID);
     }
 }

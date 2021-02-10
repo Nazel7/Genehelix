@@ -31,6 +31,9 @@ public class Customer implements IUser {
     @Column(name = "email")
     private String email;
 
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "customer")
+    private CustomerProfilePhoto customerProfilePhoto;
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Review> reviewList = new ArrayList<>();
 
@@ -62,11 +65,13 @@ public class Customer implements IUser {
         this.employee = employee;
     }
 
-    public Customer(String firstName, String lastName, List<Review> reviewList, CustomerDetails customerDetails) {
+    public Customer(String firstName, String lastName, List<Review> reviewList, CustomerDetails customerDetails,
+                    CustomerProfilePhoto customerProfilePhoto) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.reviewList = reviewList;
         this.customerDetails= customerDetails;
+        this.customerProfilePhoto= customerProfilePhoto;
     }
 
     public Customer(int id, UserResume userResume) {
@@ -104,6 +109,14 @@ public class Customer implements IUser {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public CustomerProfilePhoto getCustomerProfilePhoto() {
+        return customerProfilePhoto;
+    }
+
+    public void setCustomerProfilePhoto(CustomerProfilePhoto customerProfilePhoto) {
+        this.customerProfilePhoto = customerProfilePhoto;
     }
 
     public List<Review> getReviewList() {

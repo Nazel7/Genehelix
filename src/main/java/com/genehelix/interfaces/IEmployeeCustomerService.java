@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-public interface IEmployeeService {
+public interface IEmployeeCustomerService {
     List<Employee> getEmployees();
 
     Employee getEmployee(int empID);

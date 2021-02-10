@@ -1,10 +1,9 @@
 package com.genehelix.controllers.views;
 
-import com.genehelix.interfaces.IEmployeeService;
+import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Customer;
 import com.genehelix.entities.Employee;
 import com.genehelix.utils.ErrorMessageUtil;
-import com.genehelix.utils.HomeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -22,7 +21,7 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
-    private IEmployeeService IEmployeeService;
+    private IEmployeeCustomerService IEmployeeCustomerService;
     private List<String> reviewList;
 
     public HomeController() {
@@ -62,7 +61,7 @@ public class HomeController {
             return "home-reg-customer";
         } else {
             if (customer != null) {
-                IEmployeeService.addEmployeeCustomer(customer);
+                IEmployeeCustomerService.addEmployeeCustomer(customer);
 
             }
             return "redirect:/home-page";
@@ -82,7 +81,7 @@ public class HomeController {
                                               @ModelAttribute("entityProperty") String entityName, Model model) {
 
         int pageSize = 5;
-        Page<Employee> page = IEmployeeService.getSearchPaginatedEmployeeHome(entityName, pageNo, pageSize);
+        Page<Employee> page = IEmployeeCustomerService.getSearchPaginatedEmployeeHome(entityName, pageNo, pageSize);
         List<Employee> employees = page.getContent();
         if (employees.isEmpty()) {
             String emptyEmployee = "There is no employee found.....";
@@ -105,7 +104,7 @@ public class HomeController {
         System.out.println("wpep=" + employeeID);
 
         model.addAttribute("employeeSearchId", employeeID);
-        reviewList = IEmployeeService.showReviews(employeeID);
+        reviewList = IEmployeeCustomerService.showReviews(employeeID);
         return ErrorMessageUtil.errorMessage(reviewList,
                 "There is no review found.....",
                 "empty-review-home",

@@ -35,4 +35,5 @@ public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
     @Query("Select c from customer c inner join employee e on e.id= c.employee.id " +
             "where e.firstName like %?1% or e.lastName like %?1% or e.email like %?1% order by c.id desc")
     List<Customer> getEmployeeCustomers(String employeeName);
+
 }

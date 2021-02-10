@@ -11,4 +11,6 @@ public interface IService {
     List<HcServiceResponse> getHCServiceNameAndDate(int userID);
 
     void saveHcService(HcService service);
+
+    List<HcService> getHCServiceListByCustomerId(int cId);
 }

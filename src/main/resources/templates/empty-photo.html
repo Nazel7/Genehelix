@@ -41,30 +41,34 @@
            style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">
     </span>
 <span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;
-    color: darkslategray">Upload Resume here!</span>
+    color: darkslategray">Upload Profile Photo here!</span>
 <div style="position: fixed; top: 5%; width: 100%; left: 20% ">
     <div id="loginbox" style="margin-top: 50px; "
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
         <div class="Container" style=" padding: 5px; ">
             <div>
-                <form action="#" th:action="@{/customer/uploaded_resume(userId=${customerIdR})}"
-                      th:object="${resumeObject}" method="POST" enctype="multipart/form-data">
-                    <input type="hidden" th:field="*{id}"/>
+                <form action="#" th:action="@{/empty-photo/empty_photo-uploaded}"
+                       method="POST" enctype="multipart/form-data">
 
                     <div style="border: 1px solid aqua; background-color: white; width: 128%">
                         <table>
 
                             <tr class="form-group">
-                                <td><label for="cResume">Resume Upload:</label></td>
-                                <td><input type="file" class="form-control" id="cResume"
-                                           name="muiltiPartFile"
-                                           accept="application/pdf">
+                                <td><label for="cPhoto">Photo Upload:</label></td>
+                                <td><input type="file" class="form-control" id="cPhoto"
+                                           name="file"
+                                           accept="image/jpeg">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="emptyPhoto" >
                                 </td>
                             </tr>
 
                             <tr class="form-group">
-                                <td><input type="submit" value="Update" class="btn btn-primary"/></td>
+                                <td><input type="submit" value="Upload" class="btn btn-primary"/></td>
                             </tr>
                             <div style="clear:both"></div>
                         </table>
@@ -73,36 +77,6 @@
             </div>
             <br>
             <br>
-            <div th:if="${userResume != null}">
-                <div class="resumeProperties">
-                    <div>
-                        <div style="float: left; font-size: 18px; font-weight: bold; color: darkslategray;
-                         position: fixed; z-index: 1">Resume:
-                        </div>
-                        <br><br>
-                        <div style="text-align: center">
-                            <div><img th:src="@{/images/resume-app-icon.jpg}" src="../static/images/resume-app-icon.jpg"
-                                      width="90px" height="90px">
-                            </div>
-                            <div><a th:href="@{'/resume/download'+'?resumeId='+ ${userResume.getId()}}">[[${userResume.getResumeName()}]]</a>
-                            </div>
-                            <div>([[${#numbers.formatInteger(userResume.getResumeSize(), 4, 'COMMA')}]] bytes)</div>
-                        </div>
-                        <br>
-                    </div>
-                </div>
-            </div>
-            <div th:unless="${userResume != null}">
-                <div class="resumeProperties">
-                    <div>
-                        <div style="float: left; font-size: 18px;font-weight: bold; color: darkslategray;
-                        position: fixed; z-index: 1">Resume:
-                        </div>
-                        <br><br><br>
-                        <p style="margin-left: 2%; font-size: 18px">There is no file found..</p>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>

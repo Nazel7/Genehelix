@@ -1,19 +1,15 @@
 package com.genehelix.controllers.views;
 
-import com.genehelix.entities.Customer;
-import com.genehelix.entities.Employee;
-import com.genehelix.entities.UserResume;
-import com.genehelix.interfaces.IEmployeeService;
+import com.genehelix.entities.*;
+import com.genehelix.interfaces.IEmployeeCustomerService;
+import com.genehelix.interfaces.IUserProfilePhotoService;
 import com.genehelix.interfaces.IUserResumeService;
-import com.genehelix.repositories.UserResumeRepo;
-import com.genehelix.services.UserResumeService;
 import com.genehelix.utils.ErrorMessageUtil;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,22 +20,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Controller
 public class CustomerController {
 
     @Autowired
-    private IEmployeeService IEmployeeService;
+    private IEmployeeCustomerService IEmployeeCustomerService;
 
     @Autowired
     private IUserResumeService iUserResumeService;
 
-   private  List<Customer> customers;
+    @Autowired
+    IUserProfilePhotoService profilePhotoService;
+
+
+
+    private List<Customer> customers;
 
     @InitBinder
     public void dataTrimmer(WebDataBinder dataBinder) {
@@ -52,9 +51,65 @@ public class CustomerController {
     }
 
     @GetMapping("/customer")
-    public String customerPage(){
+    public String customerPage() {
 
         return "customer-page";
+    }
+
+    @GetMapping("/customer/photoUpload")
+    public String gotoCustomerProfilePhotoPage(@RequestParam("c-userId") int cDId, Model model) {
+        CustomerProfilePhoto profilePhoto = new CustomerProfilePhoto();
+        CustomerProfilePhoto customerProfilePhoto = profilePhotoService.getCustomerProfilePhotoByCustomerId(cDId);
+        if (customerProfilePhoto == null) {
+            model.addAttribute("userPhoto", null);
+            model.addAttribute("PhotoId", null);
+            model.addAttribute("customerIdR", cDId);
+            model.addAttribute("photoObject", profilePhoto);
+
+            return "customer-photo";
+        }
+
+        model.addAttribute("userPhoto", customerProfilePhoto);
+        model.addAttribute("PhotoId", customerProfilePhoto.getId());
+        model.addAttribute("customerIdR", cDId);
+        model.addAttribute("photoObject", profilePhoto);
+        return "customer-photo";
+    }
+    @PostMapping("/customer/c-uploaded_photo")
+    public String postCustomerPhoto(@RequestParam("muiltiPartFile") MultipartFile file,
+                                    @RequestParam("userId") int cDId,
+                                    @ModelAttribute("photoObject") CustomerProfilePhoto customerProfilePhoto,
+                                    RedirectAttributes r){
+        String fileName= Util.fileConvertToString(file);
+        Customer customer= IEmployeeCustomerService.getCustomerById(cDId);
+        try{
+            if (!fileName.trim().isEmpty()){
+                profilePhotoService.saveCustomerPorfilePhoto(file, customerProfilePhoto, customer);
+                r.addFlashAttribute("message", "Photo Upload Successfully!");
+
+                return "redirect:/dashboard";
+            }
+            return "customer-photo";
+        }catch (Exception e){
+            e.printStackTrace();
+
+            return "customer-photo";
+        }
+
+
+    }
+
+    @GetMapping("/customer/c-photo-update")
+    public String updateCustomerPhoto(@RequestParam("userId") int cDId, Model model){
+
+        CustomerProfilePhoto customerProfilePhoto= profilePhotoService.getCustomerProfilePhotoByCustomerId(cDId);
+
+        model.addAttribute("photoObject", customerProfilePhoto);
+        model.addAttribute("customerIdR", cDId);
+        model.addAttribute("userPhoto", customerProfilePhoto);
+
+        return "customer-photo-update";
+
     }
 
     @GetMapping("/customers")
@@ -62,7 +117,7 @@ public class CustomerController {
         System.out.println("EmployeeId: " + employeeID);
 
         model.addAttribute("employeeId", employeeID);
-        customers = IEmployeeService.getEmployeeCustomerList(employeeID);
+        customers = IEmployeeCustomerService.getEmployeeCustomerList(employeeID);
 
         if (customers.isEmpty()) {
             String emptyCustomer = "There is no customer found.....";
@@ -82,7 +137,7 @@ public class CustomerController {
         int pageSize = 3;
 
         System.out.println(employeeId);
-        Page<Customer> page = IEmployeeService.findPaginatedCustomer(pageNo, pageSize, employeeId);
+        Page<Customer> page = IEmployeeCustomerService.findPaginatedCustomer(pageNo, pageSize, employeeId);
         model.addAttribute("employeeId", employeeId);
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalItems", page.getTotalElements());
@@ -96,7 +151,7 @@ public class CustomerController {
     @GetMapping("/customers/search")
     public String searchCustomer(@RequestParam("searchEmployeeCustomer") String customerName,
                                  @RequestParam("employeeId") int employeeId, Model model) {
-        customers = IEmployeeService.searchEmployeeCustomer(customerName, employeeId);
+        customers = IEmployeeCustomerService.searchEmployeeCustomer(customerName, employeeId);
         return ErrorMessageUtil.errorMessage(customers,
                 "There is no customer(s) found.....",
                 "empty-customer",
@@ -121,7 +176,7 @@ public class CustomerController {
                                        @RequestParam("employeeCID") int employeeId,
                                        BindingResult bindingResult,
                                        Model model
-                                       ) {
+    ) {
 
         if (bindingResult.hasErrors()) {
 
@@ -129,10 +184,10 @@ public class CustomerController {
         } else {
             System.out.println("employee123: " + employeeId);
             model.addAttribute("employeeIdUpdateCustomer", employeeId);
-            Employee employee = IEmployeeService.getEmployee(employeeId);
+            Employee employee = IEmployeeCustomerService.getEmployee(employeeId);
             if (employee != null) {
                 customer.setEmployee(employee);
-                IEmployeeService.addEmployeeCustomer(customer);
+                IEmployeeCustomerService.addEmployeeCustomer(customer);
             }
             return "redirect:/company-employees/employee-list";
         }
@@ -141,8 +196,8 @@ public class CustomerController {
     @GetMapping("/customer/showFormForCustomerUpdate")
     public String customerUpdate(@RequestParam("customerUpdate") int id, Model model) {
         System.out.println("CustomerID2: " + id);
-        Customer customer = IEmployeeService.getCustomerById(id);
-        System.out.println("RealCustomer: "+ customer.getId());
+        Customer customer = IEmployeeCustomerService.getCustomerById(id);
+        System.out.println("RealCustomer: " + customer.getId());
         model.addAttribute("employeeId", customer.getEmployee().getId());
         model.addAttribute("newEmployeeCustomer", customer);
 
@@ -152,7 +207,7 @@ public class CustomerController {
 
     @GetMapping("/customer/delete")
     public String deleteEmployeeCustomer(@RequestParam("customerDelete") int employeeCustomerId) {
-        IEmployeeService.deleteEmployeeCustomer(employeeCustomerId);
+        IEmployeeCustomerService.deleteEmployeeCustomer(employeeCustomerId);
 
         return "redirect:/company-employees/employee-list";
     }
@@ -167,7 +222,7 @@ public class CustomerController {
     public String paginatedCustomerList(@PathVariable("pageNo") int pageNo, Model model) {
 
         int pageSize = 5;
-        Page<Customer> page = IEmployeeService.getAllCustomers(pageNo, pageSize);
+        Page<Customer> page = IEmployeeCustomerService.getAllCustomers(pageNo, pageSize);
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalItems", page.getTotalElements());
@@ -181,7 +236,7 @@ public class CustomerController {
     @GetMapping("/customers-generalist/search")
     public String searchCustomerGeneralist(@RequestParam("searchHomeLogonCustomer") String customerProperty, Model model) {
 
-        Page<Customer> page = IEmployeeService.getAllCustomers(customerProperty, 1,5);
+        Page<Customer> page = IEmployeeCustomerService.getAllCustomers(customerProperty, 1, 5);
 
         List<Customer> customers = page.getContent();
         if (customers.isEmpty()) {
@@ -200,39 +255,40 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/resumeUpload")
-    public String uploadResume(@RequestParam("userId") int cDId, Model model){
-        UserResume resume= new UserResume();
-        System.out.println("reUCID: "+ cDId);
-       UserResume userResume= iUserResumeService.getUserResumeByCustomeerId(cDId);
-       if(userResume == null){
-           model.addAttribute("userResume", null);
-           model.addAttribute("resumeId", null);
-           model.addAttribute("customerIdR", cDId);
-           model.addAttribute("resumeObject", resume);
-           return "customer-resume";
-       }
+    public String uploadResume(@RequestParam("userId") int cDId, Model model) {
+        UserResume resume = new UserResume();
+        System.out.println("reUCID: " + cDId);
+        UserResume userResume = iUserResumeService.getUserResumeByCustomeerId(cDId);
+        if (userResume == null) {
+            model.addAttribute("userResume", null);
+            model.addAttribute("resumeId", null);
+            model.addAttribute("customerIdR", cDId);
+            model.addAttribute("resumeObject", resume);
+            return "customer-resume";
+        }
 
-       model.addAttribute("userResume", userResume);
-       model.addAttribute("resumeId", userResume.getId());
+        model.addAttribute("userResume", userResume);
+        model.addAttribute("resumeId", userResume.getId());
         model.addAttribute("customerIdR", cDId);
         model.addAttribute("resumeObject", resume);
         return "customer-resume";
     }
 
+
     @PostMapping("/customer/uploaded_resume")
-    public String customerUploadResume(@RequestParam("muiltiPartFile")MultipartFile file,
-                                       @RequestParam("userId")int cdId,
+    public String customerUploadResume(@RequestParam("muiltiPartFile") MultipartFile file,
+                                       @RequestParam("userId") int cdId,
                                        @ModelAttribute("resumeObject") UserResume resume,
-                                       RedirectAttributes redirectAttributes){
-        Customer customer= IEmployeeService.getCustomerById(cdId);
-        String fileName= Util.fileConvertToString(file);
-        System.out.println("FileNameP: "+ fileName);
-        System.out.println("YESCDID: "+ customer.getId());
+                                       RedirectAttributes redirectAttributes) {
+        Customer customer = IEmployeeCustomerService.getCustomerById(cdId);
+        String fileName = Util.fileConvertToString(file);
+        System.out.println("FileNameP: " + fileName);
+        System.out.println("YESCDID: " + customer.getId());
 
 
-        try{
-            if(!fileName.trim().isEmpty()) {
-                System.out.println("File:"+ file.getOriginalFilename());
+        try {
+            if (!fileName.trim().isEmpty()) {
+                System.out.println("File:" + file.getOriginalFilename());
                 resume.setCustomer(customer);
                 iUserResumeService.saveUserResume(file, resume);
                 redirectAttributes.addFlashAttribute("message", "File Upload Successfully!");
@@ -240,7 +296,7 @@ public class CustomerController {
             }
             return "customer-resume";
 
-        }catch (IOException e){
+        } catch (IOException e) {
 
             e.printStackTrace();
             return "customer-resume";
@@ -250,34 +306,46 @@ public class CustomerController {
 
     }
 
-    // I am working here...
     @GetMapping("/customer/resume-update")
-    public String customerResumeUpdate(@RequestParam("userId") int cDId, Model model){
-        UserResume userResume= iUserResumeService.getUserResumeByCustomeerId(cDId);
+    public String customerResumeUpdate(@RequestParam("userId") int cDId, Model model) {
+        UserResume userResume = iUserResumeService.getUserResumeByCustomeerId(cDId);
 
-            model.addAttribute("customerIdR", cDId);
-            model.addAttribute("userResume", userResume);
-            model.addAttribute("resumeObject", userResume);
-            return "customer-resume-update";
+        model.addAttribute("customerIdR", cDId);
+        model.addAttribute("userResume", userResume);
+        model.addAttribute("resumeObject", userResume);
+        return "customer-resume-update";
 
     }
 
 
     @GetMapping("/resume/download")
-    public void downloadResume(@Param("resumeId") int resumeId, HttpServletResponse response) throws Exception{
+    public void downloadResume(@Param("resumeId") int resumeId, HttpServletResponse response) throws Exception {
 
-        UserResume userResume= iUserResumeService.getUserResumeById(resumeId);
-        if(userResume != null){
+        UserResume userResume = iUserResumeService.getUserResumeById(resumeId);
+        if (userResume != null) {
             response.setContentType("application/octet-stream");
-            String headerKey= "Content-Disposition";
-            String headerValue= "attachment; filename="+ userResume.getResumeName();
+            String headerKey = "Content-Disposition";
+            String headerValue = "attachment; filename=" + userResume.getResumeName();
 
             response.setHeader(headerKey, headerValue);
 
-            ServletOutputStream resumeOutputStream= response.getOutputStream();
+            ServletOutputStream resumeOutputStream = response.getOutputStream();
             resumeOutputStream.write(userResume.getResume());
             resumeOutputStream.close();
         }
 
     }
+
+    @GetMapping("/customer/manager")
+    public String getCustomerManager(@RequestParam("userId") int cId, Model model){
+        Customer customer= IEmployeeCustomerService.getCustomerById(cId);
+       Employee employee= customer.getEmployee();
+
+       model.addAttribute("manager", employee);
+       model.addAttribute("user", customer);
+
+       return "customer-manager";
+    }
+
+
 }

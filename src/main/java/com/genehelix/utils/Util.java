@@ -1,16 +1,11 @@
 package com.genehelix.utils;
 
-import com.genehelix.entities.Customer;
-import com.genehelix.entities.Employee;
-import com.genehelix.interfaces.IEmployeeService;
-import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Base64;
 import java.util.Objects;
 
 public class Util {
@@ -38,5 +33,12 @@ public class Util {
         String fileName= StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
 
         return fileName;
+    }
+
+    public static String fileCovertToImageBase64String(MultipartFile file) throws IOException {
+
+        String base64String= Base64.getEncoder().encodeToString(file.getBytes());
+
+        return base64String;
     }
 }

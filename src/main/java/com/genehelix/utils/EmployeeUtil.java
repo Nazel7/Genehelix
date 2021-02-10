@@ -1,18 +1,15 @@
 package com.genehelix.utils;
 
-import com.genehelix.interfaces.IEmployeeService;
+import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class EmployeeUtil {
 
-    public static String getEmployeePage(Model model, IEmployeeService IEmployeeService, int pageNo) {
+    public static String getEmployeePage(Model model, IEmployeeCustomerService IEmployeeCustomerService, int pageNo) {
         int pageSize = 5;
-        Page<Employee> page = IEmployeeService.findPaginated(pageNo, pageSize);
+        Page<Employee> page = IEmployeeCustomerService.findPaginated(pageNo, pageSize);
         System.out.println(page.getTotalPages());
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalItems", page.getTotalElements());

@@ -19,4 +19,7 @@ public interface HcServiceRepo extends JpaRepository<HcService, Integer> {
             " where c.id= ?1 order by s.Id")
     List<HcServiceResponse> getHCServiceNameAndDate(int customerID);
 
+    @Query("SELECT hc from HcService hc inner join customer c on c.id=hc.customerh.id where c.id=?1 order by hc.Id desc")
+    List<HcService> getHCServiceListByCustomerId(int cId);
+
 }

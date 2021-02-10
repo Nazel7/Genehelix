@@ -41,15 +41,15 @@
            style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">
     </span>
 <span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;
-    color: darkslategray">Upload Resume here!</span>
+    color: darkslategray">Upload Profile Photo here!</span>
 <div style="position: fixed; top: 5%; width: 100%; left: 20% ">
     <div id="loginbox" style="margin-top: 50px; "
          class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
 
         <div class="Container" style=" padding: 5px; ">
             <div>
-                <form action="#" th:action="@{/customer/uploaded_resume(userId=${customerIdR})}"
-                      th:object="${resumeObject}" method="POST" enctype="multipart/form-data">
+                <form action="#" th:action="@{/customer/c-uploaded_photo(userId=${customerIdR})}"
+                      th:object="${photoObject}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{id}"/>
 
                     <div style="border: 1px solid aqua; background-color: white; width: 128%">
@@ -59,7 +59,7 @@
                                 <td><label for="cResume">Resume Upload:</label></td>
                                 <td><input type="file" class="form-control" id="cResume"
                                            name="muiltiPartFile"
-                                           accept="application/pdf">
+                                           accept="image/jpeg">
                                 </td>
                             </tr>
 
@@ -73,7 +73,7 @@
             </div>
             <br>
             <br>
-            <div th:if="${userResume != null}">
+            <div th:if="${userPhoto != null}">
                 <div class="resumeProperties">
                     <div>
                         <div style="float: left; font-size: 18px; font-weight: bold; color: darkslategray;
@@ -84,15 +84,14 @@
                             <div><img th:src="@{/images/resume-app-icon.jpg}" src="../static/images/resume-app-icon.jpg"
                                       width="90px" height="90px">
                             </div>
-                            <div><a th:href="@{'/resume/download'+'?resumeId='+ ${userResume.getId()}}">[[${userResume.getResumeName()}]]</a>
-                            </div>
-                            <div>([[${#numbers.formatInteger(userResume.getResumeSize(), 4, 'COMMA')}]] bytes)</div>
+                            <div>[[${userPhoto.getPhotoName()}]]</div>
+                            <div>([[${#numbers.formatInteger(userPhoto.getPhotoSize(), 4, 'COMMA')}]] bytes)</div>
                         </div>
                         <br>
                     </div>
                 </div>
             </div>
-            <div th:unless="${userResume != null}">
+            <div th:unless="${userPhoto != null}">
                 <div class="resumeProperties">
                     <div>
                         <div style="float: left; font-size: 18px;font-weight: bold; color: darkslategray;
