@@ -37,13 +37,13 @@ public class HomeController {
     @GetMapping("/")
     public String homePage2() {
 
-        return "homePage";
+        return "index";
     }
 
     @GetMapping("/home-page")
     public String homePage() {
 
-        return "homePage";
+        return "index";
     }
 
     @GetMapping("/home-page/customer-reg")
