@@ -32,4 +32,10 @@ public class HcServiceService implements IService {
 
         hcServiceRepo.save(service);
     }
+
+    @Override
+    public List<HcService> getHCServiceListByCustomerId(int cId) {
+
+        return hcServiceRepo.getHCServiceListByCustomerId(cId);
+    }
 }

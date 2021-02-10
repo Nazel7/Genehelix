@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>ERMC</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container" style="margin: 2% 10%">
+
+    <h3>GeneHelix Customer's Service List</h3>
+    <hr>
+
+
+        <a href="#" th:href="@{/dashboard}" class="btn btn-success mb-3" style="float:left;">Register New Service</a>
+    <a th:href="@{/dashboard}" class="btn btn-primary btn mr-5 mb-3" style="margin-left: 5%; float: left">
+        Dashboard
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="hcService : ${hcServices}">
+
+            <td th:text="${hcService.name}"/>
+            <td th:text="${hcService.date}"/>
+
+        </tr>
+        </tbody>
+    </table>
+    <div style="clear: both"></div>
+</div>
+</body>
+</html>
+

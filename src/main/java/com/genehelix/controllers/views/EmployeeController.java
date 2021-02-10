@@ -1,11 +1,8 @@
 package com.genehelix.controllers.views;
 
 
-import com.genehelix.interfaces.IEmployeeService;
-import com.genehelix.entities.Customer;
+import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Employee;
-import com.genehelix.utils.CustomerUtil;
-import com.genehelix.utils.ErrorMessageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -33,7 +30,7 @@ public class EmployeeController {
     }
 
     @Autowired
-    private IEmployeeService IEmployeeService;
+    private IEmployeeCustomerService IEmployeeCustomerService;
 
     @InitBinder
     public void dataTrimmer(WebDataBinder dataBinder) {
@@ -54,7 +51,7 @@ public class EmployeeController {
 
     @GetMapping("/page/{pageNo}")
     public String paginatedPage(@PathVariable("pageNo") int pageNo, Model model) {
-        return EmployeeUtil.getEmployeePage(model, IEmployeeService, pageNo);
+        return EmployeeUtil.getEmployeePage(model, IEmployeeCustomerService, pageNo);
     }
 
     @GetMapping("/showAddForm")
@@ -70,28 +67,28 @@ public class EmployeeController {
         if (bindingResult.hasErrors()) {
             return "add-employee";
         }
-            IEmployeeService.addEmployee(employee);
+            IEmployeeCustomerService.addEmployee(employee);
             return "redirect:/company-employees/employee-list";
 
     }
 
     @GetMapping("/updateEmployee")
     public String updateEmployee(@RequestParam("updateLink") int id, Model model) {
-        Employee employee = IEmployeeService.getEmployee(id);
+        Employee employee = IEmployeeCustomerService.getEmployee(id);
         model.addAttribute("employee", employee);
         return "add-employee";
     }
 
     @GetMapping("/deleteEmployee")
     public String deleteEmployee(@RequestParam("deleteLink") int id) {
-        IEmployeeService.deleteEmployee(id);
+        IEmployeeCustomerService.deleteEmployee(id);
         return "redirect:/company-employees/employee-list";
     }
 
     @GetMapping("/search")
     public String searchEmployee(@RequestParam("searchEmployees") String employee, Model model) {
 
-        Page<Employee> page = IEmployeeService.getSearchPaginatedEmployeeHome(employee, 1, 5);
+        Page<Employee> page = IEmployeeCustomerService.getSearchPaginatedEmployeeHome(employee, 1, 5);
         List<Employee> employees = page.getContent();
         if (employees.isEmpty()) {
             String emptyEmployee = "There is no employee found!";

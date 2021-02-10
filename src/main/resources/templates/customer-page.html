@@ -6,7 +6,7 @@
     <title>customer-page</title>
 
     <!-- Required meta tags -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -390,11 +390,15 @@
     <div class="profileName">
         <div class="primaryDrop">My Account</div>
         <div class="profileName-content">
-            <div style="text-align: center">
-                <img th:src="@{/images/google-icon.png}" src="../static/images/k-devs-icon.jpg" width="50px"
+
+            <div style="text-align: center" th:if="${cPhoto.profilePhoto != null}">
+                <img th:src="'data:image/*;base64,' +${cPhoto.profilePhoto}" src="../static/images/k-devs-icon.jpg"
+                     width="50px"
                      height="50px"
-                     style="margin-top: 5%; margin-left:0"/>
+
+                     style="margin-top: 5%; margin-left:0; border-radius: 50%"/>
             </div>
+
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="fas fa-user-tie"></i></span>
                 <span class="fontAwesoneDropContent">Dashboard</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop"><i class="far fa-id-card"></i></span>
@@ -436,11 +440,12 @@
 <nav>
     <div>
         <div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile">
-            <img th:src="@{/images/k-devs-icon.jpg}" src="../static/images/k-devs-icon.jpg" width="120px" height="120px"
-                 class="shadow pt-1 pb-1 mb-3 bg-white rounded">
+            <img th:src="'data:image/jpeg;base64,' +${cPhoto.profilePhoto}"  width="120px" height="120px"
+                 style="border-radius: 50%; margin-bottom: 5%"/>
+
             <div style="text-align: center; margin-bottom: 6%">
 
-               <a href="#" th:href="@{/customer/photoUpload(userId=${customerId})}" style="
+               <a href="#" th:href="@{/customer/photoUpload(c-userId=${customerId})}" style="
                    width: 30%;
                    background-color: white;
                    color: dodgerblue;
@@ -482,7 +487,7 @@
                     <span>Dashboard</span> </a>
             </li>
             <li>
-                <a href="#">
+                <a href="/dashboard">
                     <i class="far fa-id-card"></i>
                     <span>My Profile</span> </a>
             </li>
@@ -492,7 +497,7 @@
                     <span>My Resume </span> </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" th:href="@{/customer/manager(userId=${customerId})}">
                     <i class="fas fa-tasks"></i>
                     <span>Manager </span> </a>
             </li>
@@ -502,7 +507,7 @@
                     <span>Medical Result</span> </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" th:href="@{/hcsevice-list/customer(userId=${customerId})}">
                     <i class="fa fa-globe" aria-hidden="true"></i>
                     <span>HC-Service History</span> </a>
             </li>
@@ -755,7 +760,7 @@ position: fixed">
             </select>
 <br>
                 <label>Visit-Date: </label>
-                <input type="" th:field="*{date}" class="form-control">
+                <input type="date" th:field="*{date}" class="form-control">
         </div>
 
         <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%"
