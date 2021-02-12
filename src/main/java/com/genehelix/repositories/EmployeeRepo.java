@@ -36,4 +36,5 @@ public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
             "where e.firstName like %?1% or e.lastName like %?1% or e.email like %?1% order by c.id desc")
     List<Customer> getEmployeeCustomers(String employeeName);
 
+    Employee getEmployeeByEmail(String email);
 }

@@ -41,4 +41,10 @@ public class Util {
 
         return base64String;
     }
+
+    public static boolean emailEqual(String email1, String email2) {
+
+
+        return email1.toLowerCase().trim().equals(email2.toLowerCase().trim());
+    }
 }
