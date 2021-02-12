@@ -51,5 +51,7 @@ public interface IEmployeeCustomerService {
 
     Page<Customer> getAllCustomers(String customerProperty, int pageNo, int pageSize);
 
+    Employee getEmployeeByEmail(String email);
+
 
 }

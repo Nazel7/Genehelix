@@ -172,4 +172,10 @@ public class EmployeeCustomerService implements IEmployeeCustomerService {
         return customerRepo.getSearchedCustomers(customerProperty, pageable);
     }
 
+    @Override
+    public Employee getEmployeeByEmail(String email) {
+
+        return employeeRepo.getEmployeeByEmail(email);
+    }
+
 }

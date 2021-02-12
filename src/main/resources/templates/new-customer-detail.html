@@ -88,7 +88,8 @@
                             </tr>
 
                             <tr class="form-group">
-                                <td><input type="submit" value="Save" class="btn btn-primary"/></td>
+                                <td><label></label></td>
+                                <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"/></td>
                             </tr>
                             <div style="clear:both"></div>
                         </table>
@@ -96,7 +97,7 @@
 
                 </form>
             </div>
-            <div th:unless="${customerDetailCheck == null}">
+            <div th:unless="${customerDetailCheck != null}">
                 <form action="#" th:action="@{/setting/postNewCustomerDetails(customerId=${activeUserId})}"
                       th:object="${newCustomerDetail}" method="POST" >
                     <input type="hidden" th:field="*{id}"/>
@@ -138,7 +139,8 @@
                             </tr>
 
                             <tr class="form-group">
-                                <td><input type="submit" value="Save" class="btn btn-primary"/></td>
+                                <td><label></label></td>
+                                <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"/></td>
                             </tr>
                             <div style="clear:both"></div>
                         </table>

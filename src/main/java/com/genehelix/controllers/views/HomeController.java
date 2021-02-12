@@ -1,9 +1,12 @@
 package com.genehelix.controllers.views;
 
+import com.genehelix.entities.User;
 import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Customer;
 import com.genehelix.entities.Employee;
+import com.genehelix.interfaces.ISecureUserService;
 import com.genehelix.utils.ErrorMessageUtil;
+import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -21,7 +24,11 @@ import java.util.List;
 public class HomeController {
 
     @Autowired
+    private ISecureUserService iSecureUserService;
+
+    @Autowired
     private IEmployeeCustomerService IEmployeeCustomerService;
+
     private List<String> reviewList;
 
     public HomeController() {
@@ -49,6 +56,9 @@ public class HomeController {
     @GetMapping("/home-page/customer-reg")
     public String customerReg(Model model) {
         Customer customer = new Customer();
+        List<Employee> employeeList = IEmployeeCustomerService.getEmployees();
+
+        model.addAttribute("employeeLists", employeeList);
         model.addAttribute("homeRegCustomer", customer);
 
         return "home-reg-customer";
@@ -56,16 +66,34 @@ public class HomeController {
 
     @PostMapping("/home-page/reg-customer")
     public String postHomeRegCustomer(@Valid @ModelAttribute("homeRegCustomer") Customer customer,
-                                      BindingResult bindingResult) {
+                                      BindingResult bindingResult,
+                                      @RequestParam("employeeValue") String employeeValue,
+                                      @RequestParam("confirmEmail") String confirmEmail,
+                                      @RequestParam("password") String password) {
+        User user = new User();
+        boolean isMyEmail = Util.emailEqual(customer.getEmail().toLowerCase().trim(), confirmEmail.toLowerCase().trim());
         if (bindingResult.hasErrors()) {
             return "home-reg-customer";
         } else {
-            if (customer != null) {
-                IEmployeeCustomerService.addEmployeeCustomer(customer);
-
-            }
-            return "redirect:/home-page";
+            Employee employee = IEmployeeCustomerService.getEmployeeByEmail(employeeValue);
+            customer.setEmployee(employee);
         }
+        if(!isMyEmail){
+           return "home-reg-customer";
+        }
+
+        customer.setEmail(confirmEmail);
+        user.setPassWord(Util.hashPassword(password));
+        String authority = "ROLE_CUSTOMER";
+        user.setAuthority(authority);
+        user.setTinyint(true);
+        user.setCustomer(customer);
+        user.setUserName(confirmEmail);
+
+        IEmployeeCustomerService.addEmployeeCustomer(customer);
+        iSecureUserService.saveSecureUser(user);
+        
+        return "redirect:/home-page";
 
     }
 
