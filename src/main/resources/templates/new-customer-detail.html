@@ -81,16 +81,18 @@
                                            placeholder="mobile number here"></td>
 
                             </tr>
+                            <tr class="form-group">
+                                <td><label for="submit"> </label>
+                                </td>
+                                <td><input type="submit" id="submit" value="Save" class="btn btn-primary" style="width: 100%"/></td>
+                            </tr>
 
                             <tr>
                                 <td><input type="hidden" name="customerId" th:field="*{customer}"/></td>
 
                             </tr>
 
-                            <tr class="form-group">
-                                <td><label></label></td>
-                                <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"/></td>
-                            </tr>
+
                             <div style="clear:both"></div>
                         </table>
                     </div>
@@ -139,8 +141,8 @@
                             </tr>
 
                             <tr class="form-group">
-                                <td><label></label></td>
-                                <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"/></td>
+                                <td><label for="save"> </label></td>
+                                <td><input type="submit" value="Save" id="save" class="btn btn-primary" style="width: 100%"/></td>
                             </tr>
                             <div style="clear:both"></div>
                         </table>
