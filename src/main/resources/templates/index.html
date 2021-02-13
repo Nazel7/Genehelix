@@ -159,23 +159,22 @@
     </style>
 </head>
 <body>
-<header class="p-3 mb-2  bg-primary text-white" style="height: 70px">
+<header class="p-3 mb-2  bg-primary text-white" style="height: 75px">
     <div id="headerDv">
         <img th:src="@{/images/gene-app.png}" src="../static/images/gh-right.png" width="80px" height="70px"
              style=" float: left; margin-left: 10%; margin-top: 1%; margin-bottom: 10px">
     </div>
-    <div style="width: 60%; float: right">
+    <div style="width: 50%; float: right">
 
         <a th:href="@{/login-page}" class="btn btn-success" style="font-size: small">Log In</a>
         <a onmouseover="this.style.color= 'forestgreen'; this.style.textDecorationLine= 'none'"
            onmouseout="this.style.color= 'white'"
            class="headerLi" th:href="@{/home-page/customer-reg}">Sign Up</a>
-
     </div>
 </header>
 
 <section class="p-3 mb-2 bg-primary text-white" id="top1" style="overflow: auto">
-    <div class="sectionDiv" style="overflow: auto;">
+    <div class="sectionDiv" style="overflow: auto; margin-top: 30px">
         <div style="height: 300px; overflow: auto">
             <h2 style="overflow: auto">
                 We at GeneHelix, the health of our clients is our top priority. We match towards making you a winner.
@@ -184,11 +183,10 @@
                 otherwise sign up under any manager of your choice.
                 We are here to make you happy with our healthcare products and services</p>
         </div>
-
     </div>
     <div class="shadow-sm p-3 mb-5 bg-white rounded" style="background-color: azure;">
         <img th:src="@{/images/customer-Relationship-1.png}" width="40%" height="400px"
-             style="border-radius: 5px; margin-right: 2%" class="shadow-sm bg-white rounded"/>
+             style="border-radius: 5px; margin-right: 3%" class="shadow-sm bg-white rounded"/>
     </div>
     <div>
         <form action="#" th:action="@{/home-search}" method="GET"
@@ -231,21 +229,29 @@
             <li><a href="#" class="alink">Training and Consultancy</a></li>
         </ul>
     </div>
-    <img th:src="@{/images/dna-image.jpg}" width="35%" height="400px"
-         style="float: right; margin-top: 5%; border-radius: 5px" class="shadow-sm  mb-5 bg-white rounded"/>
+    <img th:src="@{/images/dna-image.jpg}" width="36%" height="400px"
+         style="float: right; margin-top: 5%; margin-left: 18%; border-radius: 5px" class="shadow-sm  mb-5 bg-white rounded"/>
 </section>
 
-<div style="float: left"><img th:src="@{/images/location-map.JPG}" width="50%" height="400px" style="margin-top: 5%;
-border-radius: 20px"
-                              class="shadow-sm mb-5 bg-white rounded"/>
-    <address style="float: right; margin-top: 10%; margin-right: 20%; color: darkslategrey">
-        No 03 Omodudu Close <br>
-        Off Solomon Street, Ketu Alapere <br>
-        Lagos State Nigeria.<br>
-        Phone: +2348154981788<br>
-        Email: info.gh@geneHelix.com.ng
-    </address>
-</div>
+
+
+<section style="width: 100%; text-align: center">
+    <div ><img th:src="@{/images/location-map.JPG}" src="../static/images/location-map.JPG"
+                                  width="50%" height="400px" style="margin-top: 5%;border-radius: 20px; float: left"
+               class="shadow-sm mb-5  rounded"/>
+    </div>
+    <div style="float: left; margin-top: 10%; margin-left: 15%">
+        <div style=" color: darkslategrey">
+            No 03 Omodudu Close <br>
+            Off Solomon Street, Ketu Alapere <br>
+            Lagos State Nigeria.<br>
+            Phone: +2348154981788<br>
+            Email: info.gh@geneHelix.com.ng
+        </div>
+    </div>
+</section>
+
+
 <div style="clear: both"></div>
 <section style="width: 80%; text-align: center">
     <div style="margin-top: 5%">
