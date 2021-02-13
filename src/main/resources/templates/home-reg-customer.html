@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
           crossorigin="anonymous">
+
     <!-- Reference Bootstrap files -->
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -24,86 +25,82 @@
         }
         table tbody tr td{
             padding: 12px;
-            margin-bottom: 10%;
-
         }
         .error {
             color: red
         }
     </style>
 </head>
-<body style="background-color: azure; align-content: center">
-<div class="Container" style="position: fixed; top: 20%; width: 100%; left: 35%;">
+<body style="background-color: azure; align-content: center; overflow: auto">
+<div class="Container" style="position: fixed; top: 20%; left: 30%;">
 
-   <span><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
-              style=" float: left; top: 12%; margin-bottom: 20px;position: fixed; left: 35%">
-    </span>
-    <span style="top: 17%; width: 20%;left: 41%; position: fixed; font-size: 20px;
-    color: darkslategray">Please update your details </span>
+    <div><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
+              style=" float: left; top: 1%; margin-bottom: 20px;position: fixed; left: 40%;">
+        <div style="top: 11%; width: 40%;left: 34%; position: fixed; font-size: 20px; float: left;
+           color: darkslategray">Please update your details </div>
+       <div style="margin-top: 0; background-color: white; border: 1px solid aqua">
+           <form action="#" th:action="@{/home-page/reg-customer}"
+                 th:object="${homeRegCustomer}"
+                 method="POST" style="padding: 10px">
+               <br>
+               <h5>Save New Reg Customer for Employee [[${id}]]</h5>
+               <input type="hidden" th:field="*{id}"/>
+               <table>
+                   <tbody style=" overflow: auto">
+                   <tr class="form-group">
+                       <td><input type="text" th:field="*{firstName}" class="form-control"
+                                  placeholder="First name here"></td>
+                       <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName
+                           Error
+                       </td>
+                   </tr>
+                   <tr class="form-group">
+                       <td><input type="text" th:field="*{lastName}" class="form-control"
+                                  placeholder="Last name here"></td>
+                       <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
+                       </td>
+                   </tr>
+                   <tr class="form-group">
+                       <td><input type="email" th:field="*{email}" class="form-control"
+                                  placeholder="Email here"></td>
+                       <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
+                       </td>
+                   </tr>
+                   <tr class="form-group">
+                       <td><input type="email"  class="form-control" name="confirmEmail"
+                                  placeholder="Confirm email here" required></td>
+                   </tr>
+                   <tr class="form-group">
+                       <td>
+                           <select class="form-control" id="hc-services" name="employeeValue">
+                               <option  th:type="${employeeList.email}"
+                                        th:each="employeeList: ${employeeLists}"
+                                        th:value="${employeeList.email}"
+                                        th:text="${employeeList.email}"></option>
+                           </select>
+                       </td>
+
+                   </tr>
+                   <tr class="form-group">
+                       <td><input type="password"  class="form-control" name="password"
+                                  placeholder="Enter password here" required></td>
+                   </tr>
+                   <tr class="form-group">
+                       <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"
+                                  onclick="if(!(confirm('Are you sure to save? you cannot edit after saving!'))) return false;"/>
+                       </td>
+                   </tr>
+                   </tbody>
+               </table>
+           </form>
+       </div>
+    </div>
+
 
 <div>
-
 </div>
-    <div style=" padding: 5px ">
-        <form action="#" th:action="@{/home-page/reg-customer}"
-              th:object="${homeRegCustomer}"
-              method="POST" style="width: 50%">
-            <i class="error">This is available for only new customers</i>
-            <br>
-            <h5>Save New Reg Customer for Employee [[${id}]]</h5>
-            <input type="hidden" th:field="*{id}"/>
-            <table style="width: 50%; background-color: white; padding: 10px">
-                <tbody>
-                <tr>
-                    <td><input type="text" th:field="*{firstName}" class="form-control"
-                               placeholder="First name here"></td>
-                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName
-                        Error
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" th:field="*{lastName}" class="form-control"
-                               placeholder="Last name here"></td>
-                    <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="email" th:field="*{email}" class="form-control"
-                               placeholder="Email here"></td>
-                    <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="email"  class="form-control" name="confirmEmail"
-                               placeholder="Confirm email here" required></td>
-                </tr>
-                <tr>
-                    <td>
-                        <select class="form-control" id="hc-services" name="employeeValue">
-                            <option  th:type="${employeeList.email}"
-                                     th:each="employeeList: ${employeeLists}"
-                                     th:value="${employeeList.email}"
-                                     th:text="${employeeList.email}"></option>
-                        </select>
-                    </td>
 
-                </tr>
-                <tr>
-                    <td><input type="password"  class="form-control" name="password"
-                               placeholder="Enter password here" required></td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"
-                               onclick="if(!(confirm('Are you sure to save? you cannot edit after saving!'))) return false;"/>
-                    </td>
-                </tr>
-                <div style="clear:both"></div>
-
-                </tbody>
-            </table>
-        </form>
     </div>
-</div>
 
 </body>
 </html>

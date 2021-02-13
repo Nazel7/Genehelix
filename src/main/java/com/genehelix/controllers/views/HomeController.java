@@ -76,6 +76,10 @@ public class HomeController {
             return "home-reg-customer";
         } else {
             Employee employee = IEmployeeCustomerService.getEmployeeByEmail(employeeValue);
+            if(employee == null){
+
+                return "home-reg-customer";
+            }
             customer.setEmployee(employee);
         }
         if(!isMyEmail){

@@ -15,130 +15,151 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+    <style>
+        /**
+ * 01/28/2016
+ * This pen is years old, and watching at the code after all
+ * those years made me fall from my chair, so I:
+ * - changed all IDs to classes
+ * - converted all units to pixels and em units
+ * - changed all global elements to classes or children of
+ *   .login
+ * - cleaned the syntax to be more consistent
+ * - added a lot of spaces that I so hard tried to avoid
+ *   a few years ago
+ *   (because it's cool to not use them)
+ * - and probably something else that I can't remember anymore
+ *
+ * I sticked to the same philosophy, meaning:
+ * - the design is almost the same
+ * - only pure HTML and CSS
+ * - no frameworks, preprocessors or resets
+ */
+
+        /* 'Open Sans' font from Google Fonts */
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+        body {
+            background: #456;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .login {
+            width: 400px;
+            margin: 16px auto;
+            font-size: 16px;
+        }
+
+        /* Reset top and bottom margins from certain elements */
+        .login-header,
+        .login p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        /* The triangle form is achieved by a CSS hack */
+        .login-triangle {
+            width: 0;
+            margin-right: auto;
+            margin-left: auto;
+            border: 12px solid transparent;
+            border-bottom-color: #28d;
+        }
+
+        .login-header {
+            background: #28d;
+            padding: 20px;
+            font-size: 1.4em;
+            font-weight: normal;
+            text-align: center;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .login-container {
+            background: #ebebeb;
+            padding: 12px;
+        }
+
+        /* Every row inside .login-container is defined with p tags */
+        .login p {
+            padding: 12px;
+        }
+
+        .login input {
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            border-width: 1px;
+            border-style: solid;
+            padding: 16px;
+            outline: 0;
+            font-family: inherit;
+            font-size: 0.95em;
+        }
+
+        .login input[type="email"],
+        .login input[type="password"] {
+            background: #fff;
+            border-color: #bbb;
+            color: #555;
+        }
+
+        /* Text fields' focus effect */
+        .login input[type="email"]:focus,
+        .login input[type="password"]:focus {
+            border-color: #888;
+        }
+
+        .login input[type="submit"] {
+            background: #28d;
+            border-color: transparent;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .login input[type="submit"]:hover {
+            background: #17c;
+        }
+
+        /* Buttons' focus effect */
+        .login input[type="submit"]:focus {
+            border-color: #05a;
+        }
+    </style>
+
 </head>
 
 <body style="background-color: azure; align-content: center; ">
-        <span><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
-                   style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">
-    </span>
-    <span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;
-    color: darkslategray">Please login here</span>
-<div style="position: fixed; top: 5%; width: 100%; left: 20%">
-    <div id="loginbox" style="margin-top: 50px;"
-         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <div th:if="${logoutMessage == null}">
-                    <div class="panel-title">Sign In</div>
-                </div>
-                <div th:unless="${logoutMessage == null}">
-                    <div class="panel-title">Signed Out</div>
-                </div>
 
-            </div>
+<div class="login">
+    <div class="login-triangle"></div>
 
-            <div style="padding-top: 30px" class="panel-body">
-                <div th:object="${logoutMessage}">
-                    <div th:if="${logoutMessage != null}">
+    <h2 class="login-header">Log in</h2>
+
+    <form class="login-container" action="#" th:action="@{/loginProcessing}" method="POST">
+        <!-- Place for messages: error, alert etc ... -->
+        <div class="form-group">
+            <div class="col-xs-15">
+                <div th:if="${param.error != null}">
+                    <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                        Invalid username and password.
+                    </div>
+
+                    <div th:if="${param.logout != null}">
                         <div class="alert alert-success col-xs-offset-1 col-xs-10">
-                            <i th:text="${logoutMessage}"/>
+                            You have been logged out.
                         </div>
-
                     </div>
 
                 </div>
-
-                <!-- Login Form -->
-                <Form action="#" th:action="@{/loginProcessing}"  method="POST"
-                      class="form-horizontal">
-
-                    <!-- Place for messages: error, alert etc ... -->
-                    <div class="form-group">
-                        <div class="col-xs-15">
-                            <div th:if="${param.error != null}">
-                                <div class="alert alert-danger col-xs-offset-1 col-xs-10">
-                                    Invalid username and password.
-                                </div>
-
-                                <div th:if="${param.logout != null}">
-                                    <div class="alert alert-success col-xs-offset-1 col-xs-10">
-                                        You have been logged out.
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div th:if="${logoutMessage == null}">
-                        <!-- User name -->
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-
-                            <input type="text" name="username" placeholder="username" class="form-control">
-                        </div>
-
-                        <!-- Password -->
-                        <div style="margin-bottom: 25px" class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-
-                            <input type="password" name="password" placeholder="password" class="form-control">
-                        </div>
-
-                        <!-- Login/Submit Button -->
-                        <div style="margin-top: 10px" class="form-group">
-                            <div class="col-sm-6 controls">
-
-                                <button type="submit" class="btn btn-success">Login</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div th:if="${logoutMessage != null}">
-                        <!-- User name -->
-                        <div style="margin-bottom: 25px; margin-left: 30%; align-content: center" class="input-group">
-                            <img th:src="@{/images/logout.png}" width="110" height="110"
-                                 src="../static/images/logout.png">
-
-
-                        </div>
-
-
-                        <!-- Login/Submit Button -->
-                        <div style="margin-top: 10px" class="form-group">
-                            <div class="col-sm-6 controls">
-
-                                <a th:href="@{company-employees/employee-list}" class="btn btn-success">Admin</a>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div><a href="#"
-                            style="margin-left: 25%;margin-top: 10%; color: dodgerblue; cursor: pointer" onmouseover="this.style.color= 'blue';
-								this.style.textDecorationLine= 'none'"
-                            onmouseout="this.style.color= 'dodgerblue'"><i>Forgot password ?</i>
-                    </a><br>
-                        <hr>
-                        <span  ><a class="btn-sm btn-primary" style="text-decoration-line: none"
-                                   th:href="@{/home-page/customer-reg}">Create Account</a></span>
-                    </div>
-
-                </Form>
-                <p></p>
-
             </div>
-
         </div>
-
-    </div>
-
+        <p><input type="text"  name="username" placeholder="Email"></p>
+        <p><input type="password"  name="password" placeholder="Password"></p>
+        <p><input type="submit" value="Login"></p>
+    </form>
 </div>
-        <span style="bottom: 16%; width: 20%;left: 39%; position: fixed; font-size: 14px;
-    color: darkslategray"><div style="text-align: center">
-        <a class="alink">Privacy</a>
-        <a class="alink">Terms & Conditions</a>
-        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gene-app.png}"
-                                                          src="../static/images/gene-app.png"
-                                                          width="24px"
-                                                          height="23px"></sup>Copyright<sup>&copy;</sup> 2020. All rights Research</p>
-    </div></span>
+
 </body>
 </html>
