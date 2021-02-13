@@ -11,54 +11,73 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
           integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
           crossorigin="anonymous">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
+        label{
+            color: darkslategray;
+        }
+        table tbody tr td{
+            padding: 12px;
+        }
         .error {
             color: red
         }
     </style>
 </head>
-<body>
-<div class="Container" style="margin: 2% 10%">
-
-    <div class="bg-primary" style="text-align: center; padding: 5px; width: 40%">
-        <h3>ERM- EMPLOYEE RELATIONSHIP MANAGER</h3>
+<body style="background-color: azure; align-content: center; overflow: auto">
+<div class="Container " style="position: fixed; top: 20%; left: 30%; float: left">
+    <div><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
+              style=" float: left; top: 1%; margin-bottom: 20px;position: fixed; left: 40%;">
+        <div style="top: 11%; width: 40%;left: 34%; position: fixed; font-size: 20px; float: left;
+           color: darkslategray">Please update your details </div>
+        <div style="margin-top: 0; background-color: white; border: 1px solid aqua">
+            <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${employee}" method="POST"
+                  style="padding: 10px">
+                <br>
+                <h5>Save Employee </h5>
+                <input type="hidden" th:field="*{id}"/>
+                <table>
+                    <tbody style=" overflow: auto">
+                    <tr>
+                        <td><input type="text" th:field="*{firstName}" class="form-control"
+                                   placeholder="first name here"></td>
+                        <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName
+                            Error
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" th:field="*{lastName}" class="form-control"
+                                   placeholder="last name here"></td>
+                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>
+                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>
+                    </tr>
+                    <tr class="form-group">
+                        <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"
+                                   onclick="if(!(confirm('Are you sure to save? you cannot edit after saving!'))) return false;"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+        </div>
     </div>
-    <div style="width: 40%">
-        <hr>
+
+
+    <div>
     </div>
 
-    <div style=" padding: 5px">
-        <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${employee}" method="POST">
-            <h4>Save Employee</h4>
-            <input type="hidden" th:field="*{id}"/>
-            <table style="width: 40%">
-                <tbody>
-                <tr>
-                    <td><input type="text" th:field="*{firstName}" class="form-control"
-                               placeholder="first name here"></td>
-                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName
-                        Error
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" th:field="*{lastName}" class="form-control"
-                               placeholder="last name here"></td>
-                    <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>
-                    <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>
-                </tr>
-                <tr>
-                    <td><input type="submit" value="Save" class="btn btn-outline-primary"/></td>
-                </tr>
-                <div style="clear:both"></div>
-
-                </tbody>
-            </table>
-        </form>
-    </div>
 </div>
+
 </body>
 </html>
