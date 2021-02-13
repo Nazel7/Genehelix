@@ -32,10 +32,10 @@
     </style>
 </head>
 <body style="background-color: azure; align-content: center; overflow: auto">
-<div class="Container " style="position: fixed; top: 20%; left: 30%; float: left">
+<div class="Container " style="position: fixed; top: 20%; left: 20%; float: left">
     <div><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
-              style=" float: left; top: 1%; margin-bottom: 20px;position: fixed; left: 40%;">
-        <div style="top: 11%; width: 40%;left: 34%; position: fixed; font-size: 20px; float: left;
+              style=" float: left; top: 1%; margin-bottom: 20px;position: fixed; left: 30%;">
+        <div style="top: 11%; width: 40%;left: 25%; position: fixed; font-size: 20px; float: left;
            color: darkslategray">Please update your details </div>
         <div style="margin-top: 0; background-color: white; border: 1px solid aqua">
 
@@ -45,8 +45,8 @@
                       style="padding: 10px">
                     <br>
                     <input type="hidden" th:field="*{id}"/>
-                    <table>
-                        <tbody style=" overflow: auto">
+                    <table style="overflow-x: auto; white-space: nowrap">
+                        <tbody>
                         <tr class="form-group">
                             <td><label for="date1">Date:</label></td>
                             <td><input type="date" th:field="*{dateTime}" class="form-control" id="date1"

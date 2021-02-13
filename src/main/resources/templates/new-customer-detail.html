@@ -32,20 +32,21 @@
     </style>
 </head>
 <body style="background-color: azure; align-content: center; overflow: auto">
-<div class="Container" style="position: fixed; top: 20%; left: 30%;">
+<div class="Container align-self-lg-center" style=" width: 50%; margin-top: 5%; margin-left: 20%">
 
-    <div><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
-              style=" float: left; top: 1%; margin-bottom: 20px;position: fixed; left: 40%;">
-        <div style="top: 11%; width: 40%;left: 34%; position: fixed; font-size: 20px; float: left;
-           color: darkslategray">Please update your details </div>
-        <div style="margin-top: 0; background-color: white; border: 1px solid aqua">
+    <div style="width: 100%; align-items: center">
+        <div style="margin-top: 1%; width: 80%;  font-size: 20px; float: left;
+           color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 10%;"></p>
+            <p style="width: 100%">Please update your details</p></div>
+        <div style="margin-top: 1%; margin-left: 10%; background-color: white; border: 1px solid aqua; overflow-x: auto; white-space: nowrap; float:left;">
 
             <div th:if="${customerDetailCheck != null}">
                 <form action="#" th:action="@{/setting/updateCustomerDetails}"
                       th:object="${newCustomerDetail}" method="POST"  style="padding: 10px">
                     <br>
                     <input type="hidden" th:field="*{id}"/>
-                    <table >
+                    <table style="overflow-x: auto; white-space: nowrap">
                         <tbody style=" overflow: auto">
                         <tr class="form-group">
                             <td><label for="date1">Date:</label></td>
