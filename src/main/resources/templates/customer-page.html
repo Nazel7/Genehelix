@@ -110,6 +110,7 @@
 
 
         }
+
         li form {
             display: block;
             color: #000;
@@ -124,14 +125,15 @@
             border-top: 1px solid lavender;
         }
 
-        ul li a:hover   {
+        ul li a:hover {
             background-color: azure;
             color: dodgerblue;
             text-decoration: none;
             width: 100%;
 
         }
-        ul li form:hover   {
+
+        ul li form:hover {
             background-color: azure;
             color: dodgerblue;
             text-decoration: none;
@@ -167,7 +169,7 @@
 
         }
 
-        ul li a:hover , span:hover {
+        ul li a:hover, span:hover {
             background-color: azure;
             color: lightgray;
             text-decoration: none;
@@ -183,16 +185,19 @@
             transition: all 0.3s ease;
 
         }
-       ul li form input{
+
+        ul li form input {
             background-color: white;
         }
 
-        ul li a  i {
+        ul li a i {
             margin-right: 8px;
         }
+
         ul li form i {
             margin-right: 8px;
         }
+
         .notification {
             text-space: 10px;
             font-size: 18px;
@@ -344,9 +349,7 @@
 
         .divProfilespanpDatails {
             color: darkslategray;
-            border: 1px solid lightgray;
             padding: 6px;
-            margin-right: 10%;
             margin-top: 10%;
             font-size: 15px;
         }
@@ -354,6 +357,7 @@
         .divProfilespanpDatails:hover {
             color: darkslategray;
             background-color: white;
+            margin-left: 0;
         }
 
         aside {
@@ -373,7 +377,8 @@
         #carouselPrevious:hover {
             background-color: darkgray;
         }
-        .spandetailHover:hover{
+
+        .spandetailHover:hover {
             background-color: white;
         }
 
@@ -440,12 +445,12 @@
 <nav>
     <div>
         <div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile">
-            <img th:src="'data:image/jpeg;base64,' +${cPhoto.profilePhoto}"  width="120px" height="120px"
+            <img th:src="'data:image/jpeg;base64,' +${cPhoto.profilePhoto}" width="120px" height="120px"
                  style="border-radius: 50%; margin-bottom: 5%"/>
 
             <div style="text-align: center; margin-bottom: 6%">
 
-               <a href="#" th:href="@{/customer/photoUpload(c-userId=${customerId})}" style="
+                <a href="#" th:href="@{/customer/photoUpload(c-userId=${customerId})}" style="
                    width: 30%;
                    background-color: white;
                    color: dodgerblue;
@@ -453,19 +458,19 @@
                    font-size: 13px;
                    border-radius: 5px;
                    border: 1px solid dodgerblue "
-                  onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
-                  onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'">Uploader</a>
+                   onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
+                   onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'">Uploader</a>
             </div>
             <div class="divProfileSpan">
            <span class="divProfileSpan" style="width: 50%; font-size: 20px">
            <span class="divProfileSpan" th:text="${activeUser.firstName}"></span>
             <span class="divProfileSpan" th:text="${activeUser.lastName}"></span> <br>
 
-                <span th:if="${userDetail != null && userDetail.occupation != null}" >
+                <span th:if="${userDetail != null && userDetail.occupation != null}">
                     <p th:text="${userDetail.occupation}" class="divProfileSpan" style="color: darkslategray;
-                margin-top: 1%; font-size: 15px">Software Engineer</p>
+                margin-top: 1%; font-size: 15px"></p>
                 </span>
-               <span th:unless="${userDetail != null && userDetail.occupation != null}" >
+               <span th:unless="${userDetail != null && userDetail.occupation != null}">
                     <span class="divProfileSpan" style="color: darkslategray;
                 margin-top: 1%; font-size: 15px"> Data Empty</span>
                 </span>
@@ -523,7 +528,7 @@
             </li>
 
             <li style="color: red; border-bottom: none">
-                <form action="#" th:action="@{/logout}" method="POST" >
+                <form action="#" th:action="@{/logout}" method="POST">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <input style="border: none" onmouseover="this.style.color='lightgray'"
                            onmouseout="this.style.color='darkslategray'" type="submit" value="Logout">
@@ -551,7 +556,7 @@
                 <tr>
                     <td><input type="text" th:field="*{firstName}"
                                class="form-control" style="width: 50%; font-size: 15px"></td>
-                    <!--                    <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName Error</td>-->
+
                 </tr>
                 <tr>
                     <td><label>Last Name:</label></td>
@@ -587,30 +592,28 @@
         <h2 class="sectionh2">Healthcare current Service</h2>
         <hr>
         <br>
-        <br>
-        <span class="divProfilespanpDatails" style="margin-top: 3%; border: none;">
-            <label style="margin-right: 32%; margin-left: 0">M-Service:</label><label>Visit-Date:</label>
-        </span>
-        <br>
-        <span th:if="${latestService!= null}" class="spandetailHover">
-             <span th:text="${latestService}" class="divProfilespanpDatails"
-                    style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; margin-right: 10%"></span>
+        <div style="width: 50%; float: left">
+            <label style="width:100%; font-size: 15px; color:darkslategray">M-Service: </label>
+            <br>
+            <span style="width: 100%" th:if="${latestService!= null}" class="spandetailHover">
+             <span class="divProfilespanpDatails" th:text="${latestService}"></span>
         </span>
 
-        <span th:unless="${latestService != null}" class="spandetailHover">
-             <span  class="divProfilespanpDatails"
-                    style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; margin-right: 10%">No Service</span>
+            <span th:unless="${latestService != null}" class="spandetailHover">
+             <span class="divProfilespanpDatails">No Service</span>
+        </span>
+        </div>
+
+        <div style="width: 50%; float: left">
+            <label style="width: 100%; font-size: 15px; color:darkslategray">Visit-Date</label>
+            <span style="width: auto" th:if="${latestServiceDate != null}" class="spandetailHover">
+      <span class="divProfilespanpDatails" th:text="${latestServiceDate}"></span>
         </span>
 
-        <span th:if="${latestServiceDate != null}" class="spandetailHover">
-      <span th:text="${latestServiceDate}" class="divProfilespanpDatails"
-            style="margin-top: 5%; margin-left: 10%"></span>
+            <span style="width: auto" th:unless="${latestServiceDate != null}" class="spandetailHover">
+                 <span class="divProfilespanpDatails">No set Date</span>
         </span>
-        <span th:unless="${latestServiceDate != null}" class="spandetailHover">
- <span class="divProfilespanpDatails"
-       style="margin-top: 5%; margin-left: 10%">No set Date</span>
-        </span>
-
+        </div>
     </div>
 
 </section>
@@ -620,25 +623,30 @@
         <h2 class="sectionh2">Social Link</h2>
         <hr>
         <br>
-        <span class="divProfilespanpDatails" style="margin-top: 3%; border: none;">
-            <label style="margin-right: 30.5%; margin-left: 0">Twitter:</label><label>LinkedIn:</label>
-        </span>
-        <br>
-        <span th:if="${userDetail != null && userDetail.twitter != null}" style="margin-right: 5%" class="spandetailHover">
-             <span th:text="${userDetail.twitter}" class="divProfilespanpDatails" style="margin-top: 5%"></span>
-        </span>
-        <span th:unless="${userDetail != null && userDetail.twitter != null}" class="spandetailHover">
-            <span class="divProfilespanpDatails" style="margin-top: 5%">No Account set</span>
+        <div style="width: 50%; float: left">
+            <label style="width:100%; font-size: 15px; color:darkslategray">Twitter </label>
+            <br>
+            <span style="width: 100%" th:if="${userDetail != null && userDetail.twitter != null}" class="spandetailHover">
+             <span class="divProfilespanpDatails" th:text="${userDetail.twitter}"></span>
         </span>
 
-        <span th:if="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
-      <span th:text="${userDetail.linkedin}" class="divProfilespanpDatails"
-      style="margin-top: 5%"></span>
+            <span th:unless="${userDetail != null && userDetail.twitter != null}" class="spandetailHover">
+             <span class="divProfilespanpDatails">No Account set</span>
         </span>
-        <span th:unless="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
- <span class="divProfilespanpDatails"
-       style="margin-top: 5%">No Account set</span>
+        </div>
+
+        <div style="width: 50%; float: left">
+            <label style="width: 100%; font-size: 15px; color:darkslategray">LinkedIn</label>
+            <span style="width: auto" th:if="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
+      <span class="divProfilespanpDatails" th:text="${userDetail.linkedin}"></span>
         </span>
+
+            <span style="width: auto" th:unless="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
+                 <span class="divProfilespanpDatails">No Account set</span>
+        </span>
+        </div>
+
+
     </div>
 
 </section>
@@ -656,7 +664,8 @@
         </span>
 
         <span th:unless="${userDetail != null && userDetail.homeAddress != null}" class="spandetailHover">
-            <span  class="divProfilespanpDatails" style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">No Address</span>
+            <span class="divProfilespanpDatails"
+                  style="margin-top: 5%; margin-left: 1%; margin-bottom: 5%; ">No Address</span>
         </span>
     </div>
 
@@ -667,25 +676,24 @@
         <h2 class="sectionh2">Contact Details</h2>
         <hr>
         <br>
-        <span class="divProfilespanpDatails" style="margin-top: 3%; border: none">
-            <label style="margin-right: 34%; margin-left: 0">Email:</label><label>Mobile:</label>
+
+        <div style="width: 50%; float: left">
+            <label style="width:100%; font-size: 15px; color:darkslategray">Email </label>
+            <br>
+             <span class="divProfilespanpDatails" th:text="${activeUser.email}"></span>
+        </div>
+
+        <div style="width: 50%; float: left">
+            <label style="width: 100%; font-size: 15px; color:darkslategray">Mobile</label>
+            <span style="width: auto" th:if="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
+      <span class="divProfilespanpDatails" th:text="${userDetail.linkedin}"></span>
         </span>
-        <br>
-        <span th:text="${activeUser.email}" class="divProfilespanpDatails" style="margin-top: 5%"></span>
 
-        <span th:if="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
-        <span th:text="${userDetail.mobile}" class="divProfilespanpDatails"
-              style="margin-top: 5%"></span>
+            <span style="width: auto" th:unless="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
+                 <span class="divProfilespanpDatails">No Account set</span>
         </span>
-      <span th:unless="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
-           <span th:if="${activeUser.email == null}">
-              <span class="divProfilespanpDatails" style="margin-top: 5%">No Email</span>
-          </span>
-           <span  class="divProfilespanpDatails"
-                  style="margin-top: 5%">No Phone Number</span>
+        </div>
 
-
-      </span>
 
     </div>
 
@@ -693,10 +701,11 @@
 <section style="margin-top: 0.5%; margin-bottom: 3%; width: 5%">
     <div>
         <p th:if="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
-              th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a></p>
+                                            th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a>
+        </p>
 
         <p th:unless="${userDetail != null}"><a class="btn btn-primary" style="font-size: 15px"
-              th:href="@{/setting/newCustomerDetails}">Setting</a></p>
+                                                th:href="@{/setting/newCustomerDetails}">Setting</a></p>
     </div>
 
 </section>
@@ -705,30 +714,28 @@
 <div class="container" style="float: left; width: 20%;
      margin-left: 60%; height: 200px; position: fixed; top: 12%;">
     <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 106%; margin-left: 0">
-        <!--            &lt;!&ndash; Indicators &ndash;&gt;-->
-        <!--            <ol class="carousel-indicators">-->
-        <!--                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>-->
-        <!--                <li data-target="#myCarousel" data-slide-to="1"></li>-->
-        <!--                <li data-target="#myCarousel" data-slide-to="2"></li>-->
-        <!--            </ol>-->
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" style="width: 100%">
             <div class="item active" style="width: 100%;">
-                <img th:src="@{/images/rmi-machine-icon.jpg}" src="../static/images/rmi-machine-icon.jpg" alt="rmi machine" style="width:100%;height: 200px">
+                <img th:src="@{/images/rmi-machine-icon.jpg}" src="../static/images/rmi-machine-icon.jpg"
+                     alt="rmi machine"
+                     style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Cancer Research Success</h5>
                 <p class="carouselH6">NCBC has given visibility on the modalities to tackle cervicae cancer in
                     2021.. </p>
             </div>
 
             <div class="item" style="width: 100%;">
-                <img th:src="@{/images/ncbc-icon.jpg}" src="../static/images/ncbc-icon.jpg" alt="ncbc" style="width:100%;height: 200px">
+                <img th:src="@{/images/ncbc-icon.jpg}" src="../static/images/ncbc-icon.jpg" alt="ncbc"
+                     style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Stem cell Research is taking the world</h5>
                 <p class="carouselH6">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
             </div>
 
             <div class="item" style="width: 100%;">
-                <img th:src="@{/images/linkedin.png}" src="../static/images/linkedin.png" alt=linkedIn style="width:100%;height: 200px">
+                <img th:src="@{/images/linkedin.png}" src="../static/images/linkedin.png" alt=linkedIn
+                     style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Diabetes can be cured!</h5>
                 <p class="carouselH6">A new research choose the cells responsible for insulin activation can be..</p>
             </div>
@@ -750,17 +757,17 @@ position: fixed">
     <form action="#" th:object="${newHcService}"
           th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST">
 
-            <div class="form-group">
+        <div class="form-group">
             <label for="hc-services" style="color: dodgerblue; font-size: 13px">Register for a New HC-Service</label>
             <select th:field="*{name}" class="form-control" id="hc-services">
-                <option  th:type="${serviceList.getServiceTitle()}"
+                <option th:type="${serviceList.getServiceTitle()}"
                         th:each="serviceList: ${hcServiceLists}"
                         th:value="${serviceList.getServiceTitle()}"
                         th:text="${serviceList.getServiceTitle()}"></option>
             </select>
-<br>
-                <label>Visit-Date: </label>
-                <input type="date" th:field="*{date}" class="form-control">
+            <br>
+            <label>Visit-Date: </label>
+            <input type="date" th:field="*{date}" class="form-control">
         </div>
 
         <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 15px; margin-top: 5%"
@@ -768,15 +775,6 @@ position: fixed">
                            return false">
     </form>
 
-<!--    <tr class="form-group">-->
-<!--        <td><label for="hc-services">Healthcare Service:</label></td>-->
-<!--        <td th:if="${cDServices == null}">-->
-<!--            <select th:field="*{service}"  class="form-control" id="hc-services">-->
-<!--                <option th:type="${serviceList.id}"  th:each="serviceList: ${serviceListRL}"-->
-<!--                        th:text="${serviceList.getServiceTitle()}"></option>-->
-<!--            </select>-->
-<!--        </td>-->
-<!--    </tr>-->
 
 </aside>
 
