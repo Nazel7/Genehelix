@@ -227,6 +227,11 @@
         #input1 {
             width: 50%;
             margin: 4%;
+            float: left;
+        }
+        #input2 {
+            float: left;
+            width: 40%;
         }
 
         #img-section {
@@ -409,7 +414,7 @@
         </div>
         <div class="noVisisbleForm" id="noVisisbleForm">
             <form action="#" th:action="@{/home-search}" method="GET"
-                  class="form-inline">
+                  class="form-inline" style="width: 100%;">
 
                 <input type="text" name="searchEmployeesHome" class="form-control form-control-lg" id="input"
                        placeholder="Search for manager here"/>
@@ -418,11 +423,11 @@
         </div>
         <div class="noVisisbleForm1" id="visibleFormField">
             <form action="#" th:action="@{/home-search}" method="GET"
-                  class="form-inline">
+                  class="form-inline" style="width: 100%" >
 
                 <input type="text" name="searchEmployeesHome" class="form-control form-control-sm" id="input1"
                        placeholder="Search for manager here"/>
-                <input type="submit" class="btn btn-success btn-sm" width="5%" value="Search">
+                <input type="submit" class="btn btn-success btn-sm" width="5%" value="Search" id="input2">
             </form>
         </div>
     </section>
