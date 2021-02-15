@@ -23,6 +23,12 @@
                 cursor: pointer;
                 float: left;
             }
+            #top1 {
+                margin-top: 14%;
+            }
+            #headerImageMargin {
+
+            }
             .alinkimg {
                 width: 20px;
                 height: 20px;
@@ -136,7 +142,7 @@
                 float: left; margin-left: 10%; margin-top: 1%; margin-bottom: 10px; width: 70px; height: 60px
             }
             #headerMessage{
-                margin-top: 30%;
+                margin-top: 15%;
                 overflow: auto;
                 font-size: 12px;
             }
@@ -149,7 +155,7 @@
             #headerImage1{
               width: 40%;
                 height: 250px;
-                margin-top: 10%;
+                margin-top: 6%;
             }
         }
         .error {
@@ -192,30 +198,8 @@
             cursor: pointer;
         }
 
-        #top1 {
+        .top1 {
             margin-top: 6%;
-            -webkit-animation: anime 5s infinite;
-            animation: anime 5s infinite;
-        }
-
-        /* Chrome, Safari, Opera */
-        @-webkit-keyframes anime {
-            from {
-                background-color: blue;
-            }
-            to {
-                background-color: dodgerblue;
-            }
-        }
-
-        /* Standard syntax */
-        @keyframes anime {
-            from {
-                background-color: blue;
-            }
-            to {
-                background-color: dodgerblue;
-            }
         }
 
         section div h3 p {
@@ -401,44 +385,46 @@
            class="headerLi" id="headerLi" th:href="@{/home-page/customer-reg}">Sign Up</a>
     </div>
 </header>
-
-<section class="p-3 mb-2 bg-primary text-white" id="top1" style="overflow: auto">
-    <div class="sectionDiv" style="overflow: auto; margin-top: 30px; margin-right: 12%">
-        <div style="height: 300px; overflow: auto">
-            <h2 class="headerMessage" id="headerMessage" >
-                We at GeneHelix, the health of our clients is our top priority. We match towards making you a winner.
-            </h2>
-            <p class="headerMessage" id="headerMessage1">Checkout your preferred manager by search and lookup on their reviews,
-                otherwise sign up under any manager of your choice.
-                We are here to make you happy with our healthcare products and services</p>
+<div class="top1" id="top1">
+    <section class="p-3 mb-2 bg-primary text-white" >
+        <div class="sectionDiv" style="overflow: auto; margin-top: 30px; margin-right: 12%">
+            <div style="height: 300px; overflow: auto">
+                <h2 class="headerMessage" id="headerMessage" >
+                    We at GeneHelix, the health of our clients is our top priority. We match towards making you a winner.
+                </h2>
+                <p class="headerMessage" id="headerMessage1">Checkout your preferred manager by search and lookup on their reviews,
+                    otherwise sign up under any manager of your choice.
+                    We are here to make you happy with our healthcare products and services</p>
+            </div>
         </div>
-    </div>
-    <div class="shadow-sm p-3 mb-5 bg-white rounded" style="background-color: azure">
-        <div style="border-radius: 5px; margin-right: 1%">
-            <img th:src="@{/images/customer-Relationship-1.png}" width="40%" height="400px"
-               id="headerImage1"   class="shadow-sm bg-white rounded"/>
+        <div class="shadow-sm p-3 mb-5 bg-white rounded" id="headerImageMargin">
+            <div style="border-radius: 5px; margin-right: 1%">
+                <img th:src="@{/images/customer-Relationship-1.png}" width="40%" height="400px"
+                     id="headerImage1"   class="shadow-sm bg-white rounded"/>
+            </div>
+
         </div>
+        <div class="noVisisbleForm" id="noVisisbleForm">
+            <form action="#" th:action="@{/home-search}" method="GET"
+                  class="form-inline">
 
-    </div>
-    <div class="noVisisbleForm" id="noVisisbleForm">
-        <form action="#" th:action="@{/home-search}" method="GET"
-              class="form-inline">
+                <input type="text" name="searchEmployeesHome" class="form-control form-control-lg" id="input"
+                       placeholder="Search for manager here"/>
+                <input type="submit" class="btn btn-success btn-lg" width="5%" value="Search">
+            </form>
+        </div>
+        <div class="noVisisbleForm1" id="visibleFormField">
+            <form action="#" th:action="@{/home-search}" method="GET"
+                  class="form-inline">
 
-            <input type="text" name="searchEmployeesHome" class="form-control form-control-lg" id="input"
-                   placeholder="Search for manager here"/>
-            <input type="submit" class="btn btn-success btn-lg" width="5%" value="Search">
-        </form>
-    </div>
-    <div class="noVisisbleForm1" id="visibleFormField">
-        <form action="#" th:action="@{/home-search}" method="GET"
-              class="form-inline">
+                <input type="text" name="searchEmployeesHome" class="form-control form-control-sm" id="input1"
+                       placeholder="Search for manager here"/>
+                <input type="submit" class="btn btn-success btn-sm" width="5%" value="Search">
+            </form>
+        </div>
+    </section>
 
-            <input type="text" name="searchEmployeesHome" class="form-control form-control-sm" id="input1"
-                   placeholder="Search for manager here"/>
-            <input type="submit" class="btn btn-success btn-sm" width="5%" value="Search">
-        </form>
-    </div>
-</section>
+</div>
 
 
 <section style="margin-top: 5%">
