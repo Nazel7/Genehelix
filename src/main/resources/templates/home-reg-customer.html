@@ -39,17 +39,17 @@
            color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
                                          width="80px" height="70px"
                                          style=" float: left; ; margin-bottom: 10px; margin-left: 10%;"></p>
-            <p>Please update your details</p></div>
+            <p>Please enter your details</p></div>
         <div style="margin-top: 1%; margin-left: 10%; background-color: white; border: 1px solid aqua; overflow-x: auto;
         white-space: nowrap; float:left">
 
-            <div th:if="${updateCustomerDetail!= null}" style="width: 100%; overflow: auto">
+            <div  style="width: 100%; overflow: auto">
                 <form action="#" th:action="@{/home-page/reg-customer}"
                       th:object="${homeRegCustomer}"
                       method="POST"
                       style="padding: 10px; width: inherit">
                     <br>
-                    <h5>Save New Reg Customer for Employee [[${id}]]</h5>
+                    <h5></h5>
                     <input type="hidden" th:field="*{id}"/>
                     <table style="overflow-x: auto; white-space: nowrap">
                         <tbody>
@@ -78,63 +78,7 @@
                         </tr>
                         <tr class="form-group">
                             <td>
-                                <select class="form-control" id="hc-services" name="employeeValue">
-                                    <option  th:type="${employeeList.email}"
-                                             th:each="employeeList: ${employeeLists}"
-                                             th:value="${employeeList.email}"
-                                             th:text="${employeeList.email}"></option>
-                                </select>
-                            </td>
-
-                        </tr>
-                        <tr class="form-group">
-                            <td><input type="password"  class="form-control" name="password"
-                                       placeholder="Enter password here" required></td>
-                        </tr>
-                        <tr class="form-group">
-                            <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"
-                                       onclick="if(!(confirm('Are you sure to save? you cannot edit after saving!'))) return false;"/>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
-            </div>
-            <div th:unless="${updateCustomerDetail!= null}" style="width: 100%; overflow: auto">
-                <form action="#" th:action="@{/home-page/reg-customer}"
-                      th:object="${homeRegCustomer}"
-                      method="POST"
-                      style="padding: 10px; width: inherit">
-                    <br>
-                    <h5>Save New Reg Customer for Employee [[${id}]]</h5>
-                    <input type="hidden" th:field="*{id}"/>
-                    <table style="overflow-x: auto; white-space: nowrap">
-                        <tbody>
-                        <tr class="form-group">
-                            <td><input type="text" th:field="*{firstName}" class="form-control"
-                                       placeholder="First name here"></td>
-                            <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName
-                                Error
-                            </td>
-                        </tr>
-                        <tr class="form-group">
-                            <td><input type="text" th:field="*{lastName}" class="form-control"
-                                       placeholder="Last name here"></td>
-                            <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
-                            </td>
-                        </tr>
-                        <tr class="form-group">
-                            <td><input type="email" th:field="*{email}" class="form-control"
-                                       placeholder="Email here"></td>
-                            <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
-                            </td>
-                        </tr>
-                        <tr class="form-group">
-                            <td><input type="email"  class="form-control" name="confirmEmail"
-                                       placeholder="Confirm email here" required></td>
-                        </tr>
-                        <tr class="form-group">
-                            <td>
+                                <label style="font-size: 10px">Review manager from home search</label>
                                 <select class="form-control" id="hc-services" name="employeeValue">
                                     <option  th:type="${employeeList.email}"
                                              th:each="employeeList: ${employeeLists}"
