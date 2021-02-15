@@ -24,20 +24,24 @@
             color: darkslategray;
         }
         table tbody tr td{
-            padding: 12px;
+            padding: 12px
         }
         .error {
             color: red
         }
     </style>
 </head>
-<body style="background-color: azure; align-content: center; overflow: auto">
-<div class="Container " style="position: fixed; top: 20%; left: 34%; float: left">
-    <div><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
-              style=" float: left; top: 1%; margin-bottom: 20px;position: fixed; left: 40%;">
-        <div style="top: 11%; width: 40%;left: 34%; position: fixed; font-size: 20px; float: left;
-           color: darkslategray">Please update your details </div>
-        <div style="margin-top: 0; background-color: white; border: 1px solid aqua">
+<body style="background-color: azure;max-width: 500px; margin: auto; overflow: auto">
+<div>
+
+    <div style="width: 100%; ">
+        <div style="margin-top: 1%; width: 80%;  font-size: 20px; float: left;
+           color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
+                                         width="80px" height="70px"
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 10%;"></p>
+            <p>Please update your details</p></div>
+        <div style="margin-top: 1%; margin-left: 10%; background-color: white; border: 1px solid aqua; overflow-x: auto;
+        white-space: nowrap; float:left;">
             <form action="#" th:action="@{/customers/postEmployeeCustomer(employeeCID=${employeeId})}"
                   th:object="${newEmployeeCustomer}" method="POST"
                   style="padding: 10px">
