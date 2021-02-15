@@ -36,17 +36,18 @@
     </style>
 </head>
 
-<body style="background-color: azure; align-content: center; ">
-<span><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png" width="80px" height="70px"
-           style=" float: left; top: 2%; margin-bottom: 20px;position: fixed; left: 38%">
-    </span>
-<span style="top: 5%; width: 20%;left: 43%; position: fixed; font-size: 20px;
-    color: darkslategray">Upload Profile Photo here!</span>
-<div style="position: fixed; top: 5%; width: 100%; left: 20% ">
-    <div id="loginbox" style="margin-top: 50px; "
-         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
+<body style="background-color: azure;max-width: 500px; margin: auto; overflow: auto">
+<div>
 
-        <div class="Container" style=" padding: 5px; ">
+    <div style="width: 100%; ">
+        <div style="margin-top: 1%; width: 100%;  font-size: 20px; float: left;
+           color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
+                                         width="80px" height="70px"
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 1%;"></p>
+            <p>Please update your details</p></div>
+        <div style="margin-top: 1%; background-color: white; border: 1px solid aqua; overflow-x: auto;
+        white-space: nowrap; float:left; width: 95%">
+            <div class="Container" style=" padding: 5px; ">
             <div>
                 <form action="#" th:action="@{/empty-photo/empty_photo-uploaded}"
                        method="POST" enctype="multipart/form-data">
@@ -82,14 +83,6 @@
     </div>
 
 </div>
-<span style="bottom: 10%; width: 20%;left: 42%; position: fixed; font-size: 14px;
-    color: darkslategray"><div style="text-align: center">
-        <a class="alink">Privacy</a>
-        <a class="alink">Terms & Conditions</a>
-        <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gene-app.png}"
-                                                          src="../static/images/gene-app.png"
-                                                          width="24px"
-                                                          height="23px"></sup>Copyright<sup>&copy;</sup> 2020. All rights Research</p>
-    </div></span>
+</div>
 </body>
 </html>
