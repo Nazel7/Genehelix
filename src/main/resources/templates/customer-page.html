@@ -264,9 +264,9 @@
             #headerpicture{
                 margin-left: 10%; float: left; width: 50px; height: 40px;
             }
-            #logout{
+            #serviceReg{
                 display: inline;
-                font-size: 9px;
+                font-size: 7px;
             }
             #doyou {
                 margin-top: 20%;
@@ -588,7 +588,7 @@
             z-index: 1;
             cursor: pointer;
         }
-        .logout {
+        .serviceReg {
             display: none;
         }
 
@@ -999,7 +999,7 @@
     </div>
 
 </section>
-<section style="margin-top: 0.5%; margin-bottom: 3%; width: 75%">
+<section style="margin-top: 0.5%; margin-bottom: 3%; width: 74%">
     <div>
         <span style="width: 30%" th:if="${userDetail != null}"><a class="btn btn-primary"
                                             th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a>
@@ -1008,11 +1008,12 @@
         <span style="width: 30%" th:unless="${userDetail != null}"><a class="btn btn-primary"
                                                 th:href="@{/setting/newCustomerDetails}">Setting</a></span>
 
-        <span class="logout"  style="width: 30%; float: right" id="logout"> <form action="#" th:action="@{/logout}" method="POST">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <input style="border: none; font-size: 12px" onmouseover="this.style.color='lightgray'"
-                           onmouseout="this.style.color='darkslategray'" type="submit" value="Logout">
-                </form></span>
+        <span class="serviceReg" id="serviceReg">
+            <span class="btn btn-primary" style="width: 34%; float: right" >
+            <a   th:href="@{/hc-serviceList}">Register for Service</a>
+        </span>
+        </span>
+
     </div>
 </section>
 <div style="clear: both"/>
