@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hc-service</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        label{
+            color: darkslategray;
+        }
+        table tbody tr td{
+            padding: 12px;
+        }
+        .error {
+            color: red
+        }
+    </style>
+</head>
+<body style="background-color: azure;max-width: 500px; margin: auto; overflow: auto">
+<div>
+
+    <div style="width: 100%; ">
+        <div style="margin-top: 1%; width: 80%;  font-size: 17px; float: left;
+           color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
+                                         width="60px" height="50px"
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 3%;"></p>
+            <p style="font-size: 17px">Register for Service here</p></div>
+        <div style="margin-top: 1%; margin-left: 13%; background-color: white; border: 1px solid aqua; overflow-x: auto;
+        white-space: nowrap; float:left;">
+            <form action="#" th:object="${newHcService}"
+                  th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST"
+                  style="padding: 10px">
+                <br>
+                <div class="form-group">
+                    <label for="hc-services" style="color: dodgerblue; font-size: 12px">Register for a New HC-Service</label>
+                    <select th:field="*{name}" class="form-control" id="hc-services">
+                        <option th:type="${serviceList.getServiceTitle()}"
+                                th:each="serviceList: ${hcServiceLists}"
+                                th:value="${serviceList.getServiceTitle()}"
+                                th:text="${serviceList.getServiceTitle()}"></option>
+                    </select>
+                    <br>
+                    <label style="font-size: 13px">Visit-Date: </label>
+                    <input type="date" th:field="*{date}" class="form-control">
+                </div>
+
+                <input class="btn btn-secondary" type="submit" value="Submit" style="font-size: 12px; margin-top: 1%"
+                       onclick="if(!(confirm('Are you sure, to register for this service?')))
+                           return false">
+            </form>
+        </div>
+    </div>
+
+
+    <div>
+    </div>
+
+</div>
+
+</body>
+</html>
