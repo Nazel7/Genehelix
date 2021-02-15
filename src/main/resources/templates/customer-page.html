@@ -34,6 +34,43 @@
 
 
             }
+            #successMessage{
+                font-size: 9px;
+            }
+            #dataNameProfile{
+                width: 50%; font-size: 11px
+            }
+            #dataNameProfile1{
+                width: 50%; font-size: 11px
+            }
+            #dataNameProfile2{
+                width: 50%; font-size: 11px
+            }
+            #dataNameProfile3{
+                width: 50%; font-size: 11px
+            }
+            #dataNameProfile4{
+                width: 50%; font-size: 11px
+            }
+
+            #dataName{
+                color: darkslategray;
+                margin-top: 1%;
+                font-size: 9px
+            }
+            #dataName1{
+                color: darkslategray;
+                margin-top: 1%;
+                font-size: 9px
+            }
+            #dataName2{
+                color: darkslategray;
+                margin-top: 1%; font-size: 10px
+            }
+            #dataName3{
+                color: darkslategray;
+                margin-top: 1%; font-size: 10px
+            }
             #notification {
                 text-space: 10px;
                 font-size: 15px;
@@ -227,9 +264,9 @@
             #headerpicture{
                 margin-left: 10%; float: left; width: 50px; height: 40px;
             }
-            #logout{
+            #serviceReg{
                 display: inline;
-                font-size: 9px;
+                font-size: 7px;
             }
             #doyou {
                 margin-top: 20%;
@@ -311,6 +348,11 @@
         .divProfileSpan:hover {
             background-color: white;
             color: blue;
+        }
+        .dataName{
+            color: darkslategray;
+            margin-top: 1%;
+            font-size: 14px
         }
 
         ul {
@@ -546,7 +588,7 @@
             z-index: 1;
             cursor: pointer;
         }
-        .logout {
+        .serviceReg {
             display: none;
         }
 
@@ -632,6 +674,13 @@
         .profilePhoto{
             border-radius: 50%; margin-bottom: 5%; width: 120px; height: 120px
         }
+        .dataNameProfile{
+            width: 50%; font-size: 17px
+        }
+        .dataName2{
+            color: darkslategray;
+            margin-top: 1%; font-size: 14px
+        }
 
     </style>
 </head>
@@ -713,23 +762,23 @@
                    onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'">Uploader</a>
             </div>
             <div class="divProfileSpan">
-           <span class="divProfileSpan" style="width: 50%; font-size: 17px">
-           <span class="divProfileSpan" th:text="${activeUser.firstName}"></span>
-            <span class="divProfileSpan" th:text="${activeUser.lastName}"></span> <br>
+           <span class="divProfileSpan" id="dataNameProfile1">
+           <span class="divProfileSpan" id="dataNameProfile2"><span class="dataNameProfile" id="dataNameProfile"
+                                                                    th:text="${activeUser.firstName}"></span></span>
+            <span class="divProfileSpan" id="dataNameProfile3"><span class="dataNameProfile" id="dataNameProfile4"
+                                                                     th:text="${activeUser.lastName}"></span></span> <br>
 
                 <span th:if="${userDetail != null && userDetail.occupation != null}">
-                    <p th:text="${userDetail.occupation}" class="divProfileSpan" style="color: darkslategray;
-                margin-top: 1%; font-size: 14px"></p>
+                    <p  class="divProfileSpan" id="dataName3"><p class="dataName2" id="dataName2" th:text="${userDetail.occupation}"></p></p>
                 </span>
                <span th:unless="${userDetail != null && userDetail.occupation != null}">
-                    <span class="divProfileSpan" style="color: darkslategray;
-                margin-top: 1%; font-size: 14px"> Data Empty</span>
+                    <span class="divProfileSpan" id="dataName1"><span id="dataName">Data Empty</span> </span>
                 </span>
            </span>
             </div>
             <br>
             <span class="divProfileSpan" style="float: left; color: green">
-                <span class="text-success">
+                <span class="text-success" id="successMessage">
                    [[${message}]]
                 </span>
 
@@ -950,7 +999,7 @@
     </div>
 
 </section>
-<section style="margin-top: 0.5%; margin-bottom: 3%; width: 75%">
+<section style="margin-top: 0.5%; margin-bottom: 3%; width: 74%">
     <div>
         <span style="width: 30%" th:if="${userDetail != null}"><a class="btn btn-primary"
                                             th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a>
@@ -959,11 +1008,12 @@
         <span style="width: 30%" th:unless="${userDetail != null}"><a class="btn btn-primary"
                                                 th:href="@{/setting/newCustomerDetails}">Setting</a></span>
 
-        <span class="logout"  style="width: 30%; float: right" id="logout"> <form action="#" th:action="@{/logout}" method="POST">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                    <input style="border: none; font-size: 12px" onmouseover="this.style.color='lightgray'"
-                           onmouseout="this.style.color='darkslategray'" type="submit" value="Logout">
-                </form></span>
+        <span class="serviceReg" id="serviceReg">
+            <span class="btn btn-primary" style="width: 34%; float: right" >
+            <a   th:href="@{/hc-serviceList}">Register for Service</a>
+        </span>
+        </span>
+
     </div>
 </section>
 <div style="clear: both"/>

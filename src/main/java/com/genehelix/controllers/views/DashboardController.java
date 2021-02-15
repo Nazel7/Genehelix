@@ -164,6 +164,14 @@ public class DashboardController {
         return "access-denied";
     }
 
+    @GetMapping("/hc-serviceList")
+    public String getHcServiceList(Model model){
+        hcServiceLists= ihcServiceListService.findAll();
+        model.addAttribute("hcServiceLists", hcServiceLists);
+
+        return "register-for-service";
+    }
+
 
     @PostMapping("/loginProcessing")
     public String loginSuccess(HttpServletRequest request) {
