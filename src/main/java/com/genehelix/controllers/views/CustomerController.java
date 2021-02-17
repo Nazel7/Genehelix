@@ -2,6 +2,7 @@ package com.genehelix.controllers.views;
 
 import com.genehelix.entities.*;
 import com.genehelix.interfaces.IEmployeeCustomerService;
+import com.genehelix.interfaces.ISecureUserService;
 import com.genehelix.interfaces.IUserProfilePhotoService;
 import com.genehelix.interfaces.IUserResumeService;
 import com.genehelix.utils.ErrorMessageUtil;
@@ -35,6 +36,9 @@ public class CustomerController {
 
     @Autowired
     IUserProfilePhotoService profilePhotoService;
+
+    @Autowired
+    private ISecureUserService secureUserService;
 
 
 
@@ -347,5 +351,39 @@ public class CustomerController {
        return "customer-manager";
     }
 
+    @GetMapping("customer/change-password")
+    public String changePassword(@RequestParam("customerId-p") int cId, Model model){
+
+        model.addAttribute("customerId-p" , cId);
+
+        return "c-change-password";
+    }
+
+    @PostMapping("customer/post-new-password")
+    public String postChangePassowrd(@ModelAttribute("customerId-p") int cId,
+                                     @RequestParam("old-password") String oldPassword,
+                                     @RequestParam("new-password") String newPassword,
+                                     @RequestParam("cNew-password") String cNewPassword,
+                                     RedirectAttributes r){
+
+        String encodedPassword= secureUserService.getPasswordByCustomerId(cId);
+
+        boolean isPassword= Util.decodePassword(oldPassword, encodedPassword);
+        boolean isSame= Util.compareString(newPassword, cNewPassword);
+
+        if (!isPassword || !isSame){
+            return "c-change-password";
+        }
+
+        r.addFlashAttribute("message", "password or old password is wrong!");
+
+        String newPasscode= Util.hashPassword(newPassword);
+
+       User user= secureUserService.getUserByCustomerId(cId);
+       user.setPassWord(newPasscode);
+
+       return "redirect:/dashboard";
+
+    }
 
 }

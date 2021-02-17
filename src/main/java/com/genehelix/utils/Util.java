@@ -17,6 +17,13 @@ public class Util {
         return hashPassword;
     }
 
+    public static boolean decodePassword(String rawPassword, String encodedPassword){
+
+        BCryptPasswordEncoder decoder = new BCryptPasswordEncoder();
+
+        return  decoder.matches(rawPassword, encodedPassword);
+
+    }
 
     public static byte[] formatFile(MultipartFile file) {
         try{
@@ -42,9 +49,9 @@ public class Util {
         return base64String;
     }
 
-    public static boolean emailEqual(String email1, String email2) {
+    public static boolean compareString(String string1, String string2) {
 
 
-        return email1.toLowerCase().trim().equals(email2.toLowerCase().trim());
+        return string1.toLowerCase().trim().equals(string2.toLowerCase().trim());
     }
 }

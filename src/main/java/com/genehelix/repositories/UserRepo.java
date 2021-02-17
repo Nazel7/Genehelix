@@ -12,4 +12,9 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     User findByUserName(String username);
 
     User findById(int id);
+
+    @Query("select p.passWord from User p inner join customer  c on c.id=p.customer.id where c.id=?1 ")
+    String getPasswordByCustomerId(int customerId);
+
+    User getUserByCustomerId(int customerId);
 }
