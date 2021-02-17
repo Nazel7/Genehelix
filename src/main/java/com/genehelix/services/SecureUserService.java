@@ -16,4 +16,17 @@ public class SecureUserService implements ISecureUserService {
         userRepo.save(user);
 
     }
+
+    @Override
+    public String getPasswordByCustomerId(int customerId) {
+
+
+        return userRepo.getPasswordByCustomerId(customerId);
+    }
+
+    @Override
+    public User getUserByCustomerId(int customerId) {
+
+        return userRepo.getUserByCustomerId(customerId);
+    }
 }

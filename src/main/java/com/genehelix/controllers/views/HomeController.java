@@ -71,7 +71,7 @@ public class HomeController {
                                       @RequestParam("confirmEmail") String confirmEmail,
                                       @RequestParam("password") String password) {
         User user = new User();
-        boolean isMyEmail = Util.emailEqual(customer.getEmail().toLowerCase().trim(), confirmEmail.toLowerCase().trim());
+        boolean isMyEmail = Util.compareString(customer.getEmail().toLowerCase().trim(), confirmEmail.toLowerCase().trim());
         if (bindingResult.hasErrors()) {
             return "home-reg-customer";
         } else {
