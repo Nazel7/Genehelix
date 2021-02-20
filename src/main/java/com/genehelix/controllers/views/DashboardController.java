@@ -162,12 +162,29 @@ public class DashboardController {
         return "access-denied";
     }
 
-    @GetMapping("/hc-serviceList")
-    public String getHcServiceList(Model model){
+    @GetMapping("/new-hc-serviceList")
+    public String getHcServiceList(@RequestParam("userId") int cId, Model model){
+
         hcServiceLists= ihcServiceListService.findAll();
+        HcService hcService= new HcService();
+
+        model.addAttribute("newHcService", hcService);
+        model.addAttribute("customerId", cId);
         model.addAttribute("hcServiceLists", hcServiceLists);
 
         return "register-for-service";
+    }
+
+    @PostMapping("/customerService/submit")
+    public String postNewCustomerDetailService(@RequestParam("customerId") int cDId,
+                                               @ModelAttribute("newHcService") HcService hcService) {
+
+        Customer customer = IEmployeeCustomerService.getCustomerById(cDId);
+        hcService.setCustomerh(customer);
+
+        iService.saveHcService(hcService);
+
+        return "redirect:/dashboard";
     }
 
 
@@ -177,18 +194,7 @@ public class DashboardController {
     }
 
 
-    @PostMapping("/customerService/submit")
-    public String postNewCustomerDetailService(@RequestParam("customerId") int cDId,
-                                               @ModelAttribute("newHcService") HcService hcService) {
 
-        Customer customer = IEmployeeCustomerService.getCustomerById(cDId);
-        System.out.println("custDTSErvice:: " + customer.getEmail());
-        hcService.setCustomerh(customer);
-
-        iService.saveHcService(hcService);
-
-        return "redirect:/dashboard";
-    }
 
     // Associate another postMapping
     @GetMapping("/setting/userDetails")

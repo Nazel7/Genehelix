@@ -43,7 +43,7 @@
         <div style="margin-top: 1%; margin-left: 13%; background-color: white; border: 1px solid aqua; overflow-x: auto;
         white-space: nowrap; float:left;">
             <form action="#" th:object="${newHcService}"
-                  th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST"
+                  th:action="@{/customerService/submit(customerId=${customerId})}" method="POST"
                   style="padding: 10px">
                 <br>
                 <div class="form-group">
