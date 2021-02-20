@@ -73,10 +73,10 @@ public class EmployeeController {
     @PostMapping("/postEmployee")
     public String postEmployee(@Valid @ModelAttribute("employee") Employee employee,
                                BindingResult bindingResult,
-                               @RequestParam("cEmail") String cEmail,
+                               @RequestParam("cEmail") String confirmEmail,
                                @RequestParam("password") String password
     ) {
-        boolean isEmail = Util.compareString(cEmail, employee.getEmail());
+        boolean isEmail = Util.compareString(confirmEmail, employee.getEmail());
         User user = new User();
         if (bindingResult.hasErrors() || !isEmail) {
             return "add-employee";
@@ -84,7 +84,7 @@ public class EmployeeController {
         user.setTinyint(true);
         user.setPassWord(Util.hashPassword(password));
         user.setAuthority("ROLE_EMPLOYEE");
-        user.setUserName(cEmail);
+        user.setUserName(confirmEmail);
         user.setEmployee(employee);
         IEmployeeCustomerService.addEmployee(employee);
         secureUserService.saveSecureUser(user);

@@ -32,7 +32,6 @@
                 width: 20%;
                 margin-top: 5%;
 
-
             }
             #successMessage{
                 font-size: 9px;
@@ -382,7 +381,6 @@
             padding: 8px 16px;
             text-decoration: none;
             text-decoration-line: none;
-
 
         }
 
@@ -847,7 +845,7 @@
         <h2 class="sectionh2" id="sectionh2">Do you have a question?</h2>
         <hr>
         <p class="sec1Title" id="sect1Title">Ask your manager →</p>
-        <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${activeUser}" method="POST">
+        <form action="#" th:action="'mailto:'+ ${activeUser.email}" th:object="${activeUser}" method="POST">
             <input type="hidden" th:field="*{id}"/>
             <table class="sect1Table" id="sect1Table">
                 <tbody>
@@ -857,7 +855,6 @@
                 <tr>
                     <td><input type="text" th:field="*{firstName}"
                                class="form-control" style="width: 50%; font-size: 15px"></td>
-
                 </tr>
                 <tr>
                     <td><label>Last Name:</label></td>
@@ -1011,7 +1008,7 @@
 
         <span class="serviceReg" id="serviceReg">
             <span class="btn btn-primary" style="width: 35%; float: right; color: white" >
-            <a   th:href="@{/hc-serviceList}" style="color: white; text-decoration-line: none">Register for Service</a>
+            <a   th:href="@{/new-hc-serviceList(userId=${customerId})}" style="color: white; text-decoration-line: none">Register for Service</a>
         </span>
         </span>
 
