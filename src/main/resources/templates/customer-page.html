@@ -91,7 +91,7 @@
                 border-bottom: 3px solid dodgerblue;
                 width: 80%;
                 top: 0;
-                z-index: 1;
+                z-index: 4;
             }
             .profilePhoto{
                 border-radius: 50%; margin-bottom: 5%; width: 90px; height: 90px
@@ -267,6 +267,7 @@
             #serviceReg{
                 display: inline;
                 font-size: 7px;
+                color: white;
             }
             #doyou {
                 margin-top: 20%;
@@ -309,7 +310,7 @@
             border-bottom: 3px solid dodgerblue;
             width: 80%;
             top: 0;
-            z-index: 1;
+            z-index: 4;
         }
 
         nav {
@@ -893,7 +894,7 @@
         <h2 class="sectionh2" id="sectionh21">Healthcare current Service</h2>
         <hr>
         <br>
-        <div style="width: 50%; float: left">
+        <div style="width: 50%; float: left; overflow: auto">
             <label style="width:100%; font-size: 15px; color:darkslategray">M-Service: </label>
             <br>
             <span style="width: 100%" th:if="${latestService!= null}" class="spandetailHover">
@@ -924,7 +925,7 @@
         <h2 class="sectionh2" id="sectionh22">Social Link</h2>
         <hr>
         <br>
-        <div style="width: 50%; float: left">
+        <div style="width: 50%; float: left; overflow: auto">
             <label style="width:100%; font-size: 15px; color:darkslategray">Twitter </label>
             <br>
             <span style="width: 100%" th:if="${userDetail != null && userDetail.twitter != null}" class="spandetailHover">
@@ -936,7 +937,7 @@
         </span>
         </div>
 
-        <div style="width: 50%; float: left">
+        <div style="width: 50%; float: left; overflow: auto">
             <label style="width: 100%; font-size: 15px; color:darkslategray">LinkedIn</label>
             <span style="width: auto" th:if="${userDetail != null && userDetail.linkedin != null}" class="spandetailHover">
       <span class="divProfilespanpDatails" id="divProfilespanpDatails13" th:text="${userDetail.linkedin}"></span>
@@ -954,7 +955,7 @@
 
 <section class="shadow-sm p-3 mb-3 bg-white rounded" id="Address"
          style="margin-top: 3px; border-top: 1px solid lightgray; height: 200px">
-    <div style=" padding: 5px; text-align: left; margin-left: 3%; margin-right: 3%; margin-top: 3%">
+    <div style=" padding: 5px; text-align: left; margin-left: 3%; margin-right: 3%; margin-top: 3%; overflow: auto">
         <h2 class="sectionh2" id="sectionh24">Address/ Location</h2>
         <hr>
         <br>
@@ -978,13 +979,13 @@
         <hr>
         <br>
 
-        <div style="width: 50%; float: left">
+        <div style="width: 50%; float: left; overflow: auto">
             <label style="width:100%; font-size: 15px; color:darkslategray">Email </label>
             <br>
              <span class="divProfilespanpDatails" id="divProfilespanpDatails21" th:text="${activeUser.email}"></span>
         </div>
 
-        <div style="width: 50%; float: left">
+        <div style="width: 50%; float: left; overflow: auto">
             <label style="width: 100%; font-size: 15px; color:darkslategray">Mobile</label>
             <span style="width: auto" th:if="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
       <span class="divProfilespanpDatails" id="divProfilespanpDatails22" th:text="${userDetail.linkedin}"></span>
@@ -1009,8 +1010,8 @@
                                                 th:href="@{/setting/newCustomerDetails}">Setting</a></span>
 
         <span class="serviceReg" id="serviceReg">
-            <span class="btn btn-primary" style="width: 34%; float: right" >
-            <a   th:href="@{/hc-serviceList}">Register for Service</a>
+            <span class="btn btn-primary" style="width: 35%; float: right; color: white" >
+            <a   th:href="@{/hc-serviceList}" style="color: white; text-decoration-line: none">Register for Service</a>
         </span>
         </span>
 
@@ -1019,7 +1020,7 @@
 <div style="clear: both"/>
 
 <div class="container" style="float: left; width: 21%;
-    z-index: 0; margin-left: 59%; height: 330px; position: fixed; top: 12%; background-color: #f8f9fc;">
+    z-index: 3; margin-left: 59%; height: 330px; position: fixed; top: 12%; background-color: #f8f9fc;">
     <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 106%; margin: auto; height:300px">
 
         <!-- Wrapper for slides -->
@@ -1059,17 +1060,18 @@
         </a>
     </div>
 </div>
-<aside style="float: left; width: 19%;  margin-left: 61%; height: 190px; z-index:-1; margin-top: 26%; position: fixed; background-color: #f8f9fc;">
+<aside style="float: left; width: 19%;  margin-left: 61%; height: 190px; z-index:2; margin-top: 26%; position: fixed; background-color: #f8f9fc;">
     <form action="#" th:object="${newHcService}"
           th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST">
 
         <div class="form-group">
             <label for="hc-services" style="color: dodgerblue; font-size: 12px">Register for a New HC-Service</label>
             <select th:field="*{name}" class="form-control" id="hc-services">
-                <option th:type="${serviceList.getServiceTitle()}"
-                        th:each="serviceList: ${hcServiceLists}"
-                        th:value="${serviceList.getServiceTitle()}"
-                        th:text="${serviceList.getServiceTitle()}"></option>
+                <option th:each="serviceList: ${hcServiceLists}"
+                        th:text="${serviceList.getServiceTitle()}"
+                        th:type="${serviceList.getServiceTitle()}"
+                        th:value="${serviceList.getServiceTitle()}">
+                </option>
             </select>
             <br>
             <label>Visit-Date: </label>
@@ -1085,7 +1087,7 @@
 </aside>
 
 
-<aside style="float: left; width: 18%;  margin-left: 61%; height: 200px; margin-top: 40%; z-index: -2;
+<aside style="float: left; width: 18%;  margin-left: 61%; height: 200px; margin-top: 40%; z-index: 1;
 position: fixed">
     <br>
     <div style="text-align: center; margin-top: 1%">

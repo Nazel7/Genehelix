@@ -69,9 +69,10 @@
                         <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
                         </td>
                     </tr>
+
                     <tr class="form-group">
-                        <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"
-                                   onclick="if(!(confirm('Are you sure to save? you cannot edit after saving!'))) return false;"/>
+                        <td><input type="submit" value="Submit" class="btn btn-primary" style="width: 100%"
+                                   onclick="if(!(confirm('Are you sure to submit?'))) return false;"/>
                         </td>
                     </tr>
                     </tbody>
