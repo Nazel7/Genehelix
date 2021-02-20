@@ -174,6 +174,17 @@ public class CustomerController {
         return "add-new-employee-customer";
     }
 
+    @GetMapping("/customer/showFormForCustomerUpdate")
+    public String customerUpdate(@RequestParam("customerUpdate") int id, Model model) {
+        System.out.println("CustomerID2: " + id);
+        Customer customer = IEmployeeCustomerService.getCustomerById(id);
+        System.out.println("RealCustomer: " + customer.getId());
+        model.addAttribute("employeeId", customer.getEmployee().getId());
+        model.addAttribute("newEmployeeCustomer", customer);
+
+        return "add-new-employee-customer";
+
+    }
 
     @PostMapping("/customers/postEmployeeCustomer")
     public String postEmployeeCustomer(@ModelAttribute("newEmployeeCustomer") Customer customer,
@@ -197,17 +208,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/customer/showFormForCustomerUpdate")
-    public String customerUpdate(@RequestParam("customerUpdate") int id, Model model) {
-        System.out.println("CustomerID2: " + id);
-        Customer customer = IEmployeeCustomerService.getCustomerById(id);
-        System.out.println("RealCustomer: " + customer.getId());
-        model.addAttribute("employeeId", customer.getEmployee().getId());
-        model.addAttribute("newEmployeeCustomer", customer);
 
-        return "add-new-employee-customer";
-
-    }
 
     @GetMapping("/customer/delete")
     public String deleteEmployeeCustomer(@RequestParam("customerDelete") int employeeCustomerId) {

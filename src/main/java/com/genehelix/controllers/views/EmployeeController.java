@@ -1,8 +1,11 @@
 package com.genehelix.controllers.views;
 
 
+import com.genehelix.entities.User;
 import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Employee;
+import com.genehelix.interfaces.ISecureUserService;
+import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -20,7 +23,22 @@ import java.util.List;
 @Controller
 @RequestMapping("/company-employees")
 public class EmployeeController {
+
+    @Autowired
+    private IEmployeeCustomerService IEmployeeCustomerService;
+
+    @Autowired
+    private ISecureUserService secureUserService;
+
+    @InitBinder
+    public void dataTrimmer(WebDataBinder dataBinder) {
+        StringTrimmerEditor sTrimmer = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, sTrimmer);
+    }
+
+
     private List<String> reviewList;
+
     List<Employee> employees;
 
 
@@ -29,17 +47,8 @@ public class EmployeeController {
         this.employees = new ArrayList<>();
     }
 
-    @Autowired
-    private IEmployeeCustomerService IEmployeeCustomerService;
-
-    @InitBinder
-    public void dataTrimmer(WebDataBinder dataBinder) {
-        StringTrimmerEditor sTrimmer = new StringTrimmerEditor(true);
-        dataBinder.registerCustomEditor(String.class, sTrimmer);
-    }
-
     @GetMapping("/employee")
-    public String employeePage(){
+    public String employeePage() {
 
         return "employee-page";
     }
@@ -63,12 +72,24 @@ public class EmployeeController {
 
     @PostMapping("/postEmployee")
     public String postEmployee(@Valid @ModelAttribute("employee") Employee employee,
-                               BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
+                               BindingResult bindingResult,
+                               @RequestParam("cEmail") String cEmail,
+                               @RequestParam("password") String password
+    ) {
+        boolean isEmail = Util.compareString(cEmail, employee.getEmail());
+        User user = new User();
+        if (bindingResult.hasErrors() || !isEmail) {
             return "add-employee";
         }
-            IEmployeeCustomerService.addEmployee(employee);
-            return "redirect:/company-employees/employee-list";
+        user.setTinyint(true);
+        user.setPassWord(Util.hashPassword(password));
+        user.setAuthority("ROLE_EMPLOYEE");
+        user.setUserName(cEmail);
+        user.setEmployee(employee);
+        IEmployeeCustomerService.addEmployee(employee);
+        secureUserService.saveSecureUser(user);
+
+        return "redirect:/company-employees/employee-list";
 
     }
 
@@ -103,7 +124,6 @@ public class EmployeeController {
 
         return "employee-list";
     }
-
 
 
 }

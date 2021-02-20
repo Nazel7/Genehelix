@@ -115,10 +115,7 @@ public class DashboardController {
                         return gotoCustomerPage();
                     } else {
 
-                            System.out.println("userIDEXP: " + customersId);
-                            model.addAttribute("cPhoto", Objects.requireNonNullElse(customerProfilePhoto, emptyProfilePhoto));
-                            model.addAttribute("customerId", customersId);
-                            model.addAttribute("hcServiceLists", hcServiceLists);
+                        //if error input all the value in global else..
                             model.addAttribute("userDetail", customerDetails);
 
                             return gotoCustomerPage();
@@ -134,6 +131,7 @@ public class DashboardController {
                     return gotoCustomerPage();
 
                 }
+
 
 
             case "ROLE_EMPLOYEE":
