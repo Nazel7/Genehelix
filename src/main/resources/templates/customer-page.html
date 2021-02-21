@@ -695,12 +695,13 @@
         <div class="primaryDrop" id="primaryDrop">My Account</div>
         <div class="profileName-content">
 
+
             <div style="text-align: center" th:if="${cPhoto.profilePhoto != null}">
                 <img th:src="'data:image/*;base64,' +${cPhoto.profilePhoto}" src="../static/images/k-devs-icon.jpg"
                      width="50px"
                      height="50px"
 
-                     style="margin-top: 5%; margin-left:0; border-radius: 50%"/>
+                     style="margin-top: 8%; margin-left:0; border-radius: 50%"/>
             </div>
 
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop1"><i class="fas fa-user-tie"></i></span>
@@ -744,8 +745,9 @@
 <nav>
     <div>
         <div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile">
+            <br>
             <img th:src="'data:image/jpeg;base64,' +${cPhoto.profilePhoto}"
-                 class="profilePhoto"/>
+                 class="profilePhoto" src="../static/images/k-devs-icon.jpg"/>
 
             <div style="text-align: center; margin-bottom: 6%">
 
