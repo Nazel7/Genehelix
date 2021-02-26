@@ -352,36 +352,44 @@ public class CustomerController {
        return "customer-manager";
     }
 
-    @GetMapping("customer/change-password")
+    @GetMapping("/customer/change-password")
     public String changePassword(@RequestParam("customerId-p") int cId, Model model){
 
-        model.addAttribute("customerId-p" , cId);
+        model.addAttribute("customerIdP" , cId);
 
         return "c-change-password";
     }
 
-    @PostMapping("customer/post-new-password")
-    public String postChangePassowrd(@ModelAttribute("customerId-p") int cId,
-                                     @RequestParam("old-password") String oldPassword,
-                                     @RequestParam("new-password") String newPassword,
-                                     @RequestParam("cNew-password") String cNewPassword,
+    @PostMapping("/customer/post-new-password")
+    public String postChangePassword(@RequestParam("customerIdP") int cId,
+                                     @RequestParam("oldPassword") String oldPassword,
+                                     @RequestParam("newPassword") String newPassword,
+                                     @RequestParam("cNewPassword") String cNewPassword,
                                      RedirectAttributes r){
 
         String encodedPassword= secureUserService.getPasswordByCustomerId(cId);
 
         boolean isPassword= Util.decodePassword(oldPassword, encodedPassword);
+        System.out.println("decodedPassword: "+ isPassword);
+
         boolean isSame= Util.compareString(newPassword, cNewPassword);
 
         if (!isPassword || !isSame){
+
+            r.addFlashAttribute("message", "password or old password is wrong!");
             return "c-change-password";
         }
 
-        r.addFlashAttribute("message", "password or old password is wrong!");
 
+        r.addFlashAttribute("message", "password changed successfully!");
         String newPasscode= Util.hashPassword(newPassword);
 
        User user= secureUserService.getUserByCustomerId(cId);
+        System.out.println("UserName: "+ user.getUserName());
        user.setPassWord(newPasscode);
+       secureUserService.saveSecureUser(user);
+
+        System.out.println(user.getPassWord());
 
        return "redirect:/dashboard";
 
