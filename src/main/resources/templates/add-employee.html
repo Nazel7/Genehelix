@@ -38,8 +38,8 @@
         <div style="margin-top: 1%; width: 80%;  font-size: 20px; float: left;
            color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
                                          width="80px" height="70px"
-                                         style=" float: left; ; margin-bottom: 10px; margin-left: 10%;"></p>
-            <p>Please update your details</p></div>
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 5%;"></p>
+            <p style="font-size: 16px">Please update your details</p></div>
         <div style="margin-top: 1%; margin-left: 10%; background-color: white; border: 1px solid aqua; overflow-x: auto;
         white-space: nowrap; float:left;">
             <form action="#" th:action="@{/company-employees/postEmployee}" th:object="${employee}" method="POST"
@@ -47,8 +47,8 @@
                 <br>
                 <h5 style="margin-left: 1%">Save Employee </h5>
                 <input type="hidden" th:field="*{id}"/>
-                <table>
-                    <tbody style=" overflow: auto">
+                <table style="width: 100%">
+                    <tbody style=" overflow: auto; width: 100%;">
                     <tr>
                         <td><input type="text" th:field="*{firstName}" class="form-control"
                                    placeholder="first name here"></td>
