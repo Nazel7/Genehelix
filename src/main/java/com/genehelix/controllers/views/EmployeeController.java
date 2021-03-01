@@ -1,10 +1,11 @@
 package com.genehelix.controllers.views;
 
 
+import com.genehelix.entities.Employee;
 import com.genehelix.entities.User;
 import com.genehelix.interfaces.IEmployeeCustomerService;
-import com.genehelix.entities.Employee;
 import com.genehelix.interfaces.ISecureUserService;
+import com.genehelix.utils.EmployeeUtil;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -14,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import com.genehelix.utils.EmployeeUtil;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -70,6 +70,17 @@ public class EmployeeController {
         return "add-employee";
     }
 
+    @GetMapping("/updateEmployee")
+    public String updateEmployee(@RequestParam("updateLink") int id, Model model) {
+        Employee employee = IEmployeeCustomerService.getEmployee(id);
+        User user= secureUserService.getUserByEmployeeId(id);
+
+        model.addAttribute("secureUser", user);
+        model.addAttribute("employee", employee);
+
+        return "add-update-employee";
+    }
+
     @PostMapping("/postEmployee")
     public String postEmployee(@Valid @ModelAttribute("employee") Employee employee,
                                BindingResult bindingResult,
@@ -93,16 +104,49 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("/updateEmployee")
-    public String updateEmployee(@RequestParam("updateLink") int id, Model model) {
-        Employee employee = IEmployeeCustomerService.getEmployee(id);
-        model.addAttribute("employee", employee);
-        return "add-employee";
+
+
+    @PostMapping("/postUpdateEmployee")
+    public String postEmployeeUpdate(@Valid @ModelAttribute("employee") Employee employee,
+                                     BindingResult bindingResult){
+
+        if (bindingResult.hasErrors()) {
+            return "add-employee";
+        }
+
+        IEmployeeCustomerService.addEmployee(employee);
+
+        return "redirect:/company-employees/employee-list";
+    }
+
+    @PostMapping("/post-log-detail")
+    public String postUpdatedEmployee(@ModelAttribute("secureUser") User user,
+                                      @RequestParam("userEmployeeId") int eId,
+                                      @RequestParam("cEmail") String confirmEmail,
+                                      @RequestParam("password") String password){
+
+        Employee employee= IEmployeeCustomerService.getEmployee(eId);
+        boolean isSameEmail= Util.compareString(employee.getEmail(), confirmEmail);
+
+        if (!isSameEmail){
+           return "add-update-employee";
+        }
+
+        String encodedPassword= Util.hashPassword(password);
+        user.setPassWord(encodedPassword);
+        user.setEmployee(employee);
+        user.setUserName(confirmEmail);
+        employee.setUser(user);
+        secureUserService.saveSecureUser(user);
+        IEmployeeCustomerService.addEmployee(employee);
+
+      return "redirect:/company-employees/employee-list";
     }
 
     @GetMapping("/deleteEmployee")
     public String deleteEmployee(@RequestParam("deleteLink") int id) {
         IEmployeeCustomerService.deleteEmployee(id);
+
         return "redirect:/company-employees/employee-list";
     }
 

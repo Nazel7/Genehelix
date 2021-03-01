@@ -58,7 +58,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                         "/reviews/showFormForEmployeeCustomerReview", "/reviews/showFormForAddReview",
                         "/reviews/postCustomerReview").hasAnyRole("ADMIN", "CUSTOMER")
                 .antMatchers("/customers/postEmployeeCustomer", "/customer/postUpdateEmployeeCustomer").hasRole("ADMIN")
-                .antMatchers("/customer/postUpdateEmployeeCustomer**").hasRole("ADMIN")
+                .antMatchers("/customer/postUpdateEmployeeCustomer**", "/customer/update-log", "/customer/update-customer").hasRole("ADMIN")
                 .antMatchers("/company-employees/employee-list", "/customers/general-list/**",
                         "/customers/search**", "/customers/showFormForAdd**",
                         "/customer/delete", "/company-employees/**", "/customer/showFormForCustomerUpdate**",

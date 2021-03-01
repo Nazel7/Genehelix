@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,33 +176,74 @@ public class CustomerController {
 
     @GetMapping("/customer/showFormForCustomerUpdate")
     public String customerUpdate(@RequestParam("customerUpdate") int id, Model model) {
-        System.out.println("CustomerID2: " + id);
         Customer customer = IEmployeeCustomerService.getCustomerById(id);
-        System.out.println("RealCustomer: " + customer.getId());
-        model.addAttribute("employeeId", customer.getEmployee().getId());
-        model.addAttribute("newEmployeeCustomer", customer);
+        System.out.println(customer.getId());
+        User user= secureUserService.getUserByCustomerId(id);
 
-        return "add-new-employee-customer";
+
+        System.out.println("UserStuff "+ user.getCustomer().getId() );
+        model.addAttribute("secureUser", user.getPassWord());
+        model.addAttribute("employeeId", customer.getEmployee().getId());
+        model.addAttribute("customerObject", customer);
+
+        return "add-update-employee-customer";
 
     }
+
+    @PostMapping("/customer/update-customer")
+    public String postUpdateEmployeeCustomer(@ModelAttribute("customerObject") Customer customer,
+                                             @RequestParam("userEmployeeId") int eId,
+                                             @RequestParam("password") String password){
+
+        Employee employee= IEmployeeCustomerService.getEmployee(eId);
+        customer.setEmployee(employee);
+        User user= secureUserService.getUserByCustomerId(customer.getId());
+        user.setUserName(customer.getEmail());
+
+        if (!Util.compareString(password, user.getPassWord())) {
+            user.setPassWord(Util.hashPassword(password));
+        } else {
+            user.setPassWord(password);
+        }
+
+
+        IEmployeeCustomerService.addEmployeeCustomer(customer);
+        secureUserService.saveSecureUser(user);
+
+        return "redirect:/customers?showCustomers=" + eId;
+    }
+
+
 
     @PostMapping("/customers/postEmployeeCustomer")
     public String postEmployeeCustomer(@ModelAttribute("newEmployeeCustomer") Customer customer,
                                        @RequestParam("employeeCID") int employeeId,
                                        BindingResult bindingResult,
+                                       @RequestParam("cEmail") String cEmail,
+                                       @RequestParam("password") String password,
                                        Model model
     ) {
 
-        if (bindingResult.hasErrors()) {
+        boolean isEmail= Util.compareString(cEmail, customer.getEmail() );
+        User user= new User();
+
+
+        if (bindingResult.hasErrors() || !isEmail) {
 
             return "add-new-employee-customer";
         } else {
-            System.out.println("employee123: " + employeeId);
+
             model.addAttribute("employeeIdUpdateCustomer", employeeId);
             Employee employee = IEmployeeCustomerService.getEmployee(employeeId);
             if (employee != null) {
+                user.setAuthority("ROLE_CUSTOMER");
+                user.setUserName(customer.getEmail());
+                user.setTinyint(true);
+                user.setCustomer(customer);
+                user.setPassWord(Util.hashPassword(password));
                 customer.setEmployee(employee);
                 IEmployeeCustomerService.addEmployeeCustomer(customer);
+                secureUserService.saveSecureUser(user);
             }
             return "redirect:/company-employees/employee-list";
         }

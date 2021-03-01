@@ -17,4 +17,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     String getPasswordByCustomerId(int customerId);
 
     User getUserByCustomerId(int customerId);
+
+    User getUserByEmployeeId(int employeeId);
+
+
 }
