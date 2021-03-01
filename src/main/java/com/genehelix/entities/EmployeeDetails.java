@@ -3,8 +3,6 @@ package com.genehelix.entities;
 import com.genehelix.interfaces.IUserDetail;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name= "employee_details")
@@ -34,7 +32,7 @@ public class EmployeeDetails implements IUserDetail {
     private String dateTime;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade ={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE, CascadeType.REFRESH} )
     @JoinColumn(name = "employeed_id")
     private Employee employee;
 

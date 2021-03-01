@@ -9,4 +9,6 @@ public interface ISecureUserService {
     String getPasswordByCustomerId(int customerId);
 
     User getUserByCustomerId(int customerId);
+
+    User getUserByEmployeeId(int id);
 }

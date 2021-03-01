@@ -2,7 +2,6 @@ package com.genehelix.entities;
 
 
 import com.genehelix.interfaces.IUser;
-import org.hibernate.jpa.spi.HibernateEntityManagerImplementor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,7 +34,7 @@ public class Employee implements IUser {
     @Column(name = "email")
     private String email;
 
-    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.DETACH}, mappedBy = "employee")
+    @OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "employee")
     private EmployeeDetails employeeDetails;
 
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "employee")

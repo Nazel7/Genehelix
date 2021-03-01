@@ -24,7 +24,7 @@
             color: darkslategray;
         }
         table tbody tr td{
-            padding: 12px
+            padding: 12px;
         }
         .error {
             color: red
@@ -38,63 +38,78 @@
         <div style="margin-top: 1%; width: 80%;  font-size: 20px; float: left;
            color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
                                          width="80px" height="70px"
-                                         style=" float: left; ; margin-bottom: 10px; margin-left: 5%%;"></p>
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 5%;"></p>
             <p style="font-size: 16px">Please update your details</p></div>
         <div style="margin-top: 1%; margin-left: 10%; background-color: white; border: 1px solid aqua; overflow-x: auto;
         white-space: nowrap; float:left;">
-            <form action="#" th:action="@{/customers/postEmployeeCustomer(employeeCID=${employeeId})}"
-                  th:object="${newEmployeeCustomer}" method="POST"
+            <form id="form1" action="#" th:action="@{/company-employees/postUpdateEmployee}" th:object="${employee}" method="POST"
                   style="padding: 10px">
                 <br>
-                <h5>New Customer Form </h5>
+                <h5 style="margin-left: 1%">Save Employee </h5>
                 <input type="hidden" th:field="*{id}"/>
-                <table>
-                    <tbody style=" overflow: auto">
+
+                <table style="width: 100%">
+                    <tbody style=" overflow: auto; width: 100%;">
                     <tr>
                         <td><input type="text" th:field="*{firstName}" class="form-control"
                                    placeholder="first name here"></td>
-                        <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">firstName
+                        <td th:if="${#fields.hasErrors('firstName')}" class="error" th:errors="*{firstName}">FirstName
                             Error
                         </td>
                     </tr>
                     <tr>
                         <td><input type="text" th:field="*{lastName}" class="form-control"
                                    placeholder="last name here"></td>
-                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">lastName Error
+                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error
                         </td>
                     </tr>
                     <tr>
-                        <td><input type="email" th:field="*{email}" class="form-control"
-                                   placeholder="email here"></td>
-                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">email Error
-                        </td>
+                        <td><input type="email" th:field="*{email}" class="form-control" placeholder="email here"></td>
+                        <td th:if="${#fields.hasErrors('email')}" class="error" th:errors="*{email}">Email Error</td>
                     </tr>
-                    <tr>
-                        <td><input type="email" name="cEmail" class="form-control"
-                                   placeholder=" confirm email here" required></td>
 
-                    </tr>
-                    <tr>
-                        <td><input type="password" name="password" class="form-control"
-                                   placeholder="passcode here" required></td>
-
-                    </tr>
-                    <tr class="form-group">
-                        <td><input type="submit" value="Submit" class="btn btn-primary" style="width: 100%"
-                                   onclick="if(!(confirm('Are you sure to submit?'))) return false;"/>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
             </form>
+
+            <form  id="form2" style="padding: 10px" th:action="@{/company-employees/post-log-detail(userEmployeeId=${employee.id})}"
+                   th:object="${secureUser}" method="POST">
+                <input type="hidden" th:field="*{id}"/>
+                <input type="hidden" th:field="*{authority}"/>
+                <input type="hidden" th:field="*{tinyint}"/>
+
+                <table style="width: 100%">
+                  <tbody style=" overflow: auto; width: 100%;">
+                  <tr>
+                      <td><input type="email" name="cEmail"  class="form-control"
+                                 placeholder="confirm email here" required></td>
+                  </tr>
+                  <tr>
+                      <td><input type="password"  name="password"  class="form-control"
+                                 placeholder=" passcode here" required></td>
+                  </tr>
+                  <tr class="form-group">
+                      <td><input type="submit" value="Submit" class="btn btn-primary" style="width: 100%"
+                                 onclick="if(!(confirm('Are you sure to save? you cannot edit after saving!'))) return false; doubleFormSubmit()"/>
+                      </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+            </form>
+
         </div>
     </div>
 
-
     <div>
     </div>
-
 </div>
+<script>
+   function doubleFormSubmit() {
+        document.getElementById("form1").submit();
+        document.getElementById("form2").submit();
+    }
+</script>
 
 </body>
 </html>
