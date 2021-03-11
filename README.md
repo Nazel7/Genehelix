@@ -120,7 +120,7 @@ Note the setup lines:
 ```$xslt
 1. Open the project starter pack in Intellij IDEA; my favourite you can use others
 2. Make sure to connect to internet, then open the command line interface in your IDEA.
-3. input $ git clone https://github.com/Nazel7/servbyte 
+3. input  "git clone https://github.com/Nazel7/servbyte "
 4. It will download to your work directory.
 5. Create new User in Mysql Databse Workbench as below
 ```
