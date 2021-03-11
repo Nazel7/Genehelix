@@ -15,4 +15,5 @@ public interface IUserResumeService {
 
     UserResume getUserResumeById(int userResumeId);
 
+    UserResume getUserResumeByEmployeeId(int eId);
 }

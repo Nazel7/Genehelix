@@ -33,6 +33,25 @@
                 margin-top: 5%;
 
             }
+            #nav-uploader{
+                width: 30%;
+                background-color: white;
+                color: dodgerblue;
+                padding: 4px 6px 4px 6px ;
+                font-size: 9px;
+                border-radius: 5px;
+                border: 1px solid dodgerblue
+            }
+
+            #profilePhoto{
+                border-radius: 50%;margin-top: 20px; margin-bottom: 5%; width: 60px; height: 60px
+            }
+            .as-select{
+                display: none;
+            }
+            .as-footer{
+                display: none;
+            }
             #successMessage{
                 font-size: 9px;
             }
@@ -680,6 +699,23 @@
             color: darkslategray;
             margin-top: 1%; font-size: 14px
         }
+        .as-footer{
+            float: left; width: 18%;  margin-left: 61%; height: 200px; margin-top: 40%; z-index: 1;
+            position: fixed
+        }
+        .as-select{
+            float: left; width: 19%;  margin-left: 61%; height: 190px; z-index:2; margin-top: 26%;
+            position: fixed; background-color: #f8f9fc
+        }
+        .nav-uploader{
+            width: 30%;
+            background-color: white;
+            color: dodgerblue;
+            padding: 4px 6px 4px 6px ;
+            font-size: 13px;
+            border-radius: 5px;
+            border: 1px solid dodgerblue
+        }
 
     </style>
 </head>
@@ -696,8 +732,8 @@
         <div class="profileName-content">
 
 
-            <div style="text-align: center" th:if="${cPhoto.profilePhoto != null}">
-                <img th:src="'data:image/*;base64,' +${cPhoto.profilePhoto}" src="../static/images/k-devs-icon.jpg"
+            <div style="text-align: center" th:if="${ePhoto.profilePhoto != null}">
+                <img th:src="'data:image/*;base64,' +${ePhoto.profilePhoto}" src="../static/images/k-devs-icon.jpg"
                      width="50px"
                      height="50px"
 
@@ -745,19 +781,13 @@
     <div>
         <div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile">
             <br>
-            <img th:src="'data:image/jpeg;base64,' +${cPhoto.profilePhoto}"
-                 class="profilePhoto" src="../static/images/k-devs-icon.jpg"/>
+            <img th:src="'data:image/jpeg;base64,' +${ePhoto.profilePhoto}"
+                 class="profilePhoto" id="profilePhoto" src="../static/images/k-devs-icon.jpg"/>
 
             <div style="text-align: center; margin-bottom: 6%">
 
-                <a href="#" th:href="@{/customer/photoUpload(c-userId=${customerId})}" style="
-                   width: 30%;
-                   background-color: white;
-                   color: dodgerblue;
-                   padding: 4px 6px 4px 6px ;
-                   font-size: 13px;
-                   border-radius: 5px;
-                   border: 1px solid dodgerblue "
+                <a href="#" th:href="@{/company-employees/employee/photoUpload(e-userId=${employeeId})}" class="nav-uploader"
+                   id="nav-uploader"
                    onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
                    onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'">Uploader</a>
             </div>
@@ -797,18 +827,18 @@
                     <span>My Profile</span> </a>
             </li>
             <li class="active">
-                <a href="#" th:href="@{/customer/resumeUpload(userId=${customerId})}">
+                <a href="#" th:href="@{/company-employees/employee/resumeUpload(userId=${employeeId})}">
                     <i class="far fa-file-pdf"></i>
                     <span>My Resume </span> </a>
             </li>
             <li>
-                <a href="#" th:href="@{/customer/manager(userId=${customerId})}">
+                <a href="#" th:href="@{/company-employees/employee/list-patient(userId=${employeeId})}">
                     <i class="fas fa-tasks"></i>
                     <span>List of Patient </span> </a>
             </li>
 
             <li>
-                <a href="#" th:href="@{/hcsevice-list/customer(userId=${customerId})}">
+                <a href="#" th:href="@{/hcsevice-list/employee(userId=${employeeId})}">
                     <i class="fa fa-globe" aria-hidden="true"></i>
                     <span>HC-Service History</span> </a>
             </li>
@@ -818,7 +848,7 @@
                     <span>Notification </span> </a>
             </li>
             <li>
-                <a href="#" th:href="@{/customer/change-password(customerId-p=${customerId})}">
+                <a href="#" th:href="@{/company-employees/employee/change-password(employeeId-p=${employeeId})}">
                     <i class="fas fa-key"></i>
                     <span>Change Password </span> </a>
             </li>
@@ -891,22 +921,22 @@
         <div style="width: 50%; float: left; overflow: auto">
             <label style="width:100%; font-size: 15px; color:darkslategray">M-Service: </label>
             <br>
-            <span style="width: 100%" th:if="${latestService!= null}" class="spandetailHover">
-             <span class="divProfilespanpDatails" id="divProfilespanpDatails" th:text="${latestService}"></span>
+            <span style="width: 100%" th:if="${latestServiceEm!= null}" class="spandetailHover">
+             <span class="divProfilespanpDatails" id="divProfilespanpDatails" th:text="${latestServiceEm}"></span>
         </span>
 
-            <span th:unless="${latestService != null}" class="spandetailHover">
+            <span th:unless="${latestServiceEm != null}" class="spandetailHover">
              <span class="divProfilespanpDatails" id="divProfilespanpDatails1">No Service</span>
         </span>
         </div>
 
         <div style="width: 50%; float: left">
             <label style="width: 100%; font-size: 15px; color:darkslategray">Visit-Date</label>
-            <span style="width: auto" th:if="${latestServiceDate != null}" class="spandetailHover">
-      <span class="divProfilespanpDatails" id="divProfilespanpDatails2" th:text="${latestServiceDate}"></span>
+            <span style="width: auto" th:if="${latestServiceDateEm != null}" class="spandetailHover">
+      <span class="divProfilespanpDatails" id="divProfilespanpDatails2" th:text="${latestServiceDateEm}"></span>
         </span>
 
-            <span style="width: auto" th:unless="${latestServiceDate != null}" class="spandetailHover">
+            <span style="width: auto" th:unless="${latestServiceDateEm != null}" class="spandetailHover">
                  <span class="divProfilespanpDatails" id="divProfilespanpDatails3">No set Date</span>
         </span>
         </div>
@@ -997,15 +1027,15 @@
 <section style="margin-top: 0.5%; margin-bottom: 3%; width: 74%">
     <div>
         <span style="width: 30%" th:if="${userDetail != null}"><a class="btn btn-primary"
-                                                                  th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a>
+                                                                  th:href="@{/setting/userDetails-employee(employeeId= ${activeUser.getId()})}">Setting</a>
         </span>
 
         <span style="width: 30%" th:unless="${userDetail != null}"><a class="btn btn-primary"
-                                                                      th:href="@{/setting/newCustomerDetails}">Setting</a></span>
+                                                                      th:href="@{/setting/newEmployeeDetails}">Setting</a></span>
 
         <span class="serviceReg" id="serviceReg">
             <span class="btn btn-primary" style="width: 35%; float: right; color: white" >
-            <a   th:href="@{/new-hc-serviceList(userId=${customerId})}" style="color: white; text-decoration-line: none">Register for Service</a>
+            <a   th:href="@{/new-hc-serviceList(userId=${employeeId})}" style="color: white; text-decoration-line: none">Register for Service</a>
         </span>
         </span>
 
@@ -1024,22 +1054,25 @@
                      alt="rmi machine"
                      style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Cancer Research Success</h5>
-                <p class="carouselH6" style="height: 25px">NCBC has given visibility on the modalities to tackle cervicae cancer in
+                <br>
+                <p class="carouselH6" style="height: 25px;margin-top: 2%;margin-bottom: 2px">NCBC has given visibility on the modalities to tackle cervicae cancer in
                     2021.. </p>
             </div>
 
             <div class="item" style="width: 100%; overflow: auto;">
                 <img th:src="@{/images/ncbc-icon.jpg}" src="../static/images/ncbc-icon.jpg" alt="ncbc"
                      style="width:100%;height: 200px">
-                <h5 class="carouselH6" style="color: dodgerblue">Stem cell Research is taking the world</h5>
-                <p class="carouselH6" style="height: 25px">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
+                <h5 class="carouselH6" style="color: dodgerblue">Stem cell Research</h5>
+                <br>
+                <p class="carouselH6" style="height: 25px;margin-top: 2%;margin-bottom: 2px">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
             </div>
 
             <div class="item" style="width: 100%; overflow: auto;">
                 <img th:src="@{/images/linkedin.png}" src="../static/images/linkedin.png" alt=linkedIn
                      style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Diabetes can be cured!</h5>
-                <p class="carouselH6" style="height: 25px">A new research choose the cells responsible for insulin activation can be..</p>
+                <br>
+                <p class="carouselH6" style="height: 23px; margin-top: 2%;margin-bottom: 2px">A new research choose the cells responsible for insulin activation can be..</p>
             </div>
         </div>
 
@@ -1054,9 +1087,9 @@
         </a>
     </div>
 </div>
-<aside style="float: left; width: 19%;  margin-left: 61%; height: 190px; z-index:2; margin-top: 26%; position: fixed; background-color: #f8f9fc;">
+<aside class="as-select">
     <form action="#" th:object="${newHcService}"
-          th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST">
+          th:action="@{/employeeService/submit(employeeId=${activeUser.getId()})}" method="POST">
 
         <div class="form-group">
             <label for="hc-services" style="color: dodgerblue; font-size: 12px">Register for a New HC-Service</label>
@@ -1081,8 +1114,7 @@
 </aside>
 
 
-<aside style="float: left; width: 18%;  margin-left: 61%; height: 200px; margin-top: 40%; z-index: 1;
-position: fixed">
+<aside class="as-footer">
     <br>
     <div style="text-align: center; margin-top: 1%">
         <a class="alink">Privacy</a>
@@ -1090,8 +1122,7 @@ position: fixed">
         <p style="margin-top: 2%" class="alink"><sup><img th:src="@{/images/gene-app.png}"
                                                           src="../static/images/gene-app.png"
                                                           width="24px"
-                                                          height="23px"></sup>Copyright<sup>&copy;</sup>2020. All rights
-            Research</p>
+                                                          height="23px"></sup>Copyright<sup>&copy;</sup>2020. All rights Research</p>
 
     </div>
     <br>

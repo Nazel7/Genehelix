@@ -146,17 +146,4 @@ public class Employee implements IUser {
         customerList.add(customer);
     }
 
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", employeeDetails=" + employeeDetails +
-                ", service=" + service +
-                ", user=" + user +
-                ", customerList=" + customerList +
-                '}';
-    }
 }

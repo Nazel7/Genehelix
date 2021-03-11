@@ -3,7 +3,6 @@ package com.genehelix.configs;
 import com.genehelix.Genehelix;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -20,4 +19,6 @@ public class LoginInterception extends HandlerInterceptorAdapter {
         logger.info(result + " intercepted");
         return true;
     }
+
+
 }

@@ -41,6 +41,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         return authenticationProvider;
     }
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
@@ -67,6 +68,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
                         "/customers/**", "/hcsevice-list/customer").hasRole("CUSTOMER")
                 .antMatchers("/company-employees/**", "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
+                .antMatchers("/employee/post-new-password").hasRole("EMPLOYEE")
                 .and()
                 .formLogin()
                 .loginPage("/login-page")

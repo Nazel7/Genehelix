@@ -1,16 +1,16 @@
 package com.genehelix.controllers.rests;
 
 
-import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.entities.Employee;
+import com.genehelix.interfaces.IEmployeeCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@org.springframework.web.bind.annotation.RestController
+@RestController
 @RequestMapping("/api")
-public class RestController {
+public class GeneralController {
 
     @Autowired
     private IEmployeeCustomerService IEmployeeCustomerService;

@@ -36,7 +36,7 @@ public class ReviewController {
 
     @PostMapping("/reviews/postCustomerReview")
     public String postCustomerReview(@ModelAttribute("newReview") Review review,
-                                     @RequestParam("customerId") int customerId) {
+                                     @RequestParam("employeeId") int customerId) {
         System.out.println("ReviewCustomerId: " + customerId);
         Customer customer = IEmployeeCustomerService.getCustomerById(customerId);
         if (customer != null) {

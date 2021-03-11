@@ -5,7 +5,7 @@ import com.genehelix.entities.HcService;
 
 import java.util.List;
 
-public interface IService {
+public interface IHcService {
     List<String> getHcServiceNames(int cdId);
 
     List<HcServiceResponse> getHCServiceNameAndDate(int userID);
@@ -13,4 +13,9 @@ public interface IService {
     void saveHcService(HcService service);
 
     List<HcService> getHCServiceListByCustomerId(int cId);
+
+    List<HcServiceResponse> getHCServiceNameAndDateForEmployee(int employeeID);
+
+    List<HcService> getHCServiceListByEmployeeId(int cId);
+
 }

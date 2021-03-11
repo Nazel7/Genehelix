@@ -33,6 +33,25 @@
                 margin-top: 5%;
 
             }
+            #nav-uploader{
+                width: 30%;
+                background-color: white;
+                color: dodgerblue;
+                padding: 4px 6px 4px 6px ;
+                font-size: 9px;
+                border-radius: 5px;
+                border: 1px solid dodgerblue
+            }
+
+            #profilePhoto{
+                border-radius: 50%;margin-top: 20px; margin-bottom: 5%; width: 60px; height: 60px
+            }
+            .as-select{
+               display: none;
+            }
+            .as-footer{
+               display: none;
+            }
             #successMessage{
                 font-size: 9px;
             }
@@ -680,6 +699,23 @@
             color: darkslategray;
             margin-top: 1%; font-size: 14px
         }
+        .as-footer{
+            float: left; width: 18%;  margin-left: 61%; height: 200px; margin-top: 40%; z-index: 1;
+            position: fixed
+        }
+        .as-select{
+            float: left; width: 19%;  margin-left: 61%; height: 190px; z-index:2; margin-top: 26%;
+            position: fixed; background-color: #f8f9fc
+        }
+        .nav-uploader{
+            width: 30%;
+            background-color: white;
+            color: dodgerblue;
+            padding: 4px 6px 4px 6px ;
+            font-size: 13px;
+            border-radius: 5px;
+            border: 1px solid dodgerblue
+        }
 
     </style>
 </head>
@@ -747,18 +783,11 @@
         <div class="shadow-sm pt-1 pb-1 mb-5 bg-white" id="divProfile">
             <br>
             <img th:src="'data:image/jpeg;base64,' +${cPhoto.profilePhoto}"
-                 class="profilePhoto" src="../static/images/k-devs-icon.jpg"/>
+                 class="profilePhoto" id="profilePhoto" src="../static/images/k-devs-icon.jpg"/>
 
             <div style="text-align: center; margin-bottom: 6%">
 
-                <a href="#" th:href="@{/customer/photoUpload(c-userId=${customerId})}" style="
-                   width: 30%;
-                   background-color: white;
-                   color: dodgerblue;
-                   padding: 4px 6px 4px 6px ;
-                   font-size: 13px;
-                   border-radius: 5px;
-                   border: 1px solid dodgerblue "
+                <a href="#" th:href="@{/customer/photoUpload(c-userId=${customerId})}" class="nav-uploader" id="nav-uploader"
                    onmouseover="this.style.color='blue'; this.style.borderColor='blue'"
                    onmouseout="this.style.color='dodgerblue'; this.style.borderColor='dodgerblue'">Uploader</a>
             </div>
@@ -1028,23 +1057,27 @@
                 <img th:src="@{/images/rmi-machine-icon.jpg}" src="../static/images/rmi-machine-icon.jpg"
                      alt="rmi machine"
                      style="width:100%;height: 200px">
-                <h5 class="carouselH6" style="color: dodgerblue">Cancer Research Success</h5>
-                <p class="carouselH6" style="height: 25px">NCBC has given visibility on the modalities to tackle cervicae cancer in
+                <h5 class="carouselH6" style="color: dodgerblue;">Cancer Research Success</h5>
+                <br>
+
+                <p class="carouselH6" style="height: 25px; margin-top: 2%;margin-bottom: 2px ">NCBC has given visibility on the modalities to tackle cervicae cancer in
                     2021.. </p>
             </div>
 
             <div class="item" style="width: 100%; overflow: auto;">
                 <img th:src="@{/images/ncbc-icon.jpg}" src="../static/images/ncbc-icon.jpg" alt="ncbc"
                      style="width:100%;height: 200px">
-                <h5 class="carouselH6" style="color: dodgerblue">Stem cell Research is taking the world</h5>
-                <p class="carouselH6" style="height: 25px">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
+                <h5 class="carouselH6" style="color: dodgerblue;">Stem cell Research</h5>
+                <br>
+                <p class="carouselH6" style="height: 25px; margin-top: 2%;margin-bottom: 2px">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
             </div>
 
             <div class="item" style="width: 100%; overflow: auto;">
                 <img th:src="@{/images/linkedin.png}" src="../static/images/linkedin.png" alt=linkedIn
                      style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Diabetes can be cured!</h5>
-                <p class="carouselH6" style="height: 25px">A new research choose the cells responsible for insulin activation can be..</p>
+                <br>
+                <p class="carouselH6" style="height: 25px; margin-top: 2%; margin-bottom: 2px ">A new research choose the cells responsible for insulin activation can be..</p>
             </div>
         </div>
 
@@ -1059,7 +1092,7 @@
         </a>
     </div>
 </div>
-<aside style="float: left; width: 19%;  margin-left: 61%; height: 190px; z-index:2; margin-top: 26%; position: fixed; background-color: #f8f9fc;">
+<aside  class="as-select">
     <form action="#" th:object="${newHcService}"
           th:action="@{/customerService/submit(customerId=${activeUser.getId()})}" method="POST">
 
@@ -1086,8 +1119,7 @@
 </aside>
 
 
-<aside style="float: left; width: 18%;  margin-left: 61%; height: 200px; margin-top: 40%; z-index: 1;
-position: fixed">
+<aside class="as-footer">
     <br>
     <div style="text-align: center; margin-top: 1%">
         <a class="alink">Privacy</a>
