@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        label{
+            color: darkslategray;
+        }
+        table tbody tr td{
+            padding: 12px;
+        }
+        .error {
+            color: red
+        }
+    </style>
+</head>
+<body style="background-color: azure;max-width: 500px; margin: auto; overflow: auto">
+<div>
+
+    <div style="width: 100%; ">
+        <div style="margin-top: 1%; width: 80%;  font-size: 20px; float: left;
+           color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
+                                         width="80px" height="70px"
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 10%;"></p>
+            <p>Please update your details</p></div>
+        <div style="margin-top: 1%; margin-left: 10%; background-color: white; border: 1px solid aqua; overflow-x: auto;
+        white-space: nowrap; float:left;">
+
+            <div th:if="${updateEmployeeDetail!= null}" style="width: 100%; overflow: auto">
+                <form action="#" th:action="@{/setting/updateEmployeeDetails}"
+                      th:object="${updateEmployeeDetail}" method="POST"
+                      style="padding: 10px; width: inherit">
+                    <br>
+                    <input type="hidden" th:field="*{id}"/>
+                    <table style="overflow-x: auto; white-space: nowrap">
+                        <tbody>
+                        <tr class="form-group">
+                            <td><label for="date1">Date:</label></td>
+                            <td><input type="date" th:field="*{dateTime}" class="form-control" id="date1"
+                                       placeholder="DD/MM/YYYY"></td>
+                            <!--                        <td th:if="${#fields.hasErrors('lastName')}" class="error" th:errors="*{lastName}">LastName Error-->
+                            <!--                        </td>-->
+                        </tr>
+                        <tr class="form-group re">
+                            <td><label for="twitter1">Twitter:</label></td>
+                            <td><input type="text" th:field="*{twitter}" class="form-control" id="twitter1"
+                                       placeholder=" twitter address here"></td>
+
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="linkedin1">Linkedin:</label></td>
+                            <td><input type="text" th:field="*{linkedin}" class="form-control" id="linkedin1"
+                                       placeholder="linkedin address here"></td>
+
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="location1">Address/Location:</label></td>
+                            <td><input type="text" th:field="*{homeAddress}" class="form-control" id="location1"
+                                       placeholder="home address here"></td>
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="phone1">Phone:</label></td>
+                            <td><input type="text" th:field="*{mobile}" class="form-control" id="phone1"
+                                       placeholder="mobile number here"></td>
+
+                        </tr>
+                        <tr class="form-group">
+                            <td><label for="occupa">occupation:</label></td>
+                            <td><input type="text" th:field="*{occupation}" class="form-control" id="occupa"
+                                       placeholder="mobile number here"></td>
+
+                        </tr>
+
+                        <tr class="form-group">
+                            <td><input type="hidden" name="employeeId" th:field="*{employee}"/></td>
+
+                        </tr>
+
+                        <tr class="form-group">
+                            <td><label></label></td>
+                            <td><input type="submit" value="Save" class="btn btn-primary" style="width: 100%"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+    </div>
+
+</div>
+
+</body>
+</html>

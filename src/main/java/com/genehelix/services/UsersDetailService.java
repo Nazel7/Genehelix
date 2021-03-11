@@ -2,13 +2,11 @@ package com.genehelix.services;
 
 import com.genehelix.entities.CustomerDetails;
 import com.genehelix.entities.EmployeeDetails;
-import com.genehelix.interfaces.IUserDetail;
 import com.genehelix.interfaces.IUsersDetailService;
 import com.genehelix.repositories.CustomerDetailsRepo;
 import com.genehelix.repositories.EmployeeDetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -49,6 +47,13 @@ public class UsersDetailService implements IUsersDetailService {
         CustomerDetails customerDetails= customerDetailsRepo.getCustomerDetailsByCustomerId(cId);
 
         return customerDetails;
+    }
+
+    @Override
+    public EmployeeDetails getEmployeeDetailsByEmployeeId(int eId) {
+
+
+        return employeeDetailsRepo.getEmployeeDetailsByEmployeeId(eId);
     }
 
 }

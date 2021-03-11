@@ -20,5 +20,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     User getUserByEmployeeId(int employeeId);
 
+    @Query("select p.passWord from User p inner join employee  e on e.id=p.employee.id where e.id=?1 ")
+    String getPasswordByEmployeeId(int eid);
+
 
 }

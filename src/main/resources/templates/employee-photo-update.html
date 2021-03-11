@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        label {
+            color: darkslategray;
+        }
+
+        table tbody tr td {
+            padding: 12px;
+            margin-bottom: 10%;
+
+        }
+
+        .resumeProperties {
+            background-color: white;
+            border: 1px solid aqua;
+            padding: 15px;
+            width: 128%;
+            height: 250px;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body style="background-color: azure;max-width: 500px; margin: auto; overflow: auto">
+<div>
+
+    <div style="width: 100%; ">
+        <div style="margin-top: 1%; width: 100%;  font-size: 20px; float: left;
+           color: darkslategray"><p><img th:src="@{/images/gene-app.png}" src="../static/images/gene-app.png"
+                                         width="80px" height="70px"
+                                         style=" float: left; ; margin-bottom: 10px; margin-left: 1%;"></p>
+            <p>Please update your details</p></div>
+        <div style="margin-top: 1%; background-color: white; border: 1px solid aqua; overflow-x: auto;
+        white-space: nowrap; float:left; width: 95%">
+            <div class="Container" style=" padding: 5px; ">
+            <div>
+                <form action="#" th:action="@{/company-employees/employee/e-uploaded_photo(userId=${employeeIdR})}"
+                      th:object="${photoObject}" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{id}"/>
+
+                    <div style="border: 1px solid aqua; background-color: white; width: 128%">
+                        <table>
+
+                            <tr class="form-group">
+                                <td><label for="cResume">Resume Upload:</label></td>
+                                <td><input type="file" class="form-control" id="cResume"
+                                           name="muiltiPartFile"
+                                           accept="image/jpeg">
+                                </td>
+                            </tr>
+
+                            <tr class="form-group">
+                                <td><input type="submit" value="Update" class="btn btn-primary"/></td>
+                            </tr>
+                            <div style="clear:both"></div>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <br>
+            <br>
+            <div th:if="${userPhoto != null}">
+                <div class="resumeProperties">
+                    <div>
+                        <div style="float: left; font-size: 18px; font-weight: bold; color: darkslategray;
+                         z-index: 1">Photo:
+                        </div>
+                        <br><br>
+                        <div style="text-align: center">
+                            <div><img th:src="@{/images/resume-app-icon.jpg}" src="../static/images/resume-app-icon.jpg"
+                                      width="90px" height="90px">
+                            </div>
+                            <div>[[${userPhoto.getPhotoName()}]]</div>
+                            <div>([[${#numbers.formatInteger(userPhoto.getPhotoSize(), 4, 'COMMA')}]] bytes)</div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div th:unless="${userPhoto != null}">
+                <div class="resumeProperties">
+                    <div>
+                        <div style="float: left; font-size: 18px;font-weight: bold; color: darkslategray;
+                        z-index: 1">Photo:
+                        </div>
+                        <br><br><br>
+                        <p style="margin-left: 2%; font-size: 18px">There is no file found..</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+</div>
+</body>
+</html>

@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -368,18 +367,8 @@ public class CustomerController {
     public void downloadResume(@Param("resumeId") int resumeId, HttpServletResponse response) throws Exception {
 
         UserResume userResume = iUserResumeService.getUserResumeById(resumeId);
-        if (userResume != null) {
-            response.setContentType("application/octet-stream");
-            String headerKey = "Content-Disposition";
-            String headerValue = "attachment; filename=" + userResume.getResumeName();
 
-            response.setHeader(headerKey, headerValue);
-
-            ServletOutputStream resumeOutputStream = response.getOutputStream();
-            resumeOutputStream.write(userResume.getResume());
-            resumeOutputStream.close();
-        }
-
+        Util.resumeDownloader(resumeId, response, userResume);
     }
 
     @GetMapping("/customer/manager")

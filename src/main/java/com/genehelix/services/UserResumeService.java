@@ -1,23 +1,16 @@
 package com.genehelix.services;
 
 import com.genehelix.entities.UserResume;
-import com.genehelix.interfaces.IUser;
 import com.genehelix.interfaces.IUserResumeService;
 import com.genehelix.repositories.UserResumeRepo;
 import com.genehelix.utils.Util;
-import org.hibernate.boot.InvalidMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
-import java.security.spec.InvalidParameterSpecException;
-import java.util.Base64;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Optional;
 
 
@@ -36,7 +29,7 @@ public class UserResumeService implements IUserResumeService {
                     "Please edit filename");
         }
 
-        resume.setResume(Util.formatFile(file));
+        resume.setResume(Util.formatFileTOByteArray(file));
         resume.setResumeName(fileName);
         resume.setResumeSize(file.getSize());
         resume.setDate(new Date());
@@ -45,23 +38,26 @@ public class UserResumeService implements IUserResumeService {
 
     @Override
     public void updateUserResume(MultipartFile file, UserResume resume) {
-        resume.setResume(Util.formatFile(file));
+        resume.setResume(Util.formatFileTOByteArray(file));
         resumeRepo.save(resume);
     }
 
     @Override
     public UserResume getUserResumeByCustomeerId(int cDId) {
+
         return resumeRepo.getUserResumeByCustomerId(cDId);
     }
 
     @Override
     public UserResume getUserResumeById(int userResumeId) {
       Optional<UserResume> userResume = resumeRepo.findById(userResumeId);
-      if(userResume.isPresent()){
-          UserResume resume= userResume.get();
-          return resume;
-      }
-      return null;
+        return userResume.orElse(null);
+    }
+
+    @Override
+    public UserResume getUserResumeByEmployeeId(int eId) {
+
+        return resumeRepo.getUserResumeByEmployeeId(eId);
     }
 
 }

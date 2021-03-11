@@ -2,7 +2,7 @@ package com.genehelix.services;
 
 import com.genehelix.dtos.responses.HcServiceResponse;
 import com.genehelix.entities.HcService;
-import com.genehelix.interfaces.IService;
+import com.genehelix.interfaces.IHcService;
 import com.genehelix.repositories.HcServiceRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class HcServiceService implements IService {
+public class HcServiceService implements IHcService {
     @Autowired
     private HcServiceRepo hcServiceRepo;
 
@@ -36,6 +36,20 @@ public class HcServiceService implements IService {
     @Override
     public List<HcService> getHCServiceListByCustomerId(int cId) {
 
-        return hcServiceRepo.getHCServiceListByCustomerId(cId);
+        return hcServiceRepo.getHCServiceListByCustomerID(cId);
     }
+
+    @Override
+    public List<HcServiceResponse> getHCServiceNameAndDateForEmployee(int employeeID) {
+
+        return hcServiceRepo.getHCServiceNameAndDateForEmployee(employeeID);
+    }
+
+    @Override
+    public List<HcService> getHCServiceListByEmployeeId(int eId) {
+
+
+        return hcServiceRepo.getHCServiceListByEmployeeId(eId);
+    }
+
 }

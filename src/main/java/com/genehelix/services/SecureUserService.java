@@ -35,4 +35,11 @@ public class SecureUserService implements ISecureUserService {
 
         return userRepo.getUserByEmployeeId(id);
     }
+
+    @Override
+    public String getPasswordByEmployeeId(int eId) {
+
+
+        return userRepo.getPasswordByEmployeeId(eId);
+    }
 }

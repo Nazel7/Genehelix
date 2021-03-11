@@ -1,11 +1,9 @@
 package com.genehelix.services;
 
-import com.genehelix.entities.Customer;
-import com.genehelix.entities.CustomerProfilePhoto;
-import com.genehelix.entities.EmptyProfilePhoto;
-import com.genehelix.interfaces.IUser;
+import com.genehelix.entities.*;
 import com.genehelix.interfaces.IUserProfilePhotoService;
 import com.genehelix.repositories.CustomerProfilePhotoRepo;
+import com.genehelix.repositories.EmployeeeProfilePhotoRepo;
 import com.genehelix.repositories.EmptyProfilePhotoRepo;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,13 @@ import java.nio.file.NoSuchFileException;
 public class UserProfilePhotoService implements IUserProfilePhotoService {
 
     @Autowired
-    CustomerProfilePhotoRepo profilePhotoRepo;
+    CustomerProfilePhotoRepo customerProfilePhotoRepo;
 
     @Autowired
     EmptyProfilePhotoRepo emptyProfilePhotoRepo;
+
+    @Autowired
+    EmployeeeProfilePhotoRepo employeeProfilePhoto;
 
     @Override
     public void saveCustomerPorfilePhoto(MultipartFile file, CustomerProfilePhoto customerProfilePhoto,
@@ -40,14 +41,35 @@ public class UserProfilePhotoService implements IUserProfilePhotoService {
           customerProfilePhoto.setPhotoSize(file.getSize());
           customerProfilePhoto.setCustomer(customer);
 
-          profilePhotoRepo.save(customerProfilePhoto);
+          customerProfilePhotoRepo.save(customerProfilePhoto);
+    }
+
+    @Override
+    public void saveEmployeePorfilePhoto(MultipartFile file, EmployeeProfilePhoto employeeProfilePhoto,
+                                         Employee employee) throws Exception {
+
+        String fileName= Util.fileConvertToString(file);
+
+        if(fileName.trim().isEmpty() || fileName.trim().contains(",") || fileName.trim().contains("..")){
+            throw new NoSuchFileException("Not acceptable file format. file contains any of unacceptable char in filename." +
+                    "Please edit filename");
+        }
+        String fileFormat= Util.fileCovertToImageBase64String(file);
+
+        employeeProfilePhoto.setProfilePhoto(fileFormat);
+       employeeProfilePhoto.setPhotoName(fileName);
+       employeeProfilePhoto.setPhotoSize(file.getSize());
+       employeeProfilePhoto.setEmployee(employee);
+
+       this.employeeProfilePhoto.save(employeeProfilePhoto);
+
     }
 
     @Override
     public CustomerProfilePhoto getCustomerProfilePhotoByCustomerId(int cDId) {
 
 
-        return profilePhotoRepo.getCustomerProfilePhotoByCustomerId(cDId);
+        return customerProfilePhotoRepo.getCustomerProfilePhotoByCustomerId(cDId);
     }
 
     @Override
@@ -60,6 +82,13 @@ public class UserProfilePhotoService implements IUserProfilePhotoService {
     public EmptyProfilePhoto getEmptyProfilePhotoById(int emtyId) {
 
         return emptyProfilePhotoRepo.getEmptyProfilePhotoById(emtyId);
+    }
+
+    @Override
+    public EmployeeProfilePhoto getEmployeeProfilePhotoByEmployeeId(int eId) {
+
+        return employeeProfilePhoto.getEmployeeProfilePhotoByEmployeeId(eId);
+
     }
 
 

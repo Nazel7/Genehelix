@@ -13,5 +13,7 @@ public interface IUsersDetailService {
 
     CustomerDetails getCustomerDetailsByCustomerId(int cId);
 
+  EmployeeDetails getEmployeeDetailsByEmployeeId(int eId);
+
 
 }

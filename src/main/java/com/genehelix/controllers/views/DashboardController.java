@@ -35,7 +35,7 @@ public class DashboardController {
     private IHCServiceListService ihcServiceListService;
 
     @Autowired
-    private IService iService;
+    private IHcService iHcService;
 
     @Autowired
     private IUserProfilePhotoService iuserPhoto;
@@ -73,23 +73,24 @@ public class DashboardController {
 
         // Switching Users (Customer & Employee)
         IUser user1 = userDetails.getActiveUser();
-        System.out.println("userID: " + user1.getId());
-        model.addAttribute("activeUser", user1);
-        model.addAttribute("activeRole", userDetails.getActiveRole());
+        HcService hcService = new HcService();
 
 //        set User new Service on select-option
         hcServiceLists = ihcServiceListService.findAll();
-        System.out.println(hcServiceLists.get(0).getServiceTitle());
-        int customersId = user1.getId();
-        System.out.println("uuu:" + customersId);
-        HcService hcService = new HcService();
-        model.addAttribute("newHcService", hcService);
+        int userId = user1.getId();
 
         // I am working here; plan to create a databses table for empty profile photo.
         // CustomerPhoto call...
         CustomerProfilePhoto customerProfilePhoto = iuserPhoto.getCustomerProfilePhotoByCustomerId(user1.getId());
+
+        EmployeeProfilePhoto employeeProfilePhoto= iuserPhoto.getEmployeeProfilePhotoByEmployeeId(userId);
+
         EmptyProfilePhoto emptyProfilePhoto= iUserProfilePhotoService.getEmptyProfilePhotoById(1);
-        System.out.println("photoId"+emptyProfilePhoto.getId());
+
+        model.addAttribute("activeUser", user1);
+        model.addAttribute("activeRole", userDetails.getActiveRole());
+        model.addAttribute("newHcService", hcService);
+
 
         switch (userDetails.getActiveRole()) {
             case "ROLE_ADMIN":
@@ -97,45 +98,47 @@ public class DashboardController {
             case "ROLE_CUSTOMER":
 
                 CustomerDetails customerDetails = iUsersDetailService.getCustomerDetailsByCustomerId(user1.getId());
-                if (customerDetails != null) {
-                    System.out.println("CC:" + customersId);
-                    hcServiceResponse = iService.getHCServiceNameAndDate(customersId);
-                    int lastIndex1 = hcServiceResponse.size() - 1;
-                    System.out.println("index " + lastIndex1);
-                    if (lastIndex1 >= 0) {
-                        HcServiceResponse serviceResponse1 = hcServiceResponse.get(lastIndex1);
-                        model.addAttribute("cPhoto", Objects.requireNonNullElse(customerProfilePhoto, emptyProfilePhoto));
-                        model.addAttribute("customerId", customersId);
-                        model.addAttribute("hcServiceResponse", hcServiceResponse);
-                        model.addAttribute("hcServiceResponseIndex", lastIndex1);
-                        model.addAttribute("hcServiceLists", hcServiceLists);
-                        model.addAttribute("latestServiceDate", serviceResponse1.getDate());
-                        model.addAttribute("latestService", serviceResponse1.getName());
-                        model.addAttribute("userDetail", customerDetails);
-                        return gotoCustomerPage();
-                    } else {
+                hcServiceResponse = iHcService.getHCServiceNameAndDate(userId);
+                int lastIndex1 = hcServiceResponse.size() - 1;
 
-                        //if error input all the value in global else..
-                            model.addAttribute("userDetail", customerDetails);
-
-                            return gotoCustomerPage();
-
-                    }
-
-
-                } else {
-                    System.out.println("userIDEXP: " + customersId);
-                    model.addAttribute("cPhoto", Objects.requireNonNullElse(customerProfilePhoto, emptyProfilePhoto));
-                    model.addAttribute("customerId", customersId);
-                    model.addAttribute("hcServiceLists", hcServiceLists);
-                    return gotoCustomerPage();
-
+                if (lastIndex1 >= 0) {
+                    HcServiceResponse serviceResponse1 = hcServiceResponse.get(lastIndex1);
+                    model.addAttribute("hcServiceResponse", hcServiceResponse);
+                    model.addAttribute("hcServiceResponseIndex", lastIndex1);
+                    model.addAttribute("latestServiceDate", serviceResponse1.getDate());
+                    model.addAttribute("latestService", serviceResponse1.getName());
                 }
-
+                model.addAttribute("userDetail", customerDetails);
+                model.addAttribute("cPhoto", Objects.requireNonNullElse(customerProfilePhoto, emptyProfilePhoto));
+                model.addAttribute("customerId", userId);
+                model.addAttribute("hcServiceLists", hcServiceLists);
+                return gotoCustomerPage();
 
 
             case "ROLE_EMPLOYEE":
+
+
+                EmployeeDetails employeeDetails = iUsersDetailService.getEmployeeDetailsByEmployeeId(userId);
+                hcServiceResponse = iHcService.getHCServiceNameAndDateForEmployee(userId);
+                int lastIndex1ForEmployee = hcServiceResponse.size() - 1;
+
+                if (lastIndex1ForEmployee >= 0) {
+                    HcServiceResponse serviceResponse = hcServiceResponse.get(lastIndex1ForEmployee);
+                    model.addAttribute("hcServiceResponseForEmployee", hcServiceResponse);
+                    model.addAttribute("hcServiceResponseIndexForEmployee", lastIndex1ForEmployee);
+                    model.addAttribute("latestServiceDateEm", serviceResponse.getDate());
+                    model.addAttribute("latestServiceEm", serviceResponse.getName());
+
+                }
+
+                model.addAttribute("userDetail", employeeDetails);
+                model.addAttribute("ePhoto", Objects.requireNonNullElse(employeeProfilePhoto, emptyProfilePhoto));
+                model.addAttribute("employeeId", userId);
+                model.addAttribute("hcServiceLists", hcServiceLists);
+
                 return gotoEmployeePage();
+
+
             default:
                 return "access-denied";
         }
@@ -182,7 +185,7 @@ public class DashboardController {
         Customer customer = IEmployeeCustomerService.getCustomerById(cDId);
         hcService.setCustomerh(customer);
 
-        iService.saveHcService(hcService);
+        iHcService.saveHcService(hcService);
 
         return "redirect:/dashboard";
     }
@@ -278,4 +281,81 @@ public class DashboardController {
         return "redirect:/dashboard";
 
 }
+
+// Employee APIs
+@PostMapping("/employeeService/submit")
+public String postNewEmployeeDetailService(@RequestParam("employeeId") int eId,
+                                           @ModelAttribute("newHcService") HcService hcService) {
+
+    Employee employee = IEmployeeCustomerService.getEmployee(eId);
+    hcService.setEmployeeh(employee);
+
+    iHcService.saveHcService(hcService);
+
+    return "redirect:/dashboard";
+}
+
+
+    // Associate another postMapping
+    @GetMapping("/setting/userDetails-employee")
+    public String updateEmployeeDetails(@RequestParam("employeeId") int eId, Model model) {
+      EmployeeDetails employeeDetails = iUsersDetailService.getEmployeeDetailsByEmployeeId(eId);
+        System.out.println(employeeDetails.getHomeAddress());
+        model.addAttribute("employeeId", eId);
+        model.addAttribute("updateEmployeeDetail", employeeDetails);
+
+
+        return "update-employee-detail";
+    }
+
+    @PostMapping("/setting/updateEmployeeDetails")
+    public String postUpdateEmployeeDetail(@ModelAttribute("newEmployeeDetail") EmployeeDetails employeeDetails) {
+
+        iUsersDetailService.saveUserDetails(employeeDetails);
+
+        return "redirect:/dashboard";
+
+    }
+
+
+    @GetMapping("/setting/newEmployeeDetails")
+    public String setNewEmployeeDetails(@AuthenticationPrincipal UserDetailService userDetails, Model model) {
+        EmployeeDetails employeeDetail = new EmployeeDetails();
+        int activeUserId = userDetails.getActiveUser().getId();
+        Employee employee = (Employee) userDetails.getActiveUser();
+        EmployeeDetails employeeDetails = employee.getEmployeeDetails();
+
+        model.addAttribute("employeeDetailCheck", employeeDetails);
+        model.addAttribute("newEmployeeDetail",employeeDetail);
+        model.addAttribute("activeUserId", activeUserId);
+
+        return "new-employee-detail";
+    }
+
+    @PostMapping("/setting/postNewEmployeeDetails")
+    public String postNewEmployeeDetails(@Valid @RequestParam("employeeId") int eId,
+                                         @ModelAttribute("newEmployeeDetail") EmployeeDetails employeeDetails,
+                                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            return "new-employee-detail";
+        }
+        else {
+
+            Employee employee = IEmployeeCustomerService.getEmployee(eId);
+
+           employeeDetails.setEmployee(employee);
+            iUsersDetailService.saveUserDetails(employeeDetails);
+
+
+            return "redirect:/dashboard";
+        }
+
+    }
+//    @GetMapping("/")
+//    public String getReviewForEmployee(){
+//
+//
+//    }
+
 }
