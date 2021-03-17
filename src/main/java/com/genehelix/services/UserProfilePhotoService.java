@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.nio.file.NoSuchFileException;
-
 @Service
 public class UserProfilePhotoService implements IUserProfilePhotoService {
 
@@ -28,12 +26,7 @@ public class UserProfilePhotoService implements IUserProfilePhotoService {
     public void saveCustomerPorfilePhoto(MultipartFile file, CustomerProfilePhoto customerProfilePhoto,
                                          Customer customer) throws Exception{
 
-        String fileName= Util.fileConvertToString(file);
-
-        if(fileName.trim().isEmpty() || fileName.trim().contains(",") || fileName.trim().contains("..")){
-            throw new NoSuchFileException("Not acceptable file format. file contains any of unacceptable char in filename." +
-                    "Please edit filename");
-        }
+        String fileName= Util.checkFileNameError(file);
          String fileFormat= Util.fileCovertToImageBase64String(file);
 
           customerProfilePhoto.setProfilePhoto(fileFormat);
@@ -48,16 +41,12 @@ public class UserProfilePhotoService implements IUserProfilePhotoService {
     public void saveEmployeePorfilePhoto(MultipartFile file, EmployeeProfilePhoto employeeProfilePhoto,
                                          Employee employee) throws Exception {
 
-        String fileName= Util.fileConvertToString(file);
-
-        if(fileName.trim().isEmpty() || fileName.trim().contains(",") || fileName.trim().contains("..")){
-            throw new NoSuchFileException("Not acceptable file format. file contains any of unacceptable char in filename." +
-                    "Please edit filename");
-        }
+          String fileName= Util.checkFileNameError(file);
         String fileFormat= Util.fileCovertToImageBase64String(file);
 
-        employeeProfilePhoto.setProfilePhoto(fileFormat);
+
        employeeProfilePhoto.setPhotoName(fileName);
+        employeeProfilePhoto.setProfilePhoto(fileFormat);
        employeeProfilePhoto.setPhotoSize(file.getSize());
        employeeProfilePhoto.setEmployee(employee);
 

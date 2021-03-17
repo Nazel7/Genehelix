@@ -2,22 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>luv2code - Access Denied</title>
+    <title>Genehelix- Access Denied</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+
+    <!-- Reference Bootstrap files -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-<h2>Access Denied - You are not authorized to access this resource.</h2>
+<h2 class="ml-4">Access Denied Page</h2>
 
 <hr>
 
 <div>
-    <p style="color: red"><i>Please press back button below to home page...</i></p>
-    <form action="#" th:action="@{/logout}" style="float: left" class="btn btn-primary  mr-5 mb-3"
-          method="POST">
+    <div class="alert alert-danger m-4">You are not authorized to access this resource.</div>
+<div>
+    <br>
+    <div>
+        <form action="#" th:action="@{/logout}"
+              method="POST">
 
-        <input type="submit" value="Back" class="btn btn-primary mr-5 mb-3">
-    </form>
+            <input type="submit" value="Back" class="btn btn-primary m-4">
+        </form>
+    </div>
+
+</div>
+
 </div>
 </body>
 

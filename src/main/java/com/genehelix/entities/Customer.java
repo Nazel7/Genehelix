@@ -53,6 +53,9 @@ public class Customer implements IUser {
     @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "customer")
     private User user;
 
+    @OneToMany(mappedBy = "customer")
+    private List<MedicalResult> medicalResults= new ArrayList<>();
+
 
     public Customer() {
         super();
@@ -171,5 +174,11 @@ public class Customer implements IUser {
         this.employee = employee;
     }
 
+    public List<MedicalResult> getMedicalResults() {
+        return medicalResults;
+    }
 
+    public void setMedicalResults(List<MedicalResult> medicalResults) {
+        this.medicalResults = medicalResults;
+    }
 }

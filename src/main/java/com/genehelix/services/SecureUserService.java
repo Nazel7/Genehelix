@@ -42,4 +42,10 @@ public class SecureUserService implements ISecureUserService {
 
         return userRepo.getPasswordByEmployeeId(eId);
     }
+
+    @Override
+    public User getUserByAuthority(String auth) {
+
+        return userRepo.getUserByAuthority(auth);
+    }
 }

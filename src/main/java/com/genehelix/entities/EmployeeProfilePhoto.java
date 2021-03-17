@@ -13,6 +13,7 @@ public class EmployeeProfilePhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
  @Column(name = "photo_name")
     private String photoName;
 

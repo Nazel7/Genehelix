@@ -1,5 +1,6 @@
 package com.genehelix.utils;
 
+import com.genehelix.entities.MedicalResult;
 import com.genehelix.entities.UserResume;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.StringUtils;
@@ -8,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.file.NoSuchFileException;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -72,6 +74,38 @@ public class Util {
             resumeOutputStream.write(userResume.getResume());
 
             resumeOutputStream.close();
+        }
+
+    }
+
+    public static void medicalResultDownloader(int mrId, HttpServletResponse response, MedicalResult medicalResult)
+            throws IOException {
+        if (medicalResult != null) {
+            response.setContentType("application/octet-stream");
+            String headerValue = "attachment; filename=" + medicalResult.getName();
+            String headerKey = "Content-Disposition";
+
+            response.setHeader(headerKey, headerValue);
+
+            ServletOutputStream mrOutputStream = response.getOutputStream();
+            mrOutputStream.write(medicalResult.getMedicalResult());
+
+            mrOutputStream.close();
+        }
+
+    }
+
+    public static String checkFileNameError(MultipartFile file) throws NoSuchFileException {
+
+        String fileName= Util.fileConvertToString(file);
+
+        if(fileName.trim().isEmpty() || fileName.trim().contains(",") || fileName.trim().contains("..")){
+            throw new NoSuchFileException("Not acceptable file format. file contains any of unacceptable char in filename." +
+                    "Please edit filename");
+
+        }else {
+            return fileName;
+
         }
 
     }

@@ -55,19 +55,24 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home-page").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
+                .antMatchers("/customer/e-page-customer-u-medical-f","/employee/e-customer-list",
+                        "/customer/c-upload-mr", "/e-page/**", "/customer/e-page-customer-mr-rm**").hasRole("EMPLOYEE")
                 .antMatchers("/reviews/showEmployeeReview",
                         "/reviews/showFormForEmployeeCustomerReview", "/reviews/showFormForAddReview",
                         "/reviews/postCustomerReview").hasAnyRole("ADMIN", "CUSTOMER")
-                .antMatchers("/customers/postEmployeeCustomer", "/customer/postUpdateEmployeeCustomer").hasRole("ADMIN")
-                .antMatchers("/customer/postUpdateEmployeeCustomer**", "/customer/update-log", "/customer/update-customer").hasRole("ADMIN")
+                .antMatchers("/customers/postEmployeeCustomer",
+                        "/customer/postUpdateEmployeeCustomer").hasRole("ADMIN")
+                .antMatchers("/customer/postUpdateEmployeeCustomer**", "/customer/update-log",
+                        "/customer/update-customer").hasRole("ADMIN")
                 .antMatchers("/company-employees/employee-list", "/customers/general-list/**",
                         "/customers/search**", "/customers/showFormForAdd**",
                         "/customer/delete", "/company-employees/**", "/customer/showFormForCustomerUpdate**",
                         "/dashboard/**", "/reviews", "/customers**", "/customer/**", "/customers/**",
                         "/customer/postUpdateEmployeeCustomer/","/reviews/**").hasRole("ADMIN")
                 .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
-                        "/customers/**", "/hcsevice-list/customer").hasRole("CUSTOMER")
-                .antMatchers("/company-employees/**", "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
+                        "/customers/**", "/hcsevice-list/customer", "/customer-mr**", "/mr/download**").hasRole("CUSTOMER")
+                .antMatchers("/company-employees/**",
+                        "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .antMatchers("/employee/post-new-password").hasRole("EMPLOYEE")
                 .and()
                 .formLogin()

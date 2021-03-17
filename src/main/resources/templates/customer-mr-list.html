@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <title>ERMC</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+          crossorigin="anonymous">
+</head>
+
+<body>
+
+<div class="container" style="margin: 2% 10%">
+
+    <h3>Employee Customers Data</h3>
+    <hr>
+
+    <form th:action="@{/customers/search}" class="form-inline">
+        <input class="form-control  ml-5 mr-sm-2 mb-3" type="text" name="search"
+               placeholder="Search by name"/>
+
+        <input class="btn btn-success mb-3" type="submit" value="Search">
+        <!--flash message-->
+        <!--<div class="alert alert-success" style="margin-left: 5%;" th:if="${message != null}">-->
+            <!--<span>[[${message}]]</span>-->
+        <!--</div>-->
+
+
+    </form>
+
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Size (bytes)</th>
+            <th>Date Uploaded</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="medical : ${mr}">
+
+            <td th:text="${medical.name}"/>
+            <td th:text="${#numbers.formatInteger(medical.size, 4, 'COMMA')}"/>
+            <td th:text="${medical.uploadTimeStamp}"/>
+
+            <td>
+                <!-- Add "update" button/link -->
+                <a th:href="@{/mr/download(mrId=${medical.id})}"
+                   class="btn btn-info btn-sm" target="_blank">
+                   Download
+                </a>
+
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+    <div style="clear: both"></div>
+        <div th:if="${mr.size() == 0}">
+            <div class="alert alert-success" role="alert">Your medical Result is not available at this moment...</div>
+        </div>
+        <div>
+
+        <a th:href="@{/dashboard}" class="btn btn-outline-primary mt-2" style="margin-top: 11px">
+            Dashbord
+        </a>
+        <div style="float: right; width: 80%; margin-right: 5%; margin-top: 10px">
+            <div th:if="${totalPage > 1}">
+                <div class="row col-sm-12">
+
+                    <div class="pagination">
+                        <div class="page-item">
+                            <a class="page-link" th:if="${currentPage > 1}"
+                               th:href="@{'/customer/mr-page/'+ ${1}} ">First</a>
+                            <span class="page-link" th:unless="${currentPage > 1}">First</span>
+                        </div>
+                        <div>
+                            <a class="page-link" th:if="${currentPage > 1}"
+                               th:href="@{'/customer/mr-page/'+ ${currentPage - 1}} ">Previous</a>
+                            <span class="page-link" th:unless="${currentPage > 1}">Previous</span>
+                        </div>
+
+                        <span class="page-item" th:each="i : ${#numbers.sequence(1, totalPage)}">
+                    <a class="page-link" th:if="${currentPage != i}"
+                       th:href="@{'/customer/mr-page/'+ ${i}}">
+                        [[${i}]]</a>
+                    <span style="background-color: blue" class="page-link"
+                          th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;</span>
+
+                        <div class="page-item">
+                            <a class="page-link" th:if="${currentPage < totalPage}"
+                               th:href="@{'/customer/mr-page/'+ ${currentPage + 1}}">
+                                Next</a>
+                            <span class="page-link" th:unless="${currentPage < totalPage}">Next</span>
+                        </div>
+
+                        <div class="page-item">
+                            <a class="page-link" th:if="${currentPage < totalPage}"
+                               th:href="@{'/customer/mr-page/'+ ${totalPage}}">
+                                Last</a>
+                            <span class="page-link" th:unless="${currentPage < totalPage}">Last</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
+
+
+

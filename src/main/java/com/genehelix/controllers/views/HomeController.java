@@ -123,8 +123,8 @@ public class HomeController {
         }
 
         model.addAttribute("currentPage", pageNo);
-        model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("employeeList", page.getContent());
+        model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("totalPage", page.getTotalPages());
 
 

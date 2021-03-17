@@ -425,4 +425,93 @@ public class CustomerController {
 
     }
 
+    @GetMapping("/customer/e-page-customer-u-medical-f")
+    public String uploadMedicalResult(@RequestParam("customerId") int cId, Model model){
+
+        Customer customer= IEmployeeCustomerService.getCustomerById(cId);
+
+        model.addAttribute("customer", customer);
+
+        return "c-upload-mr";
+    }
+
+
+    @PostMapping("/customer/c-upload-mr")
+    public String postMedicalResult(@RequestParam("customerId") int customerId,
+                                    @RequestParam("file") MultipartFile file,
+                                    RedirectAttributes r) throws IOException {
+
+        Customer customer= IEmployeeCustomerService.getCustomerById(customerId);
+
+      MedicalResult medicalResult= new MedicalResult();
+
+        if (Util.checkFileNameError(file) == null){
+
+            r.addFlashAttribute("message", "error uploading file...");
+
+            return "c-upload-mr";
+        }
+
+
+        r.addFlashAttribute("message", "file upload successfully...");
+
+        medicalResult.setCustomer(customer);
+        IEmployeeCustomerService.addEmployeeCustomer(customer);
+      IEmployeeCustomerService.saveUserMedicalResult(file, medicalResult);
+
+        return "redirect:/e-page/1?employeeId="+ customer.getEmployee().getId();
+    }
+
+    @GetMapping("/customer/e-page-customer-mr-rm")
+    public String deleteLatestMedicalResult(@RequestParam("customerId") int cId){
+
+        Customer customer= IEmployeeCustomerService.getCustomerById(cId);
+
+        List<MedicalResult> medicalResults= IEmployeeCustomerService.findMedicalResultsByCustomerId(cId);
+        MedicalResult medicalResult= medicalResults.get(0);
+
+        IEmployeeCustomerService.deleteMedicalResult(medicalResult);
+
+        return "redirect:/e-page/1?employeeId="+ customer.getEmployee().getId();
+
+    }
+
+    @GetMapping("/customer-mr")
+    public String getMedicalResult(@RequestParam("customerId") int cId, Model model){
+
+        model.addAttribute("customerId", cId);
+
+        return getMedicalResultPaginated(1, cId, model);
+
+    }
+
+    @GetMapping("/customer/mr-page/{pageNo}")
+    public String getMedicalResultPaginated(@PathVariable("pageNo") int pageNo,
+                                            @ModelAttribute("customerId") int cId,
+                                            Model model){
+
+        int pageSize= 5;
+
+        Page<MedicalResult> page= IEmployeeCustomerService.findAllByCustomerId(cId, pageNo, pageSize);
+
+        model.addAttribute("cId", cId);
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPage", page.getTotalPages());
+        model.addAttribute("mr", page.getContent());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("customerId", cId);
+
+        return "customer-mr-list";
+
+    }
+
+    @GetMapping("/mr/download")
+    public void downloadMedicalResult(@RequestParam("mrId") int mrId, HttpServletResponse response) throws IOException {
+
+        MedicalResult result= IEmployeeCustomerService.findById(mrId);
+
+       Util.medicalResultDownloader(mrId,response,result);
+
+    }
+
 }

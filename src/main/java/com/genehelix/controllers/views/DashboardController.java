@@ -4,16 +4,18 @@ import com.genehelix.dtos.responses.HcServiceResponse;
 import com.genehelix.entities.*;
 import com.genehelix.interfaces.*;
 import com.genehelix.services.UserDetailService;
+import com.genehelix.utils.EmployeeUtil;
+import com.genehelix.utils.ErrorMessageUtil;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import com.genehelix.utils.EmployeeUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,11 +45,16 @@ public class DashboardController {
     @Autowired
     private IUserProfilePhotoService iUserProfilePhotoService;
 
+    @Autowired
+    private ISecureUserService iSecureUserService;
+
+
     private List<String> serviceListTitle;
 
     private List<HCServiceList> hcServiceLists;
 
     private List<HcServiceResponse> hcServiceResponse;
+
 
 
     public DashboardController() {
@@ -119,8 +126,10 @@ public class DashboardController {
 
 
                 EmployeeDetails employeeDetails = iUsersDetailService.getEmployeeDetailsByEmployeeId(userId);
+                User user= iSecureUserService.getUserByAuthority("ROLE_ADMIN");
                 hcServiceResponse = iHcService.getHCServiceNameAndDateForEmployee(userId);
                 int lastIndex1ForEmployee = hcServiceResponse.size() - 1;
+
 
                 if (lastIndex1ForEmployee >= 0) {
                     HcServiceResponse serviceResponse = hcServiceResponse.get(lastIndex1ForEmployee);
@@ -131,6 +140,7 @@ public class DashboardController {
 
                 }
 
+                model.addAttribute("adminEmail", user.getUserName());
                 model.addAttribute("userDetail", employeeDetails);
                 model.addAttribute("ePhoto", Objects.requireNonNullElse(employeeProfilePhoto, emptyProfilePhoto));
                 model.addAttribute("employeeId", userId);
@@ -352,10 +362,49 @@ public String postNewEmployeeDetailService(@RequestParam("employeeId") int eId,
         }
 
     }
-//    @GetMapping("/")
-//    public String getReviewForEmployee(){
-//
-//
-//    }
+
+    @GetMapping("/employee/e-review")
+    public String getReviewForEmployee(@AuthenticationPrincipal UserDetailService userDetails, Model model){
+        Employee activeEmployee= (Employee) userDetails.getActiveUser();
+
+       List<String> reviewList = IEmployeeCustomerService.showReviews(activeEmployee.getId());
+
+       model.addAttribute("activeEmployee", activeEmployee);
+        return ErrorMessageUtil.errorMessage(reviewList,
+                "There is no review found....",
+                "review-not-found",
+                "review-list", model,
+                "emptyReview",
+                "reviews"
+        );
+
+    }
+
+    @GetMapping("/employee/e-customer-list")
+    public String getEmployeeCustomerList(@RequestParam("employeeId") int eId, Model model){
+
+        model.addAttribute("employeeId", eId);
+      return employeeCustomerPage(1, eId, model);
+
+
+    }
+
+    @GetMapping("/e-page/{pageNo}")
+    public  String employeeCustomerPage(@PathVariable("pageNo") int pageNo,
+                                        @ModelAttribute("employeeId") int eId, Model model){
+
+        int pageSize = 5;
+
+        Page<Customer> page = IEmployeeCustomerService.findPaginatedCustomer(pageNo, pageSize, eId);
+
+        model.addAttribute("employeeId", eId);
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPage", page.getTotalPages());
+        model.addAttribute("employeeCustomers", page.getContent());
+
+
+        return "e-page-customer-list";
+    }
 
 }

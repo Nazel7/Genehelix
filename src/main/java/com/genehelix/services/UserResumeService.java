@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.NoSuchFileException;
 import java.util.Date;
 import java.util.Optional;
 
@@ -22,12 +21,8 @@ public class UserResumeService implements IUserResumeService {
 
     @Override
     public void saveUserResume(MultipartFile file, UserResume resume) throws IOException {
-        String fileName= Util.fileConvertToString(file);
-        System.out.println(fileName);
-        if(fileName.trim().isEmpty() || fileName.trim().contains(",") || fileName.trim().contains("..")){
-            throw new NoSuchFileException("Not acceptable file format. file contains any of unacceptable char in filename." +
-                    "Please edit filename");
-        }
+
+        String fileName= Util.checkFileNameError(file);
 
         resume.setResume(Util.formatFileTOByteArray(file));
         resume.setResumeName(fileName);

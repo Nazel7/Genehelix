@@ -1,11 +1,11 @@
 package com.genehelix.interfaces;
 
 
-import com.genehelix.entities.Customer;
-import com.genehelix.entities.Employee;
-import com.genehelix.entities.Review;
+import com.genehelix.entities.*;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IEmployeeCustomerService {
@@ -53,5 +53,14 @@ public interface IEmployeeCustomerService {
 
     Employee getEmployeeByEmail(String email);
 
+    Page<MedicalResult> findAllByCustomerId(int cId, int pageNo, int pageSize);
+
+    List<MedicalResult> findMedicalResultsByCustomerId(int cId);
+
+    void saveUserMedicalResult(MultipartFile file, MedicalResult medicalResult) throws IOException;
+
+    void deleteMedicalResult(MedicalResult medicalResult);
+
+    MedicalResult findById(int mrId);
 
 }
