@@ -31,4 +31,5 @@ public interface CustomerRepo extends JpaRepository<Customer, Integer> {
     Page<Customer> getSearchedCustomers(String customerProperty, Pageable pageable);
 
     Customer getCustomerById(int cId);
+
 }

@@ -51,6 +51,7 @@ public class ReviewController {
         reviewList = IEmployeeCustomerService.showCustomerReviewList(customerId);
         model.addAttribute("customerId", customerId);
 
+        model.addAttribute("activeEmployee", null);
         return ErrorMessageUtil.errorMessage(reviewList,
                 "There is no review found....",
                 "review-not-found",
@@ -66,6 +67,8 @@ public class ReviewController {
         System.out.println("wpe=" + employeeID);
 
         reviewList = IEmployeeCustomerService.showReviews(employeeID);
+        model.addAttribute("activeEmployee", null);
+
         return ErrorMessageUtil.errorMessage(reviewList,
                 "There is no review found.....",
                 "empty-review-home",

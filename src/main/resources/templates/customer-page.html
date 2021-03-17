@@ -47,10 +47,10 @@
                 border-radius: 50%;margin-top: 20px; margin-bottom: 5%; width: 60px; height: 60px
             }
             .as-select{
-               display: none;
+                display: none;
             }
             .as-footer{
-               display: none;
+                display: none;
             }
             #successMessage{
                 font-size: 9px;
@@ -131,17 +131,17 @@
                 font-size: 9px;
             }
             #fontAwesoneDrop5 {
-                  margin-right: 8px;
-                  font-size: 9px;
-              }
+                margin-right: 8px;
+                font-size: 9px;
+            }
             #fontAwesoneDrop6 {
-                    margin-right: 8px;
-                    font-size: 9px;
-                }
+                margin-right: 8px;
+                font-size: 9px;
+            }
             #fontAwesoneDrop7 {
-                      margin-right: 8px;
-                      font-size: 9px;
-                  }
+                margin-right: 8px;
+                font-size: 9px;
+            }
             #fontAwesoneDrop8 {
                 margin-right: 8px;
                 font-size: 9px;
@@ -282,9 +282,8 @@
             #headerpicture{
                 margin-left: 10%; float: left; width: 50px; height: 40px;
             }
-            #serviceReg{
+            #serviceR{
                 display: inline;
-                font-size: 7px;
                 color: white;
             }
             #doyou {
@@ -725,7 +724,7 @@
 <header id="header" >
     <a id="headerDv" th:href="@{/}">
         <img th:src="@{/images/gene-app.png}"  src="../static/images/gene-app.png"
-            class="headerpicture" />
+             class="headerpicture" />
     </a>
     <div class="profileName" id="profileName">
         <div class="primaryDrop" id="primaryDrop">My Account</div>
@@ -740,8 +739,6 @@
                      style="margin-top: 8%; margin-left:0; border-radius: 50%"/>
             </div>
 
-            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop1"><i class="fas fa-user-tie"></i></span>
-                <span class="fontAwesoneDropContent">Dashboard</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop2"><i class="far fa-id-card"></i></span>
                 <span class="fontAwesoneDropContent">My Profile</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop3"><i class="far fa-file-pdf"></i></span>
@@ -751,11 +748,9 @@
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop5"><i class="fas fa-file-medical"></i></span>
                 <span class="fontAwesoneDropContent">Medical Result</span></p>
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop6"><i class="fa fa-globe"
-                                                                          aria-hidden="true"></i></span>
+                                                                                                aria-hidden="true"></i></span>
                 <span class="fontAwesoneDropContent">HC-Service History</span></p>
-            <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop7"><i class="fa fa-bell"
-                                                                          aria-hidden="true"></i></span>
-                <span class="fontAwesoneDropContent">Notification</span></p>
+
             <p class="fontAwesoneDrop-P"><span class="fontAwesoneDrop" id="fontAwesoneDrop8"><i class="fas fa-key"></i></span>
                 <span class="fontAwesoneDropContent">Change Password</span></p>
             <p>
@@ -816,11 +811,7 @@
         </div>
 
         <ul class="shadow-sm pt-1 pb-1 mb-5 bg-white rounded" style="color: darkslategray" id="ulid">
-            <li>
-                <a href="#">
-                    <i class="fas fa-user-tie"></i>
-                    <span>Dashboard</span> </a>
-            </li>
+
             <li>
                 <a href="/dashboard">
                     <i class="far fa-id-card"></i>
@@ -837,7 +828,7 @@
                     <span>Manager </span> </a>
             </li>
             <li>
-                <a href="#">
+                <a href="#" th:href="@{/customer-mr(customerId=${customerId})}">
                     <i class="fas fa-file-medical"></i>
                     <span>Medical Result</span> </a>
             </li>
@@ -846,11 +837,7 @@
                     <i class="fa fa-globe" aria-hidden="true"></i>
                     <span>HC-Service History</span> </a>
             </li>
-            <li>
-                <a href="#">
-                    <i class="fa fa-bell" aria-hidden="true"></i>
-                    <span>Notification </span> </a>
-            </li>
+
             <li>
                 <a href="#" th:href="@{/customer/change-password(customerId-p=${customerId})}">
                     <i class="fas fa-key"></i>
@@ -875,45 +862,8 @@
     <div style=" padding: 5px; text-align: left; margin-left: 3%; margin-right: 3%; margin-top: 3%">
         <h2 class="sectionh2" id="sectionh2">Do you have a question?</h2>
         <hr>
-        <p class="sec1Title" id="sect1Title">Ask your manager →</p>
-        <form action="#" th:action="'mailto:'+ ${activeUser.email}" th:object="${activeUser}" method="POST">
-            <input type="hidden" th:field="*{id}"/>
-            <table class="sect1Table" id="sect1Table">
-                <tbody>
-                <tr>
-                    <td><label>First Name:</label></td>
-                </tr>
-                <tr>
-                    <td><input type="text" th:field="*{firstName}"
-                               class="form-control" style="width: 50%; font-size: 15px"></td>
-                </tr>
-                <tr>
-                    <td><label>Last Name:</label></td>
-                </tr>
-                <tr>
-                    <td><input type="text" th:field="*{lastName}"
-                               class="form-control" style="width: 50%; font-size: 15px"></td>
-                </tr>
-                <tr>
-                    <td><label>Message:</label></td>
-                </tr>
-                <tr>
-                    <td><textarea cols="50" rows="5" class="form-control" style="text-align: left; font-size: 15px">
-
-                    </textarea></td>
-                </tr>
-                <tr>
-                    <td><label></label></td>
-                </tr>
-                <tr>
-
-                    <td><div   class="btn btn-outline-primary">
-                        <input type="submit" value="Send Message" class="sect1TableSubmit" id="sect1TableSubmit"/>
-                    </div></td>
-                </tr>
-                </tbody>
-            </table>
-        </form>
+        <br>
+       <a th:href="'mailto:'+ ${activeUser.getEmployee().getEmail()}" class="btn btn-primary">Contact Manager</a>
     </div>
 </section>
 <section class="shadow-sm p-3 mb-3 bg-white rounded"
@@ -943,6 +893,12 @@
             <span style="width: auto" th:unless="${latestServiceDate != null}" class="spandetailHover">
                  <span class="divProfilespanpDatails" id="divProfilespanpDatails3">No set Date</span>
         </span>
+        </div>
+        <div class="serviceReg" id="serviceR">
+            <div class="btn btn-primary" >
+                <a   th:href="@{/new-hc-serviceList(userId=${customerId})}" style=" color: white; text-decoration-line:
+            none">Register for Service</a>
+            </div>
         </div>
     </div>
 
@@ -1010,7 +966,7 @@
         <div style="width: 50%; float: left; overflow: auto">
             <label style="width:100%; font-size: 15px; color:darkslategray">Email </label>
             <br>
-             <span class="divProfilespanpDatails" id="divProfilespanpDatails21" th:text="${activeUser.email}"></span>
+            <span class="divProfilespanpDatails" id="divProfilespanpDatails21" th:text="${activeUser.email}"></span>
         </div>
 
         <div style="width: 50%; float: left; overflow: auto">
@@ -1030,18 +986,14 @@
 </section>
 <section style="margin-top: 0.5%; margin-bottom: 3%; width: 74%">
     <div>
-        <span style="width: 30%" th:if="${userDetail != null}"><a class="btn btn-primary"
-                                            th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a>
+
+        <span style="width: 30%" th:if="${userDetail != null}">
+            <a class="btn btn-primary" th:href="@{/setting/userDetails(customerId= ${activeUser.getId()})}">Setting</a>
         </span>
 
         <span style="width: 30%" th:unless="${userDetail != null}"><a class="btn btn-primary"
-                                                th:href="@{/setting/newCustomerDetails}">Setting</a></span>
+                                                                      th:href="@{/setting/newCustomerDetails}">Setting</a></span>
 
-        <span class="serviceReg" id="serviceReg">
-            <span class="btn btn-primary" style="width: 35%; float: right; color: white" >
-            <a   th:href="@{/new-hc-serviceList(userId=${customerId})}" style="color: white; text-decoration-line: none">Register for Service</a>
-        </span>
-        </span>
 
     </div>
 </section>
@@ -1060,7 +1012,8 @@
                 <h5 class="carouselH6" style="color: dodgerblue;">Cancer Research Success</h5>
                 <br>
 
-                <p class="carouselH6" style="height: 25px; margin-top: 2%;margin-bottom: 2px ">NCBC has given visibility on the modalities to tackle cervicae cancer in
+                <p class="carouselH6" style="height: 25px; margin-top: 2%;margin-bottom: 2px ">
+                    NCBC has given visibility on the modalities to tackle cervicae cancer in
                     2021.. </p>
             </div>
 
@@ -1069,7 +1022,8 @@
                      style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue;">Stem cell Research</h5>
                 <br>
-                <p class="carouselH6" style="height: 25px; margin-top: 2%;margin-bottom: 2px">Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
+                <p class="carouselH6" style="height: 25px; margin-top: 2%;margin-bottom: 2px">
+                    Dr. Prim from Harvard just get a head-on with taurrette syndrome...</p>
             </div>
 
             <div class="item" style="width: 100%; overflow: auto;">
@@ -1077,7 +1031,8 @@
                      style="width:100%;height: 200px">
                 <h5 class="carouselH6" style="color: dodgerblue">Diabetes can be cured!</h5>
                 <br>
-                <p class="carouselH6" style="height: 25px; margin-top: 2%; margin-bottom: 2px ">A new research choose the cells responsible for insulin activation can be..</p>
+                <p class="carouselH6" style="height: 25px; margin-top: 2%; margin-bottom: 2px ">
+                    A new research choose the cells responsible for insulin activation can be..</p>
             </div>
         </div>
 

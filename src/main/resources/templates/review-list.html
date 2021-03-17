@@ -20,7 +20,8 @@
 <hr>
 <h3>Customer Review List</h3>
 <div>
-    <div><a th:href="@{/reviews/showFormForAddReview(customerId=${customerId})}"
+    <div th:if="${activeEmployee == null}">
+        <a th:href="@{/reviews/showFormForAddReview(customerId=${customerId})}"
             class="btn btn-primary btn-sm mr-5 mb-3">
         Add Review
     </a>

@@ -50,6 +50,10 @@ public class Employee implements IUser {
             CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private List<Customer> customerList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "employee")
+    private List<MedicalResult> medicalResults= new ArrayList<>();
+
+
     public Employee() {
         super();
     }
@@ -146,4 +150,12 @@ public class Employee implements IUser {
         customerList.add(customer);
     }
 
+
+    public List<MedicalResult> getMedicalResults() {
+        return medicalResults;
+    }
+
+    public void setMedicalResults(List<MedicalResult> medicalResults) {
+        this.medicalResults = medicalResults;
+    }
 }

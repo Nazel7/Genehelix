@@ -1,19 +1,24 @@
 package com.genehelix.services;
 
 
+import com.genehelix.entities.Customer;
+import com.genehelix.entities.Employee;
+import com.genehelix.entities.MedicalResult;
+import com.genehelix.entities.Review;
 import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.repositories.CustomerRepo;
 import com.genehelix.repositories.EmployeeRepo;
+import com.genehelix.repositories.MedicalResultRepo;
 import com.genehelix.repositories.ReviewRepo;
-import com.genehelix.entities.Customer;
-import com.genehelix.entities.Employee;
-import com.genehelix.entities.Review;
+import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +31,9 @@ public class EmployeeCustomerService implements IEmployeeCustomerService {
     @Autowired
     private ReviewRepo reviewRepo;
 
+    @Autowired
+    private MedicalResultRepo medicalResultRepo;
+
     @Override
     public List<Employee> getEmployees() {
         return employeeRepo.findAllByOrderByIdDesc();
@@ -35,6 +43,7 @@ public class EmployeeCustomerService implements IEmployeeCustomerService {
     public Employee getEmployee(int empID) {
         Optional<Employee> employee = employeeRepo.findById(empID);
         Employee employee1;
+
         if (employee.isPresent()) {
             employee1 = employee.get();
             return employee1;
@@ -176,6 +185,44 @@ public class EmployeeCustomerService implements IEmployeeCustomerService {
     public Employee getEmployeeByEmail(String email) {
 
         return employeeRepo.getEmployeeByEmail(email);
+    }
+
+    @Override
+    public Page<MedicalResult> findAllByCustomerId(int cId, int pageNo, int pageSize) {
+        Pageable pageable= PageRequest.of(pageNo-1, pageSize);
+
+        return medicalResultRepo.findAllByCustomerId(cId, pageable);
+    }
+
+    @Override
+    public List<MedicalResult> findMedicalResultsByCustomerId(int cId) {
+
+        return medicalResultRepo.findMedicalResultsByCustomerIdOrderByMedicalResultIdDesc(cId);
+    }
+
+    @Override
+    public void saveUserMedicalResult(MultipartFile file, MedicalResult medicalResult) throws IOException {
+
+        String fileName= Util.checkFileNameError(file);
+
+        medicalResult.setMedicalResult(Util.formatFileTOByteArray(file));
+        medicalResult.setName(fileName);
+        medicalResult.setSize(file.getSize());
+
+        medicalResultRepo.save(medicalResult);
+
+    }
+
+    @Override
+    public void deleteMedicalResult(MedicalResult medicalResult) {
+
+        medicalResultRepo.delete(medicalResult);
+    }
+
+    @Override
+    public MedicalResult findById(int mrId) {
+
+        return medicalResultRepo.findById(mrId);
     }
 
 }

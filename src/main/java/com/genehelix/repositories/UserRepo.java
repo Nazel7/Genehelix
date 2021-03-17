@@ -24,4 +24,7 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     String getPasswordByEmployeeId(int eid);
 
 
+    User getUserByAuthority(String authority);
+
+
 }
