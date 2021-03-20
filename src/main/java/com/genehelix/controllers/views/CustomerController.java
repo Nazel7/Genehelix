@@ -1,10 +1,7 @@
 package com.genehelix.controllers.views;
 
 import com.genehelix.entities.*;
-import com.genehelix.interfaces.IEmployeeCustomerService;
-import com.genehelix.interfaces.ISecureUserService;
-import com.genehelix.interfaces.IUserProfilePhotoService;
-import com.genehelix.interfaces.IUserResumeService;
+import com.genehelix.interfaces.*;
 import com.genehelix.utils.ErrorMessageUtil;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +36,11 @@ public class CustomerController {
     @Autowired
     private ISecureUserService secureUserService;
 
+    @Autowired
+    private IHcService iHcService;
+
+    @Autowired
+    private IMR_StatusService imr_statusService;
 
 
     private List<Customer> customers;
@@ -78,22 +80,23 @@ public class CustomerController {
         model.addAttribute("photoObject", profilePhoto);
         return "customer-photo";
     }
+
     @PostMapping("/customer/c-uploaded_photo")
     public String postCustomerPhoto(@RequestParam("muiltiPartFile") MultipartFile file,
                                     @RequestParam("userId") int cDId,
                                     @ModelAttribute("photoObject") CustomerProfilePhoto customerProfilePhoto,
-                                    RedirectAttributes r){
-        String fileName= Util.fileConvertToString(file);
-        Customer customer= IEmployeeCustomerService.getCustomerById(cDId);
-        try{
-            if (!fileName.trim().isEmpty()){
+                                    RedirectAttributes r) {
+        String fileName = Util.fileConvertToString(file);
+        Customer customer = IEmployeeCustomerService.getCustomerById(cDId);
+        try {
+            if (!fileName.trim().isEmpty()) {
                 profilePhotoService.saveCustomerPorfilePhoto(file, customerProfilePhoto, customer);
                 r.addFlashAttribute("message", "Photo Upload Successfully!");
 
                 return "redirect:/dashboard";
             }
             return "customer-photo";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
             return "customer-photo";
@@ -103,9 +106,9 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/c-photo-update")
-    public String updateCustomerPhoto(@RequestParam("userId") int cDId, Model model){
+    public String updateCustomerPhoto(@RequestParam("userId") int cDId, Model model) {
 
-        CustomerProfilePhoto customerProfilePhoto= profilePhotoService.getCustomerProfilePhotoByCustomerId(cDId);
+        CustomerProfilePhoto customerProfilePhoto = profilePhotoService.getCustomerProfilePhotoByCustomerId(cDId);
 
         model.addAttribute("photoObject", customerProfilePhoto);
         model.addAttribute("customerIdR", cDId);
@@ -177,10 +180,10 @@ public class CustomerController {
     public String customerUpdate(@RequestParam("customerUpdate") int id, Model model) {
         Customer customer = IEmployeeCustomerService.getCustomerById(id);
         System.out.println(customer.getId());
-        User user= secureUserService.getUserByCustomerId(id);
+        User user = secureUserService.getUserByCustomerId(id);
 
 
-        System.out.println("UserStuff "+ user.getCustomer().getId() );
+        System.out.println("UserStuff " + user.getCustomer().getId());
         model.addAttribute("secureUser", user.getPassWord());
         model.addAttribute("employeeId", customer.getEmployee().getId());
         model.addAttribute("customerObject", customer);
@@ -192,11 +195,11 @@ public class CustomerController {
     @PostMapping("/customer/update-customer")
     public String postUpdateEmployeeCustomer(@ModelAttribute("customerObject") Customer customer,
                                              @RequestParam("userEmployeeId") int eId,
-                                             @RequestParam("password") String password){
+                                             @RequestParam("password") String password) {
 
-        Employee employee= IEmployeeCustomerService.getEmployee(eId);
+        Employee employee = IEmployeeCustomerService.getEmployee(eId);
         customer.setEmployee(employee);
-        User user= secureUserService.getUserByCustomerId(customer.getId());
+        User user = secureUserService.getUserByCustomerId(customer.getId());
         user.setUserName(customer.getEmail());
 
         if (!Util.compareString(password, user.getPassWord())) {
@@ -213,7 +216,6 @@ public class CustomerController {
     }
 
 
-
     @PostMapping("/customers/postEmployeeCustomer")
     public String postEmployeeCustomer(@ModelAttribute("newEmployeeCustomer") Customer customer,
                                        @RequestParam("employeeCID") int employeeId,
@@ -223,8 +225,8 @@ public class CustomerController {
                                        Model model
     ) {
 
-        boolean isEmail= Util.compareString(cEmail, customer.getEmail() );
-        User user= new User();
+        boolean isEmail = Util.compareString(cEmail, customer.getEmail());
+        User user = new User();
 
 
         if (bindingResult.hasErrors() || !isEmail) {
@@ -247,7 +249,6 @@ public class CustomerController {
             return "redirect:/company-employees/employee-list";
         }
     }
-
 
 
     @GetMapping("/customer/delete")
@@ -372,20 +373,20 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/manager")
-    public String getCustomerManager(@RequestParam("userId") int cId, Model model){
-        Customer customer= IEmployeeCustomerService.getCustomerById(cId);
-       Employee employee= customer.getEmployee();
+    public String getCustomerManager(@RequestParam("userId") int cId, Model model) {
+        Customer customer = IEmployeeCustomerService.getCustomerById(cId);
+        Employee employee = customer.getEmployee();
 
-       model.addAttribute("manager", employee);
-       model.addAttribute("user", customer);
+        model.addAttribute("manager", employee);
+        model.addAttribute("user", customer);
 
-       return "customer-manager";
+        return "customer-manager";
     }
 
     @GetMapping("/customer/change-password")
-    public String changePassword(@RequestParam("customerId-p") int cId, Model model){
+    public String changePassword(@RequestParam("customerId-p") int cId, Model model) {
 
-        model.addAttribute("customerIdP" , cId);
+        model.addAttribute("customerIdP", cId);
 
         return "c-change-password";
     }
@@ -395,16 +396,16 @@ public class CustomerController {
                                      @RequestParam("oldPassword") String oldPassword,
                                      @RequestParam("newPassword") String newPassword,
                                      @RequestParam("cNewPassword") String cNewPassword,
-                                     RedirectAttributes r){
+                                     RedirectAttributes r) {
 
-        String encodedPassword= secureUserService.getPasswordByCustomerId(cId);
+        String encodedPassword = secureUserService.getPasswordByCustomerId(cId);
 
-        boolean isPassword= Util.decodePassword(oldPassword, encodedPassword);
-        System.out.println("decodedPassword: "+ isPassword);
+        boolean isPassword = Util.decodePassword(oldPassword, encodedPassword);
+        System.out.println("decodedPassword: " + isPassword);
 
-        boolean isSame= Util.compareString(newPassword, cNewPassword);
+        boolean isSame = Util.compareString(newPassword, cNewPassword);
 
-        if (!isPassword || !isSame){
+        if (!isPassword || !isSame) {
 
             r.addFlashAttribute("message", "password or old password is wrong!");
             return "c-change-password";
@@ -412,23 +413,23 @@ public class CustomerController {
 
 
         r.addFlashAttribute("message", "password changed successfully!");
-        String newPasscode= Util.hashPassword(newPassword);
+        String newPasscode = Util.hashPassword(newPassword);
 
-       User user= secureUserService.getUserByCustomerId(cId);
-        System.out.println("UserName: "+ user.getUserName());
-       user.setPassWord(newPasscode);
-       secureUserService.saveSecureUser(user);
+        User user = secureUserService.getUserByCustomerId(cId);
+        System.out.println("UserName: " + user.getUserName());
+        user.setPassWord(newPasscode);
+        secureUserService.saveSecureUser(user);
 
         System.out.println(user.getPassWord());
 
-       return "redirect:/dashboard";
+        return "redirect:/dashboard";
 
     }
 
     @GetMapping("/customer/e-page-customer-u-medical-f")
-    public String uploadMedicalResult(@RequestParam("customerId") int cId, Model model){
+    public String uploadMedicalResult(@RequestParam("customerId") int cId, Model model) {
 
-        Customer customer= IEmployeeCustomerService.getCustomerById(cId);
+        Customer customer = IEmployeeCustomerService.getCustomerById(cId);
 
         model.addAttribute("customer", customer);
 
@@ -441,11 +442,11 @@ public class CustomerController {
                                     @RequestParam("file") MultipartFile file,
                                     RedirectAttributes r) throws IOException {
 
-        Customer customer= IEmployeeCustomerService.getCustomerById(customerId);
+        Customer customer = IEmployeeCustomerService.getCustomerById(customerId);
 
-      MedicalResult medicalResult= new MedicalResult();
+        MedicalResult medicalResult = new MedicalResult();
 
-        if (Util.checkFileNameError(file) == null){
+        if (Util.checkFileNameError(file) == null) {
 
             r.addFlashAttribute("message", "error uploading file...");
 
@@ -457,27 +458,27 @@ public class CustomerController {
 
         medicalResult.setCustomer(customer);
         IEmployeeCustomerService.addEmployeeCustomer(customer);
-      IEmployeeCustomerService.saveUserMedicalResult(file, medicalResult);
+        IEmployeeCustomerService.saveUserMedicalResult(file, medicalResult);
 
-        return "redirect:/e-page/1?employeeId="+ customer.getEmployee().getId();
+        return "redirect:/e-page/1?employeeId=" + customer.getEmployee().getId();
     }
 
     @GetMapping("/customer/e-page-customer-mr-rm")
-    public String deleteLatestMedicalResult(@RequestParam("customerId") int cId){
+    public String deleteLatestMedicalResult(@RequestParam("customerId") int cId) {
 
-        Customer customer= IEmployeeCustomerService.getCustomerById(cId);
+        Customer customer = IEmployeeCustomerService.getCustomerById(cId);
 
-        List<MedicalResult> medicalResults= IEmployeeCustomerService.findMedicalResultsByCustomerId(cId);
-        MedicalResult medicalResult= medicalResults.get(0);
+        List<MedicalResult> medicalResults = IEmployeeCustomerService.findMedicalResultsByCustomerId(cId);
+        MedicalResult medicalResult = medicalResults.get(0);
 
         IEmployeeCustomerService.deleteMedicalResult(medicalResult);
 
-        return "redirect:/e-page/1?employeeId="+ customer.getEmployee().getId();
+        return "redirect:/e-page/1?employeeId=" + customer.getEmployee().getId();
 
     }
 
     @GetMapping("/customer-mr")
-    public String getMedicalResult(@RequestParam("customerId") int cId, Model model){
+    public String getMedicalResult(@RequestParam("customerId") int cId, Model model) {
 
         model.addAttribute("customerId", cId);
 
@@ -488,11 +489,11 @@ public class CustomerController {
     @GetMapping("/customer/mr-page/{pageNo}")
     public String getMedicalResultPaginated(@PathVariable("pageNo") int pageNo,
                                             @ModelAttribute("customerId") int cId,
-                                            Model model){
+                                            Model model) {
 
-        int pageSize= 5;
+        int pageSize = 5;
 
-        Page<MedicalResult> page= IEmployeeCustomerService.findAllByCustomerId(cId, pageNo, pageSize);
+        Page<MedicalResult> page = IEmployeeCustomerService.findAllByCustomerId(cId, pageNo, pageSize);
 
         model.addAttribute("cId", cId);
         model.addAttribute("currentPage", pageNo);
@@ -508,10 +509,17 @@ public class CustomerController {
     @GetMapping("/mr/download")
     public void downloadMedicalResult(@RequestParam("mrId") int mrId, HttpServletResponse response) throws IOException {
 
-        MedicalResult result= IEmployeeCustomerService.findById(mrId);
+        MedicalResult result = IEmployeeCustomerService.findById(mrId);
 
-       Util.medicalResultDownloader(mrId,response,result);
+        Util.medicalResultDownloader(mrId, response, result);
 
     }
 
+    @GetMapping("/customer/checkout-mr")
+    public String getHcStatus(@RequestParam("hc-serviceId") int hcID, RedirectAttributes r) {
+
+        HcService hcService = iHcService.getHcServiceById(hcID);
+
+        return imr_statusService.saveMRStatus(hcService, hcID, r);
+    }
 }

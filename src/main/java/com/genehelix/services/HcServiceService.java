@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HcServiceService implements IHcService {
@@ -16,14 +17,14 @@ public class HcServiceService implements IHcService {
 
     @Override
     public List<String> getHcServiceNames(int customerId) {
-        List<String> hcServiceNames= hcServiceRepo.getHCServiceName(customerId);
+        List<String> hcServiceNames = hcServiceRepo.getHCServiceName(customerId);
 
         return hcServiceNames;
     }
 
     @Override
     public List<HcServiceResponse> getHCServiceNameAndDate(int customerID) {
-          List<HcServiceResponse> hcServiceResponses= hcServiceRepo.getHCServiceNameAndDate(customerID);
+        List<HcServiceResponse> hcServiceResponses = hcServiceRepo.getHCServiceNameAndDate(customerID);
         return hcServiceResponses;
     }
 
@@ -52,4 +53,10 @@ public class HcServiceService implements IHcService {
         return hcServiceRepo.getHCServiceListByEmployeeId(eId);
     }
 
+    @Override
+    public HcService getHcServiceById(int hcServiceId) {
+        Optional<HcService> hcService = hcServiceRepo.findById(hcServiceId);
+
+        return hcService.orElse(null);
+    }
 }

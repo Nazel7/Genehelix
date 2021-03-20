@@ -110,6 +110,7 @@ public class DashboardController {
 
                 if (lastIndex1 >= 0) {
                     HcServiceResponse serviceResponse1 = hcServiceResponse.get(lastIndex1);
+                    model.addAttribute("latestServiceId", serviceResponse1.getId());
                     model.addAttribute("hcServiceResponse", hcServiceResponse);
                     model.addAttribute("hcServiceResponseIndex", lastIndex1);
                     model.addAttribute("latestServiceDate", serviceResponse1.getDate());
@@ -133,6 +134,7 @@ public class DashboardController {
 
                 if (lastIndex1ForEmployee >= 0) {
                     HcServiceResponse serviceResponse = hcServiceResponse.get(lastIndex1ForEmployee);
+                    model.addAttribute("latestServiceId", serviceResponse.getId());
                     model.addAttribute("hcServiceResponseForEmployee", hcServiceResponse);
                     model.addAttribute("hcServiceResponseIndexForEmployee", lastIndex1ForEmployee);
                     model.addAttribute("latestServiceDateEm", serviceResponse.getDate());

@@ -70,7 +70,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                         "/dashboard/**", "/reviews", "/customers**", "/customer/**", "/customers/**",
                         "/customer/postUpdateEmployeeCustomer/","/reviews/**").hasRole("ADMIN")
                 .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
-                        "/customers/**", "/hcsevice-list/customer", "/customer-mr**", "/mr/download**").hasRole("CUSTOMER")
+                        "/customers/**", "/hcsevice-list/customer", "/customer-mr**",
+                        "/mr/download**", "/customer/checkout-mr**").hasRole("CUSTOMER")
                 .antMatchers("/company-employees/**",
                         "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .antMatchers("/employee/post-new-password").hasRole("EMPLOYEE")
