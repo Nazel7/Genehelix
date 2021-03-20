@@ -25,6 +25,9 @@ public class HcService {
     @JoinColumn(name = "employeeh_id")
     private Employee employeeh;
 
+    @OneToOne(mappedBy = "hcService")
+    private MedicalResultStatus medicalResult_status;
+
     public HcService(){
         super();
 
@@ -85,15 +88,12 @@ public class HcService {
     public void setEmployeeh(Employee employeeh) {
         this.employeeh = employeeh;
     }
-//
-//    @Override
-//    public String toString() {
-//        return "HcService{" +
-//                "Id=" + Id +
-//                ", name='" + name + '\'' +
-//                ", Date='" + date + '\'' +
-//                ", customerDetails=" + customerh +
-//                ", employeeDetails=" + employeeh +
-//                '}';
-//    }
+
+    public MedicalResultStatus getMedicalResult_status() {
+        return medicalResult_status;
+    }
+
+    public void setMedicalResult_status(MedicalResultStatus medicalResult_status) {
+        this.medicalResult_status = medicalResult_status;
+    }
 }

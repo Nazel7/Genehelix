@@ -54,6 +54,7 @@ public class Employee implements IUser {
     private List<MedicalResult> medicalResults= new ArrayList<>();
 
 
+
     public Employee() {
         super();
     }
@@ -158,4 +159,5 @@ public class Employee implements IUser {
     public void setMedicalResults(List<MedicalResult> medicalResults) {
         this.medicalResults = medicalResults;
     }
+
 }

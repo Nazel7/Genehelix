@@ -1,12 +1,25 @@
 package com.genehelix.dtos.responses;
 
 public class HcServiceResponse {
+    private int id;
     private String name;
     private String date;
 
+    public HcServiceResponse(int id, String name, String date) {
+        this.id= id;
+        this.name = name;
+        this.date = date;
+    }
     public HcServiceResponse(String name, String date) {
         this.name = name;
         this.date = date;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -28,7 +41,8 @@ public class HcServiceResponse {
     @Override
     public String toString() {
         return "HcServiceResponse{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", date='" + date + '\'' +
                 '}';
     }

@@ -1,5 +1,6 @@
 package com.genehelix.utils;
 
+import com.genehelix.entities.MedicalResultStatus;
 import com.genehelix.entities.MedicalResult;
 import com.genehelix.entities.UserResume;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -109,4 +110,13 @@ public class Util {
         }
 
     }
+
+    public static MedicalResultStatus setMR_status(MedicalResultStatus medicalResult_status){
+
+        medicalResult_status.setStatus("YES");
+
+        return medicalResult_status;
+    }
+
+
 }

@@ -18,4 +18,6 @@ public interface IHcService {
 
     List<HcService> getHCServiceListByEmployeeId(int cId);
 
+    HcService getHcServiceById(int hcServiceId);
+
 }

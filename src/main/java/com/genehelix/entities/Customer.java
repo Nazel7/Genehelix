@@ -56,7 +56,6 @@ public class Customer implements IUser {
     @OneToMany(mappedBy = "customer")
     private List<MedicalResult> medicalResults= new ArrayList<>();
 
-
     public Customer() {
         super();
     }
@@ -181,4 +180,6 @@ public class Customer implements IUser {
     public void setMedicalResults(List<MedicalResult> medicalResults) {
         this.medicalResults = medicalResults;
     }
+
+
 }

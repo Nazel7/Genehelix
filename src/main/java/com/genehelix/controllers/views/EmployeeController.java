@@ -1,14 +1,8 @@
 package com.genehelix.controllers.views;
 
 
-import com.genehelix.entities.Employee;
-import com.genehelix.entities.EmployeeProfilePhoto;
-import com.genehelix.entities.User;
-import com.genehelix.entities.UserResume;
-import com.genehelix.interfaces.IEmployeeCustomerService;
-import com.genehelix.interfaces.ISecureUserService;
-import com.genehelix.interfaces.IUserProfilePhotoService;
-import com.genehelix.interfaces.IUserResumeService;
+import com.genehelix.entities.*;
+import com.genehelix.interfaces.*;
 import com.genehelix.utils.EmployeeUtil;
 import com.genehelix.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +39,13 @@ public class EmployeeController {
     @Autowired
     private IUserResumeService iUserResumeService;
 
+    @Autowired
+    private IHcService iHcService;
+
+    @Autowired
+    private IMR_StatusService imrStatusService;
+
+
     @InitBinder
     public void dataTrimmer(WebDataBinder dataBinder) {
         StringTrimmerEditor sTrimmer = new StringTrimmerEditor(true);
@@ -67,15 +68,16 @@ public class EmployeeController {
 
         return "employee-page";
     }
+
     @GetMapping("/employee/photoUpload")
     public String gotoEmployeeProfilePhotoPage(@RequestParam("e-userId") int eId, Model model) {
-        EmployeeProfilePhoto profilePhoto= new EmployeeProfilePhoto();
+        EmployeeProfilePhoto profilePhoto = new EmployeeProfilePhoto();
         EmployeeProfilePhoto employeeProfilePhoto = profilePhotoService.getEmployeeProfilePhotoByEmployeeId(eId);
         if (employeeProfilePhoto == null) {
             model.addAttribute("userPhoto", null);
             model.addAttribute("PhotoId", null);
 
-        }else {
+        } else {
             model.addAttribute("userPhoto", employeeProfilePhoto);
             model.addAttribute("PhotoId", employeeProfilePhoto.getId());
         }
@@ -87,9 +89,9 @@ public class EmployeeController {
 
 
     @GetMapping("/employee/e-photo-update")
-    public String updateEmployeePhoto(@RequestParam("userId") int eId, Model model){
+    public String updateEmployeePhoto(@RequestParam("userId") int eId, Model model) {
 
-       EmployeeProfilePhoto employeeProfilePhoto= profilePhotoService.getEmployeeProfilePhotoByEmployeeId(eId);
+        EmployeeProfilePhoto employeeProfilePhoto = profilePhotoService.getEmployeeProfilePhotoByEmployeeId(eId);
 
         model.addAttribute("photoObject", employeeProfilePhoto);
         model.addAttribute("employeeIdR", eId);
@@ -103,18 +105,18 @@ public class EmployeeController {
     public String postCustomerPhoto(@RequestParam("muiltiPartFile") MultipartFile file,
                                     @RequestParam("userId") int eId,
                                     @ModelAttribute("photoObject") EmployeeProfilePhoto employeeProfilePhoto,
-                                    RedirectAttributes r){
-        String fileName= Util.fileConvertToString(file);
-        Employee employee= IEmployeeCustomerService.getEmployee(eId);
-        try{
-            if (!fileName.trim().isEmpty()){
+                                    RedirectAttributes r) {
+        String fileName = Util.fileConvertToString(file);
+        Employee employee = IEmployeeCustomerService.getEmployee(eId);
+        try {
+            if (!fileName.trim().isEmpty()) {
                 profilePhotoService.saveEmployeePorfilePhoto(file, employeeProfilePhoto, employee);
                 r.addFlashAttribute("message", "Photo Upload Successfully!");
 
                 return "redirect:/dashboard";
             }
             return "employee-photo";
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
 
             return "employee-photo";
@@ -123,7 +125,7 @@ public class EmployeeController {
 
     }
 
-// Employee Resume setUp.
+    // Employee Resume setUp.
     @GetMapping("/employee/resumeUpload")
     public String uploadResume(@RequestParam("userId") int eId, Model model) {
         UserResume resume = new UserResume();
@@ -132,7 +134,7 @@ public class EmployeeController {
             model.addAttribute("userResume", null);
             model.addAttribute("resumeId", null);
 
-        }else{
+        } else {
 
             model.addAttribute("userResume", userResume);
             model.addAttribute("resumeId", userResume.getId());
@@ -194,11 +196,10 @@ public class EmployeeController {
     }
 
 
-
     @GetMapping("/employee/change-password")
-    public String changePassword(@RequestParam("employeeId-p") int eId, Model model){
+    public String changePassword(@RequestParam("employeeId-p") int eId, Model model) {
 
-        model.addAttribute("employeeIdP" , eId);
+        model.addAttribute("employeeIdP", eId);
 
         return "e-change-password";
     }
@@ -208,26 +209,26 @@ public class EmployeeController {
                                      @RequestParam("oldPassword") String oldPassword,
                                      @RequestParam("newPassword") String newPassword,
                                      @RequestParam("eNewPassword") String eNewPassword,
-                                     RedirectAttributes r){
+                                     RedirectAttributes r) {
 
-        String encodedPassword= secureUserService.getPasswordByEmployeeId(eId);
+        String encodedPassword = secureUserService.getPasswordByEmployeeId(eId);
 
-        boolean isPassword= Util.decodePassword(oldPassword, encodedPassword);
+        boolean isPassword = Util.decodePassword(oldPassword, encodedPassword);
 
-        boolean isSame= Util.compareString(newPassword, eNewPassword);
+        boolean isSame = Util.compareString(newPassword, eNewPassword);
 
-        if (!isPassword || !isSame){
+        if (!isPassword || !isSame) {
 
             r.addFlashAttribute("message", "password or old password is wrong!");
 
-            return "redirect:/company-employees/employee/change-password?employeeId-p="+ eId;
+            return "redirect:/company-employees/employee/change-password?employeeId-p=" + eId;
         }
 
 
         r.addFlashAttribute("message", "password changed successfully!");
-        String newPasscode= Util.hashPassword(newPassword);
+        String newPasscode = Util.hashPassword(newPassword);
 
-        User user= secureUserService.getUserByEmployeeId(eId);
+        User user = secureUserService.getUserByEmployeeId(eId);
         user.setPassWord(newPasscode);
         secureUserService.saveSecureUser(user);
 
@@ -256,7 +257,7 @@ public class EmployeeController {
     @GetMapping("/updateEmployee")
     public String updateEmployee(@RequestParam("updateLink") int id, Model model) {
         Employee employee = IEmployeeCustomerService.getEmployee(id);
-        User user= secureUserService.getUserByEmployeeId(id);
+        User user = secureUserService.getUserByEmployeeId(id);
 
         model.addAttribute("secureUser", user);
         model.addAttribute("employee", employee);
@@ -288,10 +289,9 @@ public class EmployeeController {
     }
 
 
-
     @PostMapping("/postUpdateEmployee")
     public String postEmployeeUpdate(@Valid @ModelAttribute("employee") Employee employee,
-                                     BindingResult bindingResult){
+                                     BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
             return "add-employee";
@@ -306,16 +306,16 @@ public class EmployeeController {
     public String postUpdatedEmployee(@ModelAttribute("secureUser") User user,
                                       @RequestParam("userEmployeeId") int eId,
                                       @RequestParam("cEmail") String confirmEmail,
-                                      @RequestParam("password") String password){
+                                      @RequestParam("password") String password) {
 
-        Employee employee= IEmployeeCustomerService.getEmployee(eId);
-        boolean isSameEmail= Util.compareString(employee.getEmail(), confirmEmail);
+        Employee employee = IEmployeeCustomerService.getEmployee(eId);
+        boolean isSameEmail = Util.compareString(employee.getEmail(), confirmEmail);
 
-        if (!isSameEmail){
-           return "add-update-employee";
+        if (!isSameEmail) {
+            return "add-update-employee";
         }
 
-        String encodedPassword= Util.hashPassword(password);
+        String encodedPassword = Util.hashPassword(password);
         user.setPassWord(encodedPassword);
         user.setEmployee(employee);
         user.setUserName(confirmEmail);
@@ -323,7 +323,7 @@ public class EmployeeController {
         secureUserService.saveSecureUser(user);
         IEmployeeCustomerService.addEmployee(employee);
 
-      return "redirect:/company-employees/employee-list";
+        return "redirect:/company-employees/employee-list";
     }
 
     @GetMapping("/deleteEmployee")
@@ -352,5 +352,13 @@ public class EmployeeController {
         return "employee-list";
     }
 
+    @GetMapping("/employee/checkout-mr")
+    public String getHcStatus(@RequestParam("hc-serviceId") int hcID, RedirectAttributes r) {
 
+        HcService hcService = iHcService.getHcServiceById(hcID);
+
+        return imrStatusService.saveMRStatus(hcService, hcID, r);
+
+
+    }
 }
