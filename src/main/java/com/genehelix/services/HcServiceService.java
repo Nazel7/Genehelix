@@ -59,4 +59,19 @@ public class HcServiceService implements IHcService {
 
         return hcService.orElse(null);
     }
+
+    @Override
+    public List<HcService> getHcServicesByNameContainingAndCustomerhId(String hcName, int cId) {
+
+        return hcServiceRepo.getHcServicesByNameContainingAndCustomerhId(hcName, cId);
+    }
+
+    @Override
+    public List<HcService> getHcServicesByNameContainingAndEmployeehId(String hcName, int eId) {
+        if (hcName.trim().length() <= 0){
+            return getHCServiceListByCustomerId(eId);
+        }
+
+        return hcServiceRepo.getHcServicesByNameContainingAndEmployeehId(hcName, eId);
+    }
 }

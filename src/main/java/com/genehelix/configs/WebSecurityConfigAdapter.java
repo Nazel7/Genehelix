@@ -56,7 +56,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
                 .antMatchers("/customer/e-page-customer-u-medical-f","/employee/e-customer-list",
-                        "/customer/c-upload-mr", "/e-page/**", "/customer/e-page-customer-mr-rm**").hasRole("EMPLOYEE")
+                        "/customer/c-upload-mr", "/e-page/**", "/customer/e-page-customer-mr-rm**", "/hcsevice-list/employee**",
+                        "/hc-service-search/employee**", "/customers/search-epage**").hasRole("EMPLOYEE")
                 .antMatchers("/reviews/showEmployeeReview",
                         "/reviews/showFormForEmployeeCustomerReview", "/reviews/showFormForAddReview",
                         "/reviews/postCustomerReview").hasAnyRole("ADMIN", "CUSTOMER")

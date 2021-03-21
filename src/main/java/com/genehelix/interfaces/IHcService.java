@@ -20,4 +20,8 @@ public interface IHcService {
 
     HcService getHcServiceById(int hcServiceId);
 
+    List<HcService> getHcServicesByNameContainingAndEmployeehId(String hcName, int eId);
+
+    List<HcService> getHcServicesByNameContainingAndCustomerhId(String hcName, int cId);
+
 }
