@@ -522,4 +522,18 @@ public class CustomerController {
 
         return imr_statusService.saveMRStatus(hcService, hcID, r);
     }
+
+    @GetMapping("/customers/search-epage")
+    public String getSearchedEmployeePageCustomer(@RequestParam("searchResult") String searchResult,
+                                                  @RequestParam("employeeId") int eId, Model model){
+
+        List<Customer> customers= IEmployeeCustomerService.searchEmployeeCustomer(searchResult, eId);
+
+
+        model.addAttribute("employeeId", eId);
+        model.addAttribute("employeeCustomers", customers);
+
+
+        return     "e-page-customer-list";
+    }
 }
