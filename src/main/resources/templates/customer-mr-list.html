@@ -22,20 +22,18 @@
     <h3>Employee Customers Data</h3>
     <hr>
 
-    <form th:action="@{/customers/search}" class="form-inline">
-        <input class="form-control  ml-5 mr-sm-2 mb-3" type="text" name="search"
+    <form th:action="@{/customer-mr/search(customerId=${customerId})}" class="form-inline">
+        <input class="form-control  ml-5 mr-sm-2 mb-3" type="text" name="searchResult"
                placeholder="Search by name"/>
+
+        <input type="hidden" name="customerId" th:value="${customerId}"/>
 
         <input class="btn btn-success mb-3" type="submit" value="Search">
         <!--flash message-->
-        <!--<div class="alert alert-success" style="margin-left: 5%;" th:if="${message != null}">-->
-            <!--<span>[[${message}]]</span>-->
-        <!--</div>-->
-
-
+        <div class="alert alert-danger" style="margin-left: 5%;" th:if="${message != null}">
+            <span>[[${message}]]</span>
+        </div>
     </form>
-
-
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
@@ -67,8 +65,8 @@
         </tbody>
     </table>
     <div style="clear: both"></div>
-        <div th:if="${mr.size() == 0}">
-            <div class="alert alert-success" role="alert">Your medical Result is not available at this moment...</div>
+        <div th:if="${mr.size() <= 0}">
+            <div class="alert alert-danger" role="alert">Your medical Result is not available at this moment...</div>
         </div>
         <div>
 

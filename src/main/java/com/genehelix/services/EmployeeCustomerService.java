@@ -220,9 +220,16 @@ public class EmployeeCustomerService implements IEmployeeCustomerService {
     }
 
     @Override
-    public MedicalResult findById(int mrId) {
+    public MedicalResult findMedicalResultById(int mrId) {
 
         return medicalResultRepo.findById(mrId);
+    }
+
+    @Override
+    public List<MedicalResult> findMedicalResultsByNameContainingAndCustomerId(String mrName, int customerId) {
+
+
+        return medicalResultRepo.FindMedicalResultByNameAndCustomerId(mrName, customerId);
     }
 
 }

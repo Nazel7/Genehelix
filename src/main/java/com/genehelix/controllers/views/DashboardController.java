@@ -48,6 +48,9 @@ public class DashboardController {
     @Autowired
     private ISecureUserService iSecureUserService;
 
+    @Autowired
+    private IMedicalResultStatusService statusService;
+
 
     private List<String> serviceListTitle;
 
@@ -134,6 +137,7 @@ public class DashboardController {
 
                 if (lastIndex1ForEmployee >= 0) {
                     HcServiceResponse serviceResponse = hcServiceResponse.get(lastIndex1ForEmployee);
+                    System.out.println("EmploLASTSER: "+ serviceResponse.getId());
                     model.addAttribute("latestServiceId", serviceResponse.getId());
                     model.addAttribute("hcServiceResponseForEmployee", hcServiceResponse);
                     model.addAttribute("hcServiceResponseIndexForEmployee", lastIndex1ForEmployee);
@@ -194,10 +198,20 @@ public class DashboardController {
     public String postNewCustomerDetailService(@RequestParam("customerId") int cDId,
                                                @ModelAttribute("newHcService") HcService hcService) {
 
+        MedicalResultStatus medicalResultStatus= new MedicalResultStatus();
         Customer customer = IEmployeeCustomerService.getCustomerById(cDId);
+        if (customer == null){
+            return "redirect:/dashboard";
+        }
         hcService.setCustomerh(customer);
 
+        medicalResultStatus.setHcService(hcService);
+        MedicalResultStatus status= Util.setMR_statusToNR(medicalResultStatus);
+        medicalResultStatus.setStatus(status.getStatus());
+
         iHcService.saveHcService(hcService);
+        statusService.saveMedicalResultStatus(medicalResultStatus);
+
 
         return "redirect:/dashboard";
     }
@@ -299,10 +313,25 @@ public class DashboardController {
 public String postNewEmployeeDetailService(@RequestParam("employeeId") int eId,
                                            @ModelAttribute("newHcService") HcService hcService) {
 
+        MedicalResultStatus medicalResultStatus= new MedicalResultStatus();
+
     Employee employee = IEmployeeCustomerService.getEmployee(eId);
+
+    if (employee == null){
+
+        return "redirect:/dashboard";
+    }
+
     hcService.setEmployeeh(employee);
 
+    //    set default mediclResultStatus
+    medicalResultStatus.setHcService(hcService);
+    MedicalResultStatus status= Util.setMR_statusToNR(medicalResultStatus);
+    medicalResultStatus.setStatus(status.getStatus());
+
+
     iHcService.saveHcService(hcService);
+    statusService.saveMedicalResultStatus(medicalResultStatus);
 
     return "redirect:/dashboard";
 }
@@ -394,6 +423,8 @@ public String postNewEmployeeDetailService(@RequestParam("employeeId") int eId,
     @GetMapping("/e-page/{pageNo}")
     public  String employeeCustomerPage(@PathVariable("pageNo") int pageNo,
                                         @ModelAttribute("employeeId") int eId, Model model){
+
+
 
         int pageSize = 5;
 

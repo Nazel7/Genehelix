@@ -43,7 +43,7 @@ public class EmployeeController {
     private IHcService iHcService;
 
     @Autowired
-    private IMR_StatusService imrStatusService;
+    private IMedicalResultStatusService IMedicalResultStatusService;
 
 
     @InitBinder
@@ -357,7 +357,7 @@ public class EmployeeController {
 
         HcService hcService = iHcService.getHcServiceById(hcID);
 
-        return imrStatusService.saveMRStatus(hcService, hcID, r);
+        return IMedicalResultStatusService.saveMRStatus(hcService, hcID, r);
 
 
     }

@@ -56,8 +56,9 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/dashboard").hasAnyRole("ADMIN", "CUSTOMER", "EMPLOYEE")
                 .antMatchers("/customer/e-page-customer-u-medical-f","/employee/e-customer-list",
-                        "/customer/c-upload-mr", "/e-page/**", "/customer/e-page-customer-mr-rm**", "/hcsevice-list/employee**",
-                        "/hc-service-search/employee**", "/customers/search-epage**").hasRole("EMPLOYEE")
+                        "/customer/c-upload-mr","/e-page/**","/customer/e-page-customer-mr-rm**","/hcsevice-list/employee**",
+                        "/hc-service-search/employee**","/customers/search-epage**", "/hc-search/customer**",
+                        "/e-page-mr-list/customer**","/company-employees/employee/checkout-mr**").hasRole("EMPLOYEE")
                 .antMatchers("/reviews/showEmployeeReview",
                         "/reviews/showFormForEmployeeCustomerReview", "/reviews/showFormForAddReview",
                         "/reviews/postCustomerReview").hasAnyRole("ADMIN", "CUSTOMER")
@@ -72,7 +73,8 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                         "/customer/postUpdateEmployeeCustomer/","/reviews/**").hasRole("ADMIN")
                 .antMatchers("/customer-page", "/customer-page/**", "/customers", "/customer/**",
                         "/customers/**", "/hcsevice-list/customer", "/customer-mr**",
-                        "/mr/download**", "/customer/checkout-mr**").hasRole("CUSTOMER")
+                        "/mr/download**", "/customer/checkout-mr**", "/customer-mr/search**",
+                        "/hc-search/customer**").hasRole("CUSTOMER")
                 .antMatchers("/company-employees/**",
                         "/customers/general-list/**").hasAnyRole("ADMIN", "EMPLOYEE")
                 .antMatchers("/employee/post-new-password").hasRole("EMPLOYEE")

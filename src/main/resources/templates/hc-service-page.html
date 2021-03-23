@@ -35,7 +35,7 @@
 
     <div th:unless="${userEmployee != null}">
         <form action="#" th:action="@{/hc-search/customer(userId=${customerId})}" method="GET" class="form-inline">
-            <input type="text" name="searchHcService" class="form-control  ml-5 mr-sm-2 mb-3" placeholder="Search by name"/>
+            <input type="text" name="searchParam" class="form-control  ml-5 mr-sm-2 mb-3" placeholder="Search by name"/>
             <input type="submit" value="Search" class="btn btn-success mb-3"/>
             <input type="hidden" name="userId" th:value="${customerId}"/>
         </form>
@@ -45,13 +45,19 @@
 
     <table class="table table-bordered table-striped">
         <thead class="thead-dark">
-        <tr>
+        <tr th:if="${hcServiceCustomer == null}">
             <th>Name</th>
             <th>Date</th>
         </tr>
+
+        <tr th:unless="${hcServiceCustomer == null}">
+            <th>Name</th>
+            <th>Date</th>
+            <th>Medical Result Status</th>
+        </tr>
         </thead>
 
-        <tbody>
+        <tbody th:if="${hcServiceCustomer == null && hcServices != null}">
         <tr th:each="hcService : ${hcServices}">
 
             <td th:text="${hcService.name}"/>
@@ -59,10 +65,26 @@
 
         </tr>
         </tbody>
+
+        <tbody th:if="${hcServiceCustomer != null && hcServices != null}">
+        <tr th:each="hcService : ${hcServices}">
+
+            <td th:text="${hcService.name}"/>
+            <td th:text="${hcService.date}"/>
+            <td th:if="${hcService.medicalResult_status != null}">
+                <div th:if="${hcService.medicalResult_status.status != null}">
+                    [[${hcService.medicalResult_status.status}]]
+                </div></td>
+
+
+            <td th:unless="${hcService.medicalResult_status != null}">NR</td>
+
+        </tr>
+        </tbody>
     </table>
     <div style="clear: both"></div>
     <div th:if="${hcServices.size() == 0}">
-        <div class="alert alert-success" role="alert">Your currently do not register for any service...</div>
+        <div class="alert alert-danger" role="alert">No service found...</div>
     </div>
 </div>
 </body>
