@@ -61,6 +61,8 @@ public interface IEmployeeCustomerService {
 
     void deleteMedicalResult(MedicalResult medicalResult);
 
-    MedicalResult findById(int mrId);
+    MedicalResult findMedicalResultById(int mrId);
+
+    List<MedicalResult> findMedicalResultsByNameContainingAndCustomerId(String mrName, int customerId);
 
 }

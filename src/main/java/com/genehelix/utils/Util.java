@@ -113,10 +113,15 @@ public class Util {
 
     public static MedicalResultStatus setMR_status(MedicalResultStatus medicalResult_status){
 
-        medicalResult_status.setStatus("YES");
+        medicalResult_status.setStatus("Received");
 
         return medicalResult_status;
     }
+    public static MedicalResultStatus setMR_statusToNR(MedicalResultStatus medicalResult_status){
 
+        medicalResult_status.setStatus("NR");
+
+        return medicalResult_status;
+    }
 
 }

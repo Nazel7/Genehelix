@@ -869,7 +869,6 @@
                 </span>
            </span>
             </div>
-            <br>
             <span class="divProfileSpan" style="float: left; font-size: 10px">
                 <span class="text-success" id="successMessage">
                    [[${message}]]
@@ -993,7 +992,7 @@
             </div>
         </div>
         <div class="btn btn-primary" >
-            <a th:href="@{/employee/checkout-mr(hc-serviceId=${latestServiceId})}" style=" color: white;
+            <a th:href="@{/company-employees/employee/checkout-mr(hc-serviceId=${latestServiceId})}" style=" color: white;
                 text-decoration-line: none"
                onclick="if (!confirm('Are you sure to have received medical result for this service? '))
                        return false;">Confirm Result</a>
@@ -1095,7 +1094,7 @@
         <div style="width: 50%; float: left; overflow: auto">
             <label style="width: 100%; font-size: 15px; color:darkslategray">Mobile</label>
             <span style="width: auto" th:if="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">
-      <span class="divProfilespanpDatails" id="divProfilespanpDatails22" th:text="${userDetail.linkedin}"></span>
+      <span class="divProfilespanpDatails" id="divProfilespanpDatails22" th:text="${userDetail.mobile}"></span>
         </span>
 
             <span style="width: auto" th:unless="${userDetail != null && userDetail.mobile != null}" class="spandetailHover">

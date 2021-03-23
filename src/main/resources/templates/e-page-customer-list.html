@@ -29,7 +29,7 @@
         <input class="btn btn-success mb-3" type="submit" value="Search">
         <input type="hidden" name="employeeId" th:value="${employeeId}">
         <!--flash message-->
-        <div class="alert alert-success" style="margin-left: 5%;" th:if="${message != null}">
+        <div class="alert alert-danger" style="margin-left: 5%;" th:if="${message != null}">
             <span>[[${message}]]</span>
         </div>
 
@@ -68,8 +68,11 @@
                     <span class="badge badge-light" th:text="${employeeCustomer.medicalResults.size()}">
                        </span>
                 </span>
-
                 </a>
+
+                <!--medical status-->
+                <a href="#" th:href="@{/e-page-mr-list/customer(customerId=${employeeCustomer.id})}"
+                   class="btn btn-outline-success btn-sm" >View Result Status</a>
 
 
                 <!-- Add "delete" button/link -->
@@ -85,7 +88,7 @@
     </table>
     <div style="clear: both"></div>
         <div th:if="${employeeCustomers.size() == 0}">
-            <div class="alert alert-success" role="alert">No registered customer available...</div>
+            <div class="alert alert-danger" role="alert">No registered customer available...</div>
         </div>
         <div>
 

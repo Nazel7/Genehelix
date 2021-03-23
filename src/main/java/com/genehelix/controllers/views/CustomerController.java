@@ -40,7 +40,7 @@ public class CustomerController {
     private IHcService iHcService;
 
     @Autowired
-    private IMR_StatusService imr_statusService;
+    private IMedicalResultStatusService statusService;
 
 
     private List<Customer> customers;
@@ -464,15 +464,28 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/e-page-customer-mr-rm")
-    public String deleteLatestMedicalResult(@RequestParam("customerId") int cId) {
+    public String deleteLatestMedicalResult(@RequestParam("customerId") int cId, RedirectAttributes r) {
 
         Customer customer = IEmployeeCustomerService.getCustomerById(cId);
 
-        List<MedicalResult> medicalResults = IEmployeeCustomerService.findMedicalResultsByCustomerId(cId);
-        MedicalResult medicalResult = medicalResults.get(0);
+        try{
 
-        IEmployeeCustomerService.deleteMedicalResult(medicalResult);
+            List<MedicalResult> medicalResults = IEmployeeCustomerService.findMedicalResultsByCustomerId(cId);
 
+
+            MedicalResult medicalResult = medicalResults.get(0);
+
+            IEmployeeCustomerService.deleteMedicalResult(medicalResult);
+
+
+        }catch(Exception e){
+         e.printStackTrace();
+
+            r.addFlashAttribute("message", "Medical Result not found");
+            return "redirect:/e-page/1?employeeId=" + customer.getEmployee().getId();
+        }
+
+        r.addFlashAttribute("message", "Recent Medical Result deleted..");
         return "redirect:/e-page/1?employeeId=" + customer.getEmployee().getId();
 
     }
@@ -480,11 +493,13 @@ public class CustomerController {
     @GetMapping("/customer-mr")
     public String getMedicalResult(@RequestParam("customerId") int cId, Model model) {
 
+
         model.addAttribute("customerId", cId);
 
         return getMedicalResultPaginated(1, cId, model);
 
     }
+
 
     @GetMapping("/customer/mr-page/{pageNo}")
     public String getMedicalResultPaginated(@PathVariable("pageNo") int pageNo,
@@ -506,10 +521,35 @@ public class CustomerController {
 
     }
 
+    @GetMapping("/customer-mr/search")
+    public String getCustomerMedicalResultSearched(@RequestParam("searchResult") String searchParam,
+                                                   @RequestParam("customerId") int cId,
+                                                   Model model, RedirectAttributes r){
+        try{
+
+            List<MedicalResult> medicalResults=
+                    IEmployeeCustomerService.findMedicalResultsByNameContainingAndCustomerId(searchParam, cId);
+            System.out.println("MEDCCC: "+ medicalResults.get(0).getName());
+
+            model.addAttribute("mr", medicalResults);
+            model.addAttribute("customerId", cId);
+
+            return "customer-mr-list";
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+            r.addFlashAttribute("message", "Medical Result not found..");
+            return "redirect:/customer-mr?customerId="+ cId;
+        }
+
+
+    }
+
     @GetMapping("/mr/download")
     public void downloadMedicalResult(@RequestParam("mrId") int mrId, HttpServletResponse response) throws IOException {
 
-        MedicalResult result = IEmployeeCustomerService.findById(mrId);
+        MedicalResult result = IEmployeeCustomerService.findMedicalResultById(mrId);
 
         Util.medicalResultDownloader(mrId, response, result);
 
@@ -520,7 +560,7 @@ public class CustomerController {
 
         HcService hcService = iHcService.getHcServiceById(hcID);
 
-        return imr_statusService.saveMRStatus(hcService, hcID, r);
+        return statusService.saveMRStatus(hcService, hcID, r);
     }
 
     @GetMapping("/customers/search-epage")
@@ -536,4 +576,6 @@ public class CustomerController {
 
         return     "e-page-customer-list";
     }
+
+
 }

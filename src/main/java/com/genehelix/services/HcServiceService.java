@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class HcServiceService implements IHcService {
@@ -55,9 +54,9 @@ public class HcServiceService implements IHcService {
 
     @Override
     public HcService getHcServiceById(int hcServiceId) {
-        Optional<HcService> hcService = hcServiceRepo.findById(hcServiceId);
 
-        return hcService.orElse(null);
+
+        return hcServiceRepo.getHcServicesById(hcServiceId);
     }
 
     @Override

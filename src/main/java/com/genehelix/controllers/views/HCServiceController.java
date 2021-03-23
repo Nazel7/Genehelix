@@ -3,6 +3,7 @@ package com.genehelix.controllers.views;
 import com.genehelix.entities.HcService;
 import com.genehelix.interfaces.IEmployeeCustomerService;
 import com.genehelix.interfaces.IHcService;
+import com.genehelix.services.MedicalResultStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,9 @@ public class HCServiceController {
 
     @Autowired
     private IEmployeeCustomerService iEmployeeCustomerService;
+
+    @Autowired
+    private MedicalResultStatusService statusService;
 
     @GetMapping("/hcsevice-list/customer")
     public String getHcServiceListForCustomer(@RequestParam("userId") int cId, Model model, RedirectAttributes r){
@@ -59,12 +63,40 @@ public class HCServiceController {
                                                Model model){
 
         List<HcService> hcServices= iHcService.getHcServicesByNameContainingAndEmployeehId(searchResult, eId);
-        System.out.println("searchHc: "+ hcServices.get(0).getId());
+
 
         model.addAttribute("employeeId", eId);
         model.addAttribute("hcServices", hcServices);
         model.addAttribute("userEmployee", iEmployeeCustomerService.getEmployee(eId));
 
         return "hc-service-page";
+    }
+
+    @GetMapping("/hc-search/customer")
+    public String getCustomerHcServiceSearched(@RequestParam("userId") int cId,
+                                               @RequestParam("searchParam") String searchResult,
+                                               Model model){
+
+       List<HcService> hcServices= iHcService.getHcServicesByNameContainingAndCustomerhId(searchResult, cId);
+
+        model.addAttribute("customerId", cId);
+        model.addAttribute("hcServices", hcServices);
+        model.addAttribute("hcServiceCustomer", hcServices);
+
+        return "hc-service-page";
+    }
+
+
+    @GetMapping("/e-page-mr-list/customer")
+    public String getCustomerHcServiceListWithStatus(@RequestParam("customerId") int cId, Model model, RedirectAttributes r){
+
+        List<HcService> hcServices= iHcService.getHCServiceListByCustomerId(cId);
+
+        model.addAttribute("hcServices", hcServices);
+        model.addAttribute("hcServiceCustomer", hcServices);
+        model.addAttribute("customerId", cId);
+
+        return "hc-service-page";
+
     }
 }

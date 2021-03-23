@@ -17,6 +17,9 @@ public interface MedicalResultRepo extends JpaRepository<MedicalResult, Integer>
 
      MedicalResult findById(int mrId);
 
+     @Query("SELECT mr from MedicalResult  mr where mr.name like %?1% and (mr.customer.id= ?2) order by mr.id desc")
+     List<MedicalResult> FindMedicalResultByNameAndCustomerId(String mrName, int customerId);
+
 
 
 }

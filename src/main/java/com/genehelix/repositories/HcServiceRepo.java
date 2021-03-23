@@ -19,22 +19,25 @@ public interface HcServiceRepo extends JpaRepository<HcService, Integer> {
             " where c.id= ?1 order by s.Id")
     List<HcServiceResponse> getHCServiceNameAndDate(int customerID);
 
-    @Query("SELECT hc from HcService hc inner join customer c on c.id=hc.customerh.id where c.id=?1 order by hc.Id desc")
+    @Query("SELECT hc from HcService hc where hc.customerh.id=?1 order by hc.Id desc")
     List<HcService> getHCServiceListByCustomerID(int cId);
 
 
     @Query("SELECT new com.genehelix.dtos.responses.HcServiceResponse(s.Id,s.name, s.date) " +
-            "from HcService s inner join employee e on e.id=s.customerh.id" +
+            "from HcService s inner join employee e on e.id=s.employeeh.id" +
             " where e.id= ?1 order by s.Id")
     List<HcServiceResponse> getHCServiceNameAndDateForEmployee(int employeeID);
 
     @Query("SELECT hc from HcService hc inner join employee e on e.id=hc.employeeh.id where e.id=?1 order by hc.Id desc")
     List<HcService> getHCServiceListByEmployeeId(int cId);
 
-    @Query("SELECT hc FROM HcService hc where hc.employeeh.id=?2 and (hc.name like %?1%)")
+    @Query("SELECT hc FROM HcService hc where hc.employeeh.id=?2 and (hc.name like %?1%) order by hc.Id desc ")
     List<HcService> getHcServicesByNameContainingAndEmployeehId(String hcName, int eId);
 
-    @Query("SELECT hc FROM HcService hc where hc.customerh.id=?2 and  (hc.name like %?1%)")
+    @Query("SELECT hc FROM HcService hc where hc.customerh.id=?2 and  (hc.name like %?1%) order by hc.Id desc ")
     List<HcService> getHcServicesByNameContainingAndCustomerhId(String hcName, int cId);
+
+    @Query("SELECT hc from HcService hc where hc.Id=?1")
+    HcService getHcServicesById(int hcId);
 
 }
