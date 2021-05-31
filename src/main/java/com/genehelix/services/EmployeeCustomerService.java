@@ -65,7 +65,7 @@ public class EmployeeCustomerService implements IEmployeeCustomerService {
 
     @Override
     public void addEmployee(Employee employee) {
-        employeeRepo.save(employee);
+       employeeRepo.save(employee);
     }
 
     @Override

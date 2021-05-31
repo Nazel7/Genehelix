@@ -14,7 +14,6 @@ public class WebInterceptor implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterception).addPathPatterns("/**")
                 .excludePathPatterns("/css/*", "/fancy-login.html", "/js/**", "/fonts/**", "/img/**", "/logo/**",
-                        "/font-awesome.fonts/**", "/", "/login", "/customer/postUpdateEmployeeCustomer/",
-                        "/customers/postEmployeeCustomer");
+                        "/font-awesome.fonts/**", "/", "/login");
     }
 }

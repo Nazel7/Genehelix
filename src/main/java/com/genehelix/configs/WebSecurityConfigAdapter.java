@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 @Primary
-public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
+public class   WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Autowired
     private SimpleAuthenticationSuccessfulHandler successfulHandler;
 
@@ -45,6 +45,7 @@ public class WebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(daoAuthenticationProvider());
+
 
     }
 

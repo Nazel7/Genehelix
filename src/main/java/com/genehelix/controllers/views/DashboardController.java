@@ -1,12 +1,30 @@
 package com.genehelix.controllers.views;
 
 import com.genehelix.dtos.responses.HcServiceResponse;
-import com.genehelix.entities.*;
-import com.genehelix.interfaces.*;
+import com.genehelix.entities.Customer;
+import com.genehelix.entities.CustomerDetails;
+import com.genehelix.entities.CustomerProfilePhoto;
+import com.genehelix.entities.Employee;
+import com.genehelix.entities.EmployeeDetails;
+import com.genehelix.entities.EmployeeProfilePhoto;
+import com.genehelix.entities.EmptyProfilePhoto;
+import com.genehelix.entities.HCServiceList;
+import com.genehelix.entities.HcService;
+import com.genehelix.entities.MedicalResultStatus;
+import com.genehelix.entities.User;
+import com.genehelix.interfaces.IEmployeeCustomerService;
+import com.genehelix.interfaces.IHCServiceListService;
+import com.genehelix.interfaces.IHcService;
+import com.genehelix.interfaces.IMedicalResultStatusService;
+import com.genehelix.interfaces.ISecureUserService;
+import com.genehelix.interfaces.IUser;
+import com.genehelix.interfaces.IUserProfilePhotoService;
+import com.genehelix.interfaces.IUsersDetailService;
 import com.genehelix.services.UserDetailService;
 import com.genehelix.utils.EmployeeUtil;
 import com.genehelix.utils.ErrorMessageUtil;
 import com.genehelix.utils.Util;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.data.domain.Page;
@@ -15,15 +33,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.nio.file.NoSuchFileException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 public class DashboardController {
@@ -89,7 +113,7 @@ public class DashboardController {
         hcServiceLists = ihcServiceListService.findAll();
         int userId = user1.getId();
 
-        // I am working here; plan to create a databses table for empty profile photo.
+
         // CustomerPhoto call...
         CustomerProfilePhoto customerProfilePhoto = iuserPhoto.getCustomerProfilePhotoByCustomerId(user1.getId());
 
@@ -423,8 +447,6 @@ public String postNewEmployeeDetailService(@RequestParam("employeeId") int eId,
     @GetMapping("/e-page/{pageNo}")
     public  String employeeCustomerPage(@PathVariable("pageNo") int pageNo,
                                         @ModelAttribute("employeeId") int eId, Model model){
-
-
 
         int pageSize = 5;
 

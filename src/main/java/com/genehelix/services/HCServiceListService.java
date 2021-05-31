@@ -26,5 +26,6 @@ public class HCServiceListService implements IHCServiceListService {
 
        return hcServiceListRepo.findAll();
 
+
     }
 }
